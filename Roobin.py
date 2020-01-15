@@ -50,7 +50,7 @@ def listen_and_record(path):
         except Exception as e:
             print(e)
 
-def STT(file_path, Lang="fa-IR"):
+def speech_to_text(file_path, Lang="fa-IR"):
     print("1")
     #AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), file_path)
     AUDIO_FILE = "./" + file_path
@@ -71,7 +71,7 @@ def STT(file_path, Lang="fa-IR"):
                 counter = 0
                 while (counter < 100) & (data == "NONE"):
                     listen_and_record('speech.wav')
-                    data = STT('speech.wav')
+                    data = speech_to_text('speech.wav')
                 if counter >= 100:
                     return "NONE"
                 else:
@@ -104,7 +104,7 @@ def STT(file_path, Lang="fa-IR"):
                 # if it cannot recognize anything, it listens again for 100 times
                 while (counter < 100) & (data == "NONE"):
                     listen_and_record('speech.wav')
-                    data = STT('speech.wav', Lang)
+                    data = speech_to_text('speech.wav', Lang)
                 if counter >= 100:
                     return "NONE"
                 else:
@@ -136,10 +136,11 @@ def playvc(filename):
     pygame.mixer.init()
     pygame.mixer.music.load(filename)
     pygame.mixer.music.play()
-    while pygame.mixer.music.get_busy(): 
+    while pygame.mixer.music.get_busy():
         pygame.time.Clock().tick(10)
 
-def agptts(text):
+def agptts(txt):
+    text = urllib.parse.quote(txt, safe='')
     global NAME_COUNTER
     NAME_COUNTER += 1
     vcfilename = VOICES_PATH + "vcm" + str(NAME_COUNTER) + ".mp3"
@@ -147,14 +148,20 @@ def agptts(text):
     print("Requesting..")
     URL = f"http://api.farsireader.com/ArianaCloudService/ReadTextGET?APIKey=RS93OYTM9HOFBKA&Text={text}&Speaker=Male1&Format=mp3"
     r = requests.get(url = URL)
-    print("-------------") 
+    print("-------------")
     print("Done requesting")
     print("-------------==========================------------------")
     urllib.request.urlretrieve(URL, vcfilename)
     print(r)
     return vcfilename
 
-class Example:
+def say(text):
+    vcname = agptts(text)
+    playsound(vcname)
+    os.remove(vcname)
+
+class Roobin:
+
     def __init__(self):
         self.foo = 0
 
@@ -170,87 +177,42 @@ class Example:
         (Poetry's not my strong point, you understand.)
         """)
 
-    @predicate("not %b")
-    def not_(self, value):
-        return not value
-
-    @command("say %s for %n secs", is_blocking=True)
-    def say_for_secs(self, text="Hello", duration=5):
-        print(text)
-        time.sleep(duration)
-
-    @command("play note %n")
-    def play_note(self, note):
-        print("DING {note}".format(note=note))
-        time.sleep(2)
-
-    @reporter("colour of %m.pizza flavour pizza", defaults=["tomato"])
-    def pizza_colour(self, pizza):
-        return {
-            "tomato": "red",
-            "cheese": "yellow",
-            "hawaii": "orange and blue",
-        }[pizza]
-
-    @reporter("id %s")
-    def id(self, text):
-        """Tests strings can get passed from Snap! to Python and back."""
-        print(text)
-        return text
-
-    @command("set number to %n% units")
-    def percent(self, number=42):
-        print(number)
-
-    @command("set foo to %s")
-    def set_foo(self, value=''):
-        self.foo = value
-
-    @reporter("foo")
-    def get_foo(self):
-        return self.foo
-
-    @command("ü")
-    def x(self):
-        pass
-
-    @command("set color to %c")
-    def set_color(self, c):
-        print(c)
-
     @command("سلام چطوری")
     def salam(self):
     	print("hoorayyyyyy")
 
-    @command("say hello")
+    @command("سلام کن")
     def say_hello(self):
         file_path = "./voice_commands/query.wav"
         print('befor listening!')
         listen_and_record(file_path)
         print('after listneing!!!')
-        stt_text = STT(file_path)
-        print("stt")
-        if "سلام" in stt_text:
-            text = urllib.parse.quote("سلام.من ربات شما هستم.نام شما چیست ؟", safe='')
-            vcname = agptts(text)
-            playsound(vcname)
-            os.remove(vcname)
+        speech_to_text_text = speech_to_text(file_path)
+        print("speech_to_text")
+        if "سلام" in speech_to_text_text:
+            text = "سلام.من ربات شما هستم.نام شما چیست ؟"
+            say(text)
             print(text)
             print(" Congrats Baby :* ")
-        print(stt_text)
-    
+        print(speech_to_text_text)
+
+    @command("say %s")
+    def text_to_speech(self, text):
+        print("trying to speak!!!!")
+        say(text)
+        print("just said!")
+
 
 descriptor = Descriptor(
     name = "Fancy Spaceship",
     port = 1234,
-    blocks = get_decorated_blocks_from_class(Example),
+    blocks = get_decorated_blocks_from_class(Roobin),
     menus = dict(
         pizza = ["tomato", "cheese", "hawaii"],
     ),
 )
 
-extension = Extension(Example, descriptor)
+extension = Extension(Roobin, descriptor)
 
 if __name__ == "__main__":
     extension.run_forever(debug=True)
-
