@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 import os
 import time
 import wave
+import random
 import pyaudio
 import requests
 import subprocess
@@ -201,6 +202,52 @@ class Roobin:
         print("trying to speak!!!!")
         say(text)
         print("just said!")
+
+    @command("بازی حدس عدد")
+    def play_game(self):
+        number_from_client = 0
+        generated_num = random.randint(1, 100)
+        print("*" * 100)
+        print(generated_num)
+        print("*" * 100)
+        win = False
+        say("اگه میتوانی عدد من را حدس بزن")
+        for i in range(3):
+            try:
+                print("===============Here at getting Voice ..================")
+                print("==============----------------------------------------------=========================================")
+                file_path = "./voice_commands/Gamequery.wav"
+                print('Waiting for the query.')
+                listen_and_record(file_path)
+                print('Got the answer')
+                number_from_client = int(speech_to_text(file_path))
+                print(number_from_client)
+            except Exception as e :
+                print(e)
+                print("Problem in Play Game Func")
+
+            if number_from_client > generated_num:
+                print("===============Less than.================")
+                print("==============----------------------------------------------=========================================")
+                say("پایین تر")
+            elif number_from_client < generated_num:
+                print("===============Bigger.================")
+                print("==============----------------------------------------------=========================================")
+                say("بالاتر")
+            else:
+                print("===============You Won.================")
+                print("==============----------------------------------------------=========================================")
+                say("تو بردی. تبریک")
+                win = True
+                break
+
+        if not win:
+            say("من بردم")
+            print("===============I Won.================")
+            print("==============----------------------------------------------=========================================")
+
+        print("ANY BUG ????")
+
 
 
 descriptor = Descriptor(
