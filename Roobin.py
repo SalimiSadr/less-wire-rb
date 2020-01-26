@@ -9,14 +9,14 @@ import pyaudio
 import requests
 import subprocess
 import urllib.parse
+import RoobinControl
 import urllib.request
 from os import listdir
-from playsound import playsound
+from blockext import *
 import speech_recognition as sr
+from playsound import playsound
 from os.path import isfile, join
 
-
-from blockext import *
 
 m = sr.Microphone()
 r = sr.Recognizer()
@@ -197,7 +197,7 @@ class Roobin:
             print(" Congrats Baby :* ")
         print(speech_to_text_text)
 
-    @command("say %s")
+    @command("بگو %s")
     def text_to_speech(self, text):
         print("trying to speak!!!!")
         say(text)
@@ -247,6 +247,15 @@ class Roobin:
             print("==============----------------------------------------------=========================================")
 
         print("ANY BUG ????")
+
+    @command("موتور %s را با %s درجه بچرخان.")
+    def move_motor(self, motor, angle):
+        print("move {motor} by {angle} degrees!".format(motor=motor, angle=angle))
+        print("*" * 10)
+        print(int(motor),int(angle))
+        print("*" * 10)
+        RoobinControl.move(int(motor),int(angle),10)
+        print("...")
 
 
 
