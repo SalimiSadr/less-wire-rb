@@ -396,13 +396,15 @@ def adjust_again():
 
 if __name__ == "__main__":
 
-    # adjust()
+    adjust()
     # wait(5)
-    # adjust_again()
+    reset()
 
     try:
-        pass
+        print("here")
         # move(5,1,10)
+        # move(5,5,10)
+        # move(5,10,3)
         # wait(2)
     except KeyboardInterrupt:
         sys.exit(0)

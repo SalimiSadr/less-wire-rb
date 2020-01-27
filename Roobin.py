@@ -248,7 +248,7 @@ class Roobin:
 
         print("ANY BUG ????")
 
-    @command("موتور %s را با %s درجه بچرخان.")
+    @command("موتور %s را به %s درجه بچرخان")
     def move_motor(self, motor, angle):
         print("move {motor} by {angle} degrees!".format(motor=motor, angle=angle))
         print("*" * 10)
