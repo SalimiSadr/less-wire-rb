@@ -392,7 +392,26 @@ def adjust_again():
     for i in range(7):
         move(i, 2, 2)
         wait(1)
-        
+
+def eye (side="both", statement="neutral"):
+
+	stateSel = {"blink":1 , "blink_left" : 2 , "blink_right" : 3, "look_left": 4 , "look_right" : 5 , "neutral" : 6 }
+	sideSel =  {"right":1 , "left" : 2 , "both" : 3}
+
+	# right --> 01
+	# left  --> 10
+	# both  --> 11
+
+	msg = "q0"+str(sideSel[side])+","+str(stateSel[side])+","+str(spd)+"\n"
+	# Write message to serial port
+	serwrite(msg)
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
 
