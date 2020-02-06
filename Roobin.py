@@ -257,6 +257,24 @@ class Roobin:
         RoobinControl.move(int(motor),int(angle),10)
         print("...")
 
+    @command("چشمک بزن")
+    def roobinBlink(self):
+    	print("Blinking..")
+    	RoobinControl.eye("both","blink")
+    	print("Blinked..")
+
+    @command("به اطراف نگاه کن")
+    def roobinLookSides(self):
+    	print("LookingSides..")
+    	RoobinControl.eye("both","looksides")
+    	print("Looked Sides.")
+
+    @command("به روبرو نگاه کن")
+    def roobinNeutral(self):
+    	print("Being Neutral")
+    	RoobinControl.eye("both","neutral")
+    	print("Neutralled :)")
+
 
 
 descriptor = Descriptor(

@@ -924,11 +924,10 @@ void loop()
 		}
 		servar[servonum].write(target, tspeed);
 		lastpos[servonum] = target;
-    display_eyes(lookleft_eye, lookleft_eye);
+    display_eyes(closed_eye, closed_eye);
     delay(2000);
     display_eyes(lookmid_eye, lookmid_eye);
     delay(2000);
-
 	}
 
 	if (field[0] == 'd')
@@ -943,6 +942,40 @@ void loop()
 			servar[servonum].detach();
 		}
 	}
+
+ // EYES
+
+  if (field[0] == 'q')
+  {
+    if (field[2] == '1')
+    {
+      // Look Sides
+        display_eyes(lookleft_eye, lookleft_eye);
+        delay(2000);
+        display_eyes(lookmid_eye, lookmid_eye);
+        delay(2000);
+        display_eyes(lookright_eye, lookright_eye);
+        delay(2000);
+        display_eyes(lookmid_eye, lookmid_eye);
+    }
+    else
+    if (field[2] == '2')
+    {
+      // Blink
+        display_eyes(closed_eye, closed_eye);
+        delay(2000);
+        display_eyes(lookmid_eye, lookmid_eye);
+        delay(2000);
+    }
+    else
+    if (field[2] == '3')
+    {
+      // Neutral
+        display_eyes(lookmid_eye, lookmid_eye);
+    }
+  }
+
+ // EYES DONE
 
 	if (field[0] == 'a')
 	{

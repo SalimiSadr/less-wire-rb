@@ -187,6 +187,14 @@ def serwrite(s):
         # print ('waiting on write')
 
     writing = True
+    print("=======================================")
+    print()
+    print(s.encode('latin-1'))
+    print()
+    print()
+    print(s)
+    print()
+    print("=======================================")
     ser.write(s.encode('latin-1')) 
     writing = False
     
@@ -394,17 +402,14 @@ def adjust_again():
         wait(1)
 
 def eye (side="both", statement="neutral"):
-
-	stateSel = {"blink":1 , "blink_left" : 2 , "blink_right" : 3, "look_left": 4 , "look_right" : 5 , "neutral" : 6 }
-	sideSel =  {"right":1 , "left" : 2 , "both" : 3}
-
-	# right --> 01
-	# left  --> 10
-	# both  --> 11
-
-	msg = "q0"+str(sideSel[side])+","+str(stateSel[side])+","+str(spd)+"\n"
+    spd = 0
+    # stateSel = {"blink_left":1 , "blink": 2 , "blink_right" : 3, "look_left": 4 , "look_right" : 5 , "neutral" : 6 }
+    stateSel = {"looksides":1 , "blink": 2 , "neutral" : 3 }
+    sideSel =  {"right":1 , "left" : 2 , "both" : 3}
+	# right --> 01 # left  --> 10 # both  --> 11
+    msg = "q0"+str(stateSel[statement])+","+str(sideSel[side])+","+str(spd)+"\n"
 	# Write message to serial port
-	serwrite(msg)
+    serwrite(msg)
 
 
 
