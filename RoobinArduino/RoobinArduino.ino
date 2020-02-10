@@ -924,10 +924,6 @@ void loop()
 		}
 		servar[servonum].write(target, tspeed);
 		lastpos[servonum] = target;
-    display_eyes(closed_eye, closed_eye);
-    delay(2000);
-    display_eyes(lookmid_eye, lookmid_eye);
-    delay(2000);
 	}
 
 	if (field[0] == 'd')

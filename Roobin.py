@@ -7,6 +7,7 @@ import wave
 import random
 import pyaudio
 import requests
+import threading
 import subprocess
 import urllib.parse
 import RoobinControl
@@ -25,7 +26,6 @@ FORMAT = pyaudio.paInt16
 RATE = 44100
 VOICES_PATH = "./robot_voices/"
 NAME_COUNTER = 0
-
 
 def listen_and_record(path):
 
@@ -161,6 +161,15 @@ def say(text):
     playsound(vcname)
     os.remove(vcname)
 
+def server_run_forever_func():
+    extension.run_forever(debug=True)
+
+def save_generated_s2e():
+    time.sleep(2)
+    link = "http://localhost:1234/_generate_blocks/scratch/en/Scratch%20Fancy%20Spaceship%20English.s2e"
+    print(requests.get(link))
+    urllib.request.urlretrieve(link, 'S2e_file/Roobin.s2e')
+
 class Roobin:
 
     def __init__(self):
@@ -277,6 +286,7 @@ class Roobin:
 
 
 
+
 descriptor = Descriptor(
     name = "Fancy Spaceship",
     port = 1234,
@@ -289,4 +299,12 @@ descriptor = Descriptor(
 extension = Extension(Roobin, descriptor)
 
 if __name__ == "__main__":
-    extension.run_forever(debug=True)
+
+    t1_s2e = threading.Thread(target=save_generated_s2e) 
+    t2_server = threading.Thread(target=server_run_forever_func)
+
+    t1_s2e.start() 
+    t2_server.start()  
+    t1_s2e.join() 
+    t2_server.join() 
+
