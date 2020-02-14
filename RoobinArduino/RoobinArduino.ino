@@ -346,32 +346,14 @@ byte closed_eye[8] =     {B11000000,
                           B11000000};
 
 // happy mouth           //part 1 
-byte happy_mouth[24] = { B00000000,
-                         B00000000,
-                         B00000000,
-                         B00000000,
-                         B01100000,
+byte happy_mouth[8] = {  B00001000,
+                         B00010000,
                          B00110000,
-                         B00011000,
-                         B00001100,    
-                         //part 2
-                         B00001110,
-                         B00000110,
-                         B00000110,
-                         B00000110,
-                         B00000110,
-                         B00000110,
-                         B00000110,
-                         B00001100,
-                         //part 3 
-                         B00001100,
-                         B00011000,
                          B00110000,
-                         B01100000,
-                         B00000000,
-                         B00000000,
-                         B00000000,
-                         B00000000 };
+                         B00110000,
+                         B00110000,
+                         B00010000,
+                         B00001000};
                          
                                                   
 // sad mouth            //part 1
@@ -862,6 +844,16 @@ int getservonum()
 }
 void loop()
 {
+	// Roobin init
+    display_eyes(lookleft_eye, lookleft_eye);
+    delay(2000);
+    display_eyes(lookmid_eye, lookmid_eye);
+    delay(2000);
+    display_eyes(lookright_eye, lookright_eye);
+    delay(2000);
+    display_eyes(lookmid_eye, lookmid_eye);
+    display_mouth(happy_mouth);
+    // -----
 	boolean domore = true;
 	byte inChar;
 	int ix;
@@ -953,6 +945,8 @@ void loop()
         display_eyes(lookright_eye, lookright_eye);
         delay(2000);
         display_eyes(lookmid_eye, lookmid_eye);
+        display_mouth(happy_mouth);
+        
     }
     else
     if (field[2] == '2')
