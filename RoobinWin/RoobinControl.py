@@ -146,6 +146,7 @@ def move(m, pos, spd=3):
     # Limit values to keep then within range
     pos = limit(pos)
     spd = limit(spd)
+    absPos = pos
 
     # Reverse the motor if necessary   
     if motorRev[m]:
@@ -155,14 +156,17 @@ def move(m, pos, spd=3):
     attach(m)
     
     # Ensure the lips do not crash into each other. 
-    if m == TOPLIP and pos + motorPos[BOTTOMLIP] > 10:
-        pos = 10 - motorPos[BOTTOMLIP]
+    # if m == TOPLIP and pos + motorPos[BOTTOMLIP] > 10:
+    #     pos = 10 - motorPos[BOTTOMLIP]
 
-    if m == BOTTOMLIP and pos + motorPos[TOPLIP] > 10:
-        pos = 10 - motorPos[TOPLIP]
+    # if m == BOTTOMLIP and pos + motorPos[TOPLIP] > 10:
+    #     pos = 10 - motorPos[TOPLIP]
         
     # Convert position (0-10) to a motor position in degrees
-    absPos = int(getPos(m,pos))
+
+    # Only for Jaws babe :)
+    
+    # absPos = int(getPos(m,pos))
 
     # Scale range of speed
     spd = (250/10)*spd
@@ -229,10 +233,10 @@ def setSynthesizer(params):
         
 # Function to limit values so they are between 0 - 10
 def limit(val):
-     if val > 7:
-       return 7
-     elif val < 3: 
-        return 3
+     if int(val) > 50:
+       return 50
+     elif int(val) < 0: 
+        return 0
      else:
         return val
    

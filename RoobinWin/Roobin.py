@@ -288,7 +288,7 @@ class Roobin:
 
 
 descriptor = Descriptor(
-    name = "Fancy Spaceship",
+    name = "Roobin Blocks",
     port = 1234,
     blocks = get_decorated_blocks_from_class(Roobin),
     menus = dict(

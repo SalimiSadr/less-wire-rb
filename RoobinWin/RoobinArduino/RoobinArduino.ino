@@ -127,6 +127,7 @@ static const GUID <<name>> =
 
 
 #include <VarSpeedServo.h>
+VarSpeedServo myservo;
 #include <EEPROM.h>
 #include <avr/power.h>
 #include <Adafruit_NeoPixel.h>
@@ -501,6 +502,7 @@ byte opened_mouth[24] = {  B00000000,
 //**************
 void setup()
 {
+  myservo.attach(3); 
   lc.shutdown(0,false);
   lc.setIntensity(0,1);
   lc.clearDisplay(0);
@@ -845,15 +847,20 @@ int getservonum()
 void loop()
 {
 	// Roobin init
-    display_eyes(lookleft_eye, lookleft_eye);
-    delay(2000);
+//    display_eyes(lookleft_eye, lookleft_eye);
+//    delay(2000);
     display_eyes(lookmid_eye, lookmid_eye);
-    delay(2000);
-    display_eyes(lookright_eye, lookright_eye);
-    delay(2000);
-    display_eyes(lookmid_eye, lookmid_eye);
+//    delay(2000);
+//    display_eyes(lookright_eye, lookright_eye);
+//    delay(2000);
+//    display_eyes(lookmid_eye, lookmid_eye);
     display_mouth(happy_mouth);
     // -----
+//    delay(1000);
+//  myservo.write(180, 200);        // move to 180 degrees, use a speed of 30, wait until move is complete
+//  delay(1000);
+//  myservo.write(0, 200);        // move to 0 degrees, use a speed of 30, wait until move is complete
+    // ----
 	boolean domore = true;
 	byte inChar;
 	int ix;
@@ -902,16 +909,17 @@ void loop()
 	{
 		servonum = getservonum();
 		target = 90; // check about us or a set centre
-		tspeed = 0;
+		tspeed = 200;
 		if (offsetcount > 1)
 		{
 			getfield(1);
 			target = atoi(field);
-			tspeed = 0; // full speed
+			tspeed = 200; // full speed
 			if (offsetcount > 2)
 			{
 				getfield(2);
-				tspeed = atoi(field);
+//				tspeed = atoi(field);
+          tspeed = 200;
 			}
 		}
 		servar[servonum].write(target, tspeed);

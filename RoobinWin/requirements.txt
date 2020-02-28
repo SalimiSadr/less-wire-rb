@@ -1,1 +1,17 @@
-future >= 0.12
+certifi==2019.11.28
+chardet==3.0.4
+future==0.18.2
+idna==2.9
+iso8601==0.1.12
+lxml==4.5.0
+pigpio==1.45
+playsound==1.2.2
+psutil==5.7.0
+PyAudio==0.2.11
+pyserial==3.4
+PyYAML==5.3
+requests==2.23.0
+serial==0.0.97
+SimpleWebSocketServer==0.1.1
+SpeechRecognition==3.8.1
+urllib3==1.25.8
