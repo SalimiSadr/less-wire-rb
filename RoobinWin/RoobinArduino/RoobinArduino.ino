@@ -356,7 +356,25 @@ byte happy_mouth[8] = {  B00001000,
                          B00010000,
                          B00001000};
                          
-                                                  
+// closed mouth           //part 1 
+byte closed_mouth[8] = { B00000000,
+                         B00110000,
+                         B00110000,
+                         B00110000,
+                         B00110000,
+                         B00110000,
+                         B00110000,
+                         B00000000};
+
+byte open_mouth[8] = {   B00111100,
+                         B11000011,
+                         B11000011,
+                         B11000011,
+                         B11000011,
+                         B11000011,
+                         B11000011,
+                         B00111100};
+                            
 // sad mouth            //part 1
 byte sad_mouth[24] = {   B00000000,
                          B00000000,
@@ -854,7 +872,7 @@ void loop()
 //    display_eyes(lookright_eye, lookright_eye);
 //    delay(2000);
 //    display_eyes(lookmid_eye, lookmid_eye);
-    display_mouth(happy_mouth);
+//    display_mouth(closed_mouth);
     // -----
 //    delay(1000);
 //  myservo.write(180, 200);        // move to 180 degrees, use a speed of 30, wait until move is complete
@@ -974,6 +992,20 @@ void loop()
   }
 
  // EYES DONE
+ // LIP SYNC ----------------------------------------------------------
+if (field[0] == 'p')
+  {
+    if (field[2] == '3' || field[2] == '4' || field[2] == '5')
+    {
+      // Neutral
+        display_mouth(closed_mouth);
+//        delay(15);
+    }
+    else
+      display_mouth(open_mouth);
+//      delay(15);
+  }
+ // LIP SYNC DONE ---------------------------------------------------
 
 	if (field[0] == 'a')
 	{

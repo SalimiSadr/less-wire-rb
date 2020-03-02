@@ -144,7 +144,7 @@ def agptts(txt):
     text = urllib.parse.quote(txt, safe='')
     global NAME_COUNTER
     NAME_COUNTER += 1
-    vcfilename = VOICES_PATH + "vcm" + str(NAME_COUNTER) + ".mp3"
+    vcfilename = VOICES_PATH + "vcm" + str(NAME_COUNTER) + ".wav" 
     print("-------------==========================------------------")
     print("Requesting..")
     URL = f"http://api.farsireader.com/ArianaCloudService/ReadTextGET?APIKey=RS93OYTM9HOFBKA&Text={text}&Speaker=Male1&Format=mp3"
@@ -156,10 +156,35 @@ def agptts(txt):
     print(r)
     return vcfilename
 
-def say(text):
-    vcname = agptts(text)
+def playthesound(vcname):
     playsound(vcname)
     os.remove(vcname)
+
+def say(text):
+    print("In say func 1...")
+    vcname = agptts(text)
+    print("In say func 2...")
+    phonemes, times = RoobinControl.phonemes_gen(vcname)
+    print("In say func 3...")
+    # Set up a thread for the speech sound synthesis, delay start by soundDelay
+    # Set up a thread for the speech movement
+    t2 = threading.Thread(target=RoobinControl.moveSpeechMouth, args=(phonemes,times))
+    t2.start() 
+    print("In say func 4...")
+    # Set up a thread for the speech sound synthesis
+    t = threading.Thread(target=playthesound, args=(vcname,))      
+    t.start()
+    print("In say func 5...")
+    global time_from_start
+    time_from_start = time.time()
+    # if untilDone, keep running until speech has finished    
+    if untilDone:
+        totalTime = times[len(times) - 1]
+        startTime = time.time()
+        while time.time() - startTime < totalTime:
+            continue
+    # playsound(vcname)
+    # os.remove(vcname)
 
 def server_run_forever_func():
     extension.run_forever(debug=True)
