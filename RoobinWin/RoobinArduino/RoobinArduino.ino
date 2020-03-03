@@ -366,6 +366,36 @@ byte closed_mouth[8] = { B00000000,
                          B00110000,
                          B00000000};
 
+byte closed_mouth_2[8] = { B00000000,
+                           B00000000,
+                           B00000000,
+                           B00111000,
+                           B00111000,
+                           B00000000,
+                           B00000000,
+                           B00000000};
+
+
+
+byte semi_closed_mouth_2[8] = {    B00000000,
+                                   B00011000,
+                                   B00100100,
+                                   B00100100,
+                                   B00100100,
+                                   B00100100,
+                                   B00011000,
+                                   B00000000};
+
+
+byte semi_open_mouth[8] = {      B00000000,
+                                 B00011000,
+                                 B01000010,
+                                 B01000010,
+                                 B01000010,
+                                 B01000010,
+                                 B00011000,
+                                 B00000000};
+
 byte open_mouth[8] = {   B00111100,
                          B11000011,
                          B11000011,
@@ -995,15 +1025,30 @@ void loop()
  // LIP SYNC ----------------------------------------------------------
 if (field[0] == 'p')
   {
-    if (field[2] == '3' || field[2] == '4' || field[2] == '5')
+    if (field[2] == '1')
     {
       // Neutral
-        display_mouth(closed_mouth);
+        display_mouth(closed_mouth_2);
 //        delay(15);
     }
-    else
-      display_mouth(open_mouth);
-//      delay(15);
+    if (field[2] == '2')
+    {
+      // Neutral
+        display_mouth(semi_closed_mouth_2);
+//        delay(15);
+    }
+    if (field[2] == '3')
+    {
+      // Neutral
+        display_mouth(semi_open_mouth);
+//        delay(15);
+    }
+    if (field[2] == '4')
+    {
+      // Neutral
+        display_mouth(open_mouth);
+//        delay(15);
+    }
   }
  // LIP SYNC DONE ---------------------------------------------------
 
