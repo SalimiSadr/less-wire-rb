@@ -155,7 +155,6 @@ def agptts(txt):
     urllib.request.urlretrieve(URL, vcfilename)
     print(r)
     return vcfilename
-    # return VOICES_PATH + 'vcm1.wav'
 
 def playthesound(vcname):
     playsound(vcname)
@@ -166,7 +165,6 @@ def say(text):
     vcname = agptts(text)
     print("In say func 2...")
     phonemes, times = RoobinControl.phonemes_gen(vcname)
-    # phonemes, times = RoobinControl.tones_gen(vcname)
     print("In say func 3...")
     # Set up a thread for the speech sound synthesis, delay start by soundDelay
     # Set up a thread for the speech movement

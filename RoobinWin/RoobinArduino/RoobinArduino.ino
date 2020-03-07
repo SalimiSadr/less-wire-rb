@@ -366,35 +366,15 @@ byte closed_mouth[8] = { B00000000,
                          B00110000,
                          B00000000};
 
-byte closed_mouth_2[8] = { B00000000,
-                           B00000000,
-                           B00000000,
-                           B00111000,
-                           B00111000,
-                           B00000000,
-                           B00000000,
-                           B00000000};
 
-
-
-byte semi_closed_mouth_2[8] = {    B00000000,
-                                   B00011000,
-                                   B00100100,
-                                   B00100100,
-                                   B00100100,
-                                   B00100100,
-                                   B00011000,
-                                   B00000000};
-
-
-byte semi_open_mouth[8] = {      B00000000,
-                                 B00011000,
-                                 B01000010,
-                                 B01000010,
-                                 B01000010,
-                                 B01000010,
-                                 B00011000,
-                                 B00000000};
+byte semi_closed_mouth[8] = {B00000000,
+                             B00011000,
+                             B00100100,
+                             B00100100,
+                             B00100100,
+                             B00100100,
+                             B00011000,
+                             B00000000};
 
 byte open_mouth[8] = {   B00111100,
                          B11000011,
@@ -404,7 +384,8 @@ byte open_mouth[8] = {   B00111100,
                          B11000011,
                          B11000011,
                          B00111100};
-                        
+                            
+
 //**************
 // Arduino Setup
 //**************
@@ -765,9 +746,9 @@ void loop()
 //    display_mouth(closed_mouth);
     // -----
 //    delay(1000);
-  myservo.write(180, 200);        // move to 180 degrees, use a speed of 30, wait until move is complete
-  delay(1000);
-  myservo.write(0, 200);        // move to 0 degrees, use a speed of 30, wait until move is complete
+//  myservo.write(180, 200);        // move to 180 degrees, use a speed of 30, wait until move is complete
+//  delay(1000);
+//  myservo.write(0, 200);        // move to 0 degrees, use a speed of 30, wait until move is complete
     // ----
 	boolean domore = true;
 	byte inChar;
@@ -888,27 +869,19 @@ if (field[0] == 'p')
     if (field[2] == '1')
     {
       // Neutral
-        display_mouth(closed_mouth_2);
+        display_mouth(closed_mouth);
 //        delay(15);
     }
+    else
     if (field[2] == '2')
     {
       // Neutral
-        display_mouth(semi_closed_mouth_2);
+        display_mouth(semi_closed_mouth);
 //        delay(15);
     }
-    if (field[2] == '3')
-    {
-      // Neutral
-        display_mouth(semi_open_mouth);
-//        delay(15);
-    }
-    if (field[2] == '4')
-    {
-      // Neutral
-        display_mouth(open_mouth);
-//        delay(15);
-    }
+    else
+      display_mouth(open_mouth);
+//      delay(15);
   }
  // LIP SYNC DONE ---------------------------------------------------
 

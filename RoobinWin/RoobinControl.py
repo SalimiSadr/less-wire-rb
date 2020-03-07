@@ -9,14 +9,13 @@ import time
 import psutil
 import pigpio
 import serial
-from random import *
+import random
 import pyaudio
 import logging
 import subprocess
 import traceback
 import threading
 import subprocess
-from pylab import *
 from lxml import etree
 from subprocess import call
 import serial.tools.list_ports
@@ -373,11 +372,6 @@ def phonememapBottomFest(val):
 # DOT MATRIX MOUTHING--------------------------------------------
 
 def moveSpeechMouth(phonemes, times):
-    print()
-    print()
-    print("IN MOVESPEECHMOUTH")
-    print()
-    print()
     startTime = time.time()
     timeNow = 0
     totalTime = times[len(times)-1]
@@ -385,36 +379,20 @@ def moveSpeechMouth(phonemes, times):
     while timeNow < totalTime:     
         timeNow = time.time() - startTime
         for x in range (0,len(times)):
-            # if True:
-            # if timeNow > times[x] and x > currentX:                
-                # posTop = phonememapTopFest(phonemes[x])
-                # posBottom = phonememapBottomFest(phonemes[x])
+            if timeNow > times[x] and x > currentX:                
+                posTop = phonememapTopFest(phonemes[x])
+                posBottom = phonememapBottomFest(phonemes[x])
                 # must change
                 # mouthing(TOPLIP,posTop,10)
-                ph = generate_random()
-                # print()
-                # print("Mouthinggggg ---------------------------------------")
-                # print()
-                # mouthing(phonemes[x])
-                # mouthing(phonemes[x])
+                ph = random.randint(1,4)
                 mouthing(ph)
                 # mouthing(posBottom)
                 # must change
                 currentX = x
 
-    # time.sleep(2)
-    mouthing(1)
-    mouthing(1)
-    mouthing(1)
     mouthing(1)
     # move(TOPLIP,5)
     # move(BOTTOMLIP,5)
-
-
-
-def generate_random():
-    ph = randint(1,5)
-    return ph
 
 def phonemes_gen(vcname):
     import wave
@@ -469,47 +447,6 @@ def phonemes_gen(vcname):
         # print ('visnorm', i, ":", times[i], ':', phonemes[i])
 
     return phonemes, times 
-
-def tones_gen(vcname):
-    import wave
-    import librosa
-    import statistics
-    import soundfile as sf
-    from scipy.io import wavfile
-    import matplotlib.pyplot as plt
-
-    # vcname = 'speech.wav'
-    # vc2 = 'vc.wav'
-    x,_ = librosa.load(vcname, sr=16000)
-    sf.write(vcname, x, 16000)
-    sampFreq, snd = wavfile.read(vcname)
-
-    snd = snd / (2.**15)
-    s1 = snd[:] 
-    print(s1.shape)
-    timeArray = arange(0, s1.shape[0], 1)
-    timeArray = timeArray / sampFreq
-    # timeArray = timeArray * 1000  #scale to milliseconds
-    absAvg = statistics.mean(s1)
-    absMin = min(s1)
-    absMax = max(s1)
-    tones = []
-    for x in s1:
-        if absMin < x <= (absAvg + absMin)/2:
-            # print(1, "  -----")
-            t = 1
-        elif (absAvg + absMin)/2 < x <= absAvg:
-            # print(2)
-            t = 2
-        elif absAvg < x <= (absAvg + absMax)/2:
-            # print(3) 
-            t = 3
-        elif (absAvg + absMax)/2 < x <= absMax:
-            # print(4,"   *****")
-            t = 4
-        tones.append(t)
-
-    return tones, timeArray
 
 def mouthing(ph):
     msg = "p0"+str(ph)+"\n"
