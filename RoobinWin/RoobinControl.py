@@ -138,8 +138,12 @@ for child in root:
         rev = False
         motorRev[index] = rev
         
-# initialise with any port that has Arduino in the name
-init("Arduino")
+# initialize with any port that has Arduino in the name
+try:
+    init("Arduino")
+except :
+    print("Came up without Arduino.")
+    pass
 
 # Function to move Roobin's motors. Arguments | m (motor) → int (0-6) | pos (position) → int (0-10) | spd (speed) → int (0-10) **eg move(4,3,9) or move(0,9,3)**
 def move(m, pos, spd=3):
