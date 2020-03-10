@@ -6,12 +6,13 @@ import sys
 import json
 import wave
 import time
+import eyed3    
 import psutil
 import pigpio
 import serial
 import random
 import pyaudio
-import logging
+import logging    
 import subprocess
 import traceback
 import threading
@@ -375,81 +376,103 @@ def phonememapBottomFest(val):
 
 # DOT MATRIX MOUTHING--------------------------------------------
 
-def moveSpeechMouth(phonemes, times):
-    startTime = time.time()
-    timeNow = 0
-    totalTime = times[len(times)-1]
-    currentX = -1
-    while timeNow < totalTime:     
-        timeNow = time.time() - startTime
-        for x in range (0,len(times)):
-            if timeNow > times[x] and x > currentX:                
-                posTop = phonememapTopFest(phonemes[x])
-                posBottom = phonememapBottomFest(phonemes[x])
-                # must change
-                # mouthing(TOPLIP,posTop,10)
-                ph = random.randint(1,4)
-                mouthing(ph)
-                # mouthing(posBottom)
-                # must change
-                currentX = x
+def moveSpeechMouth(phonemes, times, name):
+    # startTime = time.time()
+    # timeNow = 0
+    # totalTime = times[len(times)-1]
+    # currentX = -1
+    # while timeNow < totalTime:     
+    #     timeNow = time.time() - startTime
+    #     for x in range (0,len(times)):
+    #         if timeNow > times[x] and x > currentX:                
+    #             posTop = phonememapTopFest(phonemes[x])
+    #             posBottom = phonememapBottomFest(phonemes[x])
+    duration = eyed3.load(name).info.time_secs
+    print(duration)
+    start = time.time()
+    print()
+    print(start)
+    print()
+    print()
+    stop = start + duration*0.8
+    # print(stop)
+    # print()
+    # print()
+    # print("---------------------------------------   ",duration, " --------------------------------------")
+    # print()
+    # print()
+    # time.sleep(duration)
+    while time.time() < stop:
+            # print("salam")
+            # must change
+            # mouthing(TOPLIP,posTop,10)
+            ph = random.randint(1,2)
+            mouthing(ph)
+            # mouthing(posBottom)
+            # must change
+            # currentX = x
+    # print("DONE---------------------")
 
     mouthing(1)
+    mouthing(1)
+    mouthing(1)
+    # mouthing(3)
     # move(TOPLIP,5)
     # move(BOTTOMLIP,5)
 
 def phonemes_gen(vcname):
-    import wave
-    import librosa
-    import soundfile as sf
-    x,_ = librosa.load(vcname, sr=16000)
-    sf.write(vcname, x, 16000)
-    waveFile = wave.open(vcname, 'r')
-    length = waveFile.getnframes()
-    framerate = waveFile.getframerate()
-    channels = waveFile.getnchannels()
-    bytespersample = waveFile.getsampwidth()
-    global duration
-    duration = length / float(framerate)
-    VISEMESPERSEC = 10
-    chunk = int(waveFile.getframerate() / VISEMESPERSEC)
+    # import librosa
+    # import soundfile as sf
+    # x,_ = librosa.load(vcname, sr=16000)
+    # sf.write(vcname, x, 16000)
+    # print("in hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+    # waveFile = wave.open(vcname, 'r')
+    # length = waveFile.getnframes()
+    # framerate = waveFile.getframerate()
+    # channels = waveFile.getnchannels()
+    # bytespersample = waveFile.getsampwidth()
+    # global duration
+    # duration = length / float(framerate)
+    # VISEMESPERSEC = 10
+    # chunk = int(waveFile.getframerate() / VISEMESPERSEC)
+    # phonemes = []
+    # times = []
+    # ms = 0
+    # for i in range(0, length - chunk, chunk):
+    #     vol = 0
+    #     buffer = waveFile.readframes(chunk)
+    #     # frame is 1 sample for mono or 2 for stereo
+    #     bytesread = chunk * channels * bytespersample
+    #     # print ('bytesread:', bytesread)
+    #     index = 0;
+    #     for sample in range(0, int(bytesread / (channels * bytespersample))):
+    #         vol += buffer[index]
+    #         vol += buffer[index + 1] * 256
+    #         index += bytespersample
+    #         if channels > 1:
+    #             vol += buffer[index]
+    #             vol += buffer[index + 1] * 256
+    #             index += bytespersample
+
+    #     # print ('viseme', i, ":", ms, ':', vol)
+    #     ms += (1000 / VISEMESPERSEC);
+
+    #     phonemes.append(float(vol))
+    #     times.append(float(ms) / 1000)
+
+    # waveFile.rewind()
+
+    # # Normalise the volume
+    # max = 0
+    # for i in range(0, len(phonemes) - 1):
+    #     if (phonemes[i] > max):
+    #         max = phonemes[i]
+
+    # for i in range(0, len(phonemes) - 1):
+    #     phonemes[i] = phonemes[i] * 10 / max
+    #     # print ('visnorm', i, ":", times[i], ':', phonemes[i])
     phonemes = []
     times = []
-    ms = 0
-    for i in range(0, length - chunk, chunk):
-        vol = 0
-        buffer = waveFile.readframes(chunk)
-        # frame is 1 sample for mono or 2 for stereo
-        bytesread = chunk * channels * bytespersample
-        # print ('bytesread:', bytesread)
-        index = 0;
-        for sample in range(0, int(bytesread / (channels * bytespersample))):
-            vol += buffer[index]
-            vol += buffer[index + 1] * 256
-            index += bytespersample
-            if channels > 1:
-                vol += buffer[index]
-                vol += buffer[index + 1] * 256
-                index += bytespersample
-
-        # print ('viseme', i, ":", ms, ':', vol)
-        ms += (1000 / VISEMESPERSEC);
-
-        phonemes.append(float(vol))
-        times.append(float(ms) / 1000)
-
-    waveFile.rewind()
-
-    # Normalise the volume
-    max = 0
-    for i in range(0, len(phonemes) - 1):
-        if (phonemes[i] > max):
-            max = phonemes[i]
-
-    for i in range(0, len(phonemes) - 1):
-        phonemes[i] = phonemes[i] * 10 / max
-        # print ('visnorm', i, ":", times[i], ':', phonemes[i])
-
     return phonemes, times 
 
 def mouthing(ph):
