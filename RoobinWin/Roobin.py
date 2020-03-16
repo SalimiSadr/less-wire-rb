@@ -36,6 +36,7 @@ def listen_and_record(path):
         try:
             print("trying!!!")
             r.adjust_for_ambient_noise(source)
+            playsound("robot_voices/beep1.mp3")
             print("Set minimum energy threshold to {}".format(r.energy_threshold))
             print("*" * 100, "\n", "*" * 100)
             print("Start Speaking")
@@ -178,11 +179,11 @@ def say(text):
     global time_from_start
     time_from_start = time.time()
     # if untilDone, keep running until speech has finished    
-    if untilDone:
-        totalTime = times[len(times) - 1]
-        startTime = time.time()
-        while time.time() - startTime < totalTime:
-            continue
+    # if untilDone:
+    #     totalTime = times[len(times) - 1]
+    #     startTime = time.time()
+    #     while time.time() - startTime < totalTime:
+    #         continue
     # playsound(vcname)
     # os.remove(vcname)
 
