@@ -289,14 +289,14 @@ byte lookleft_eye[8] = {B01111110,
                        B01111110};
 
 
-byte lookmid_eye[8] = {B01111110,
-                       B10000001,
-                       B10000001,
+byte lookmid_eye[8] = {B00111100,
+                       B01000010,
                        B10011001,
+                       B10110101,
+                       B10111101,
                        B10011001,
-                       B10000001,
-                       B10000001,
-                       B01111110};
+                       B01000010,
+                       B00111100};
 
 byte lookright_eye[8] = {B01111110,
                          B10011001,
@@ -347,7 +347,7 @@ byte closed_eye[8] =     {B11000000,
                           B11000000};
 
 // happy mouth           //part 1 
-byte happy_mouth[8] = {  B00001000,
+byte happy_mouth_2[8] = {  B00001000,
                          B00010000,
                          B00110000,
                          B00110000,
@@ -357,33 +357,92 @@ byte happy_mouth[8] = {  B00001000,
                          B00001000};
                          
 // closed mouth           //part 1 
-byte closed_mouth[8] = { B00000000,
-                         B00110000,
-                         B00110000,
-                         B00110000,
-                         B00110000,
-                         B00110000,
-                         B00110000,
+byte closed_mouth[8] = { B00111100,
+                         B00111100,
+                         B00111100,
+                         B00111100,
+                         B00111100,
+                         B00111100,
+                         B00111100,
+                         B00111100};
+
+
+byte semi_closed_mouth[8] = {  B00001111,
+                               B00011001,
+                               B00110011,
+                               B00110010,
+                               B00110010,
+                               B00110011,
+                               B00011001,
+                               B00001111};
+
+byte open_mouth[8] =        {  B00011111,
+                               B01100001,
+                               B11000011,
+                               B11000010,
+                               B11000010,
+                               B11000011,
+                               B01100001,
+                               B00011111};
+
+byte happy_mouth[8] = {    B00011100,
+                           B00110000,
+                           B01100000,
+                           B01100000,
+                           B01100000,
+                           B01100000,
+                           B00110000,
+                           B00011100};                          
+
+// Arrows                            
+
+byte right_arrow[8] = {  B00111100,
+                         B11011011,
+                         B00011000,
+                         B00011000,
+                         B00011000,
+                         B00011000,
+                         B00011000,
+                         B00011000};
+
+                         
+byte left_arrow[8] = {   B00111100,
+                         B00011000,
+                         B00011000,
+                         B00011000,
+                         B00011000,
+                         B00011000,
+                         B11011011,
+                         B00111100};
+
+byte down_arrow[8] = {     B00000000,
+                         B01100000,
+                         B10000000,
+                         B11111111,
+                         B11111111,
+                         B10000000,
+                         B01100000,
+                         B00000000};
+
+                         
+byte up_arrow[8] = {   B00000000,
+                         B00000110,
+                         B00000001,
+                         B11111111,
+                         B11111111,
+                         B00000001,
+                         B00000110,
                          B00000000};
 
 
-byte semi_closed_mouth[8] = {B00000000,
-                             B00011000,
-                             B00100100,
-                             B00100100,
-                             B00100100,
-                             B00100100,
-                             B00011000,
-                             B00000000};
-
-byte open_mouth[8] = {   B00111100,
-                         B11000011,
-                         B11000011,
-                         B11000011,
-                         B11000011,
-                         B11000011,
-                         B11000011,
-                         B00111100};
+byte full_on[8] = {    B11111111,
+                       B11111111,
+                       B11111111,
+                       B11111111,
+                       B11111111,
+                       B11111111,
+                       B11111111,
+                       B11111111};                    
                             
 
 //**************
@@ -832,35 +891,87 @@ void loop()
 
   if (field[0] == 'q')
   {
-    if (field[2] == '1')
+    switch (field[1])
     {
-      // Look Sides
-        display_eyes(lookleft_eye, lookleft_eye);
-        delay(2000);
-        display_eyes(lookmid_eye, lookmid_eye);
-        delay(2000);
-        display_eyes(lookright_eye, lookright_eye);
-        delay(2000);
-        display_eyes(lookmid_eye, lookmid_eye);
-        display_mouth(happy_mouth);
-        
-    }
-    else
-    if (field[2] == '2')
-    {
-      // Blink
-        display_eyes(closed_eye, closed_eye);
-        delay(2000);
-        display_eyes(lookmid_eye, lookmid_eye);
-        delay(2000);
-    }
-    else
-    if (field[2] == '3')
-    {
-      // Neutral
-        display_eyes(lookmid_eye, lookmid_eye);
+    case ('1'): // right eye
+              switch (field[2])
+              {
+              case '4': display_eyes(full_on, right_arrow);
+                  break;
+              case '5': display_eyes(full_on, left_arrow);
+                  break;
+              case '6': display_eyes(full_on, up_arrow);
+                  break;
+              case '7': display_eyes(full_on, down_arrow);
+                  break;
+              }
+              if (field[3] == '1') delay(1000);
+              if (field[3] == '2') delay(2000);
+              if (field[3] == '3') delay(3000);
+              if (field[3] == '4') delay(4000);
+              break;
+                  
+    case ('2'): // left eye
+              switch (field[2])
+              {
+              case '4': display_eyes(right_arrow, full_on);
+                  break;
+              case '5': display_eyes(left_arrow, full_on);
+                  break;
+              case '6': display_eyes(up_arrow, full_on);
+                  break;
+              case '7': display_eyes(down_arrow, full_on);
+                  break;
+              }
+              if (field[3] == '1') delay(1000);
+              if (field[3] == '2') delay(2000);
+              if (field[3] == '3') delay(3000);
+              if (field[3] == '4') delay(4000);
+              break;
+                                   
+    case ('3'): // both eyes
+              switch (field[2])
+              {
+              case '1':   // Look sides
+                          display_eyes(lookleft_eye, lookleft_eye);
+                          delay(2000);
+                          display_eyes(lookmid_eye, lookmid_eye);
+                          delay(2000);
+                          display_eyes(lookright_eye, lookright_eye);
+                          delay(2000);
+                          display_eyes(lookmid_eye, lookmid_eye);
+                          display_mouth(happy_mouth);
+                      break;
+
+              case '2':
+                          // Blink
+                          display_eyes(closed_eye, closed_eye);
+                          delay(2000);
+                          display_eyes(lookmid_eye, lookmid_eye);
+                          delay(2000);
+                      break;
+              case '3': 
+                          // Neutral
+                          display_eyes(full_on, full_on);
+                      break;
+              }
+              if (field[3] == '1') delay(1000);
+              if (field[3] == '2') delay(2000);
+              if (field[3] == '3') delay(3000);
+              if (field[3] == '4') delay(4000);
+              break;
     }
   }
+
+// if (field[0] == 'b')
+// {
+//  if (field[2] == '1')
+//    delay(1000);
+//  if (field[2] == '2')
+//    delay(2000);
+//  if (field[2] == '3')
+//    delay(3000);
+// }
 
  // EYES DONE
  // LIP SYNC ----------------------------------------------------------

@@ -13,10 +13,10 @@ import serial
 import random
 import pyaudio
 import logging    
-import subprocess
 import traceback
 import threading
 import subprocess
+import contextlib
 from lxml import etree
 from subprocess import call
 import serial.tools.list_ports
@@ -112,6 +112,7 @@ def init(portName):
 # xml file for motor definitions
 dir = "./"
 file = os.path.join(dir, 'MotorDefinitionsv21.omd')
+
 tree = etree.parse(file)
 root = tree.getroot()
 
@@ -205,7 +206,10 @@ def serwrite(s):
     # print(s)
     # print()
     # print("=======================================")
-    ser.write(s.encode('latin-1')) 
+    try:
+        ser.write(s.encode('latin-1')) 
+    except:
+        pass
     writing = False
     
 # Function to attach Roobin's motors. Argument | m (motor) int (0-6)
@@ -377,100 +381,32 @@ def phonememapBottomFest(val):
 # DOT MATRIX MOUTHING--------------------------------------------
 
 def moveSpeechMouth(phonemes, times, name):
-    # startTime = time.time()
-    # timeNow = 0
-    # totalTime = times[len(times)-1]
-    # currentX = -1
-    # while timeNow < totalTime:     
-    #     timeNow = time.time() - startTime
-    #     for x in range (0,len(times)):
-    #         if timeNow > times[x] and x > currentX:                
-    #             posTop = phonememapTopFest(phonemes[x])
-    #             posBottom = phonememapBottomFest(phonemes[x])
-    duration = eyed3.load(name).info.time_secs
-    print(duration)
+
+    # duration = eyed3.load(name).info.time_secs
+    fname = name
+    with contextlib.closing(wave.open(fname,'r')) as f:
+        frames = f.getnframes()
+        rate = f.getframerate()
+        duration = frames / float(rate)
+        print(f"{name} : {duration}")
+    print("=-=-=-=-=-=-=-=-=-=-=-=-=")
+    # print(duration)
     start = time.time()
-    print()
-    print(start)
-    print()
-    print()
-    stop = start + duration*0.73
-    # print(stop)
+    # print()
+    # print(start)
     # print()
     # print()
-    # print("---------------------------------------   ",duration, " --------------------------------------")
-    # print()
-    # print()
-    # time.sleep(duration)
+    stop = start + duration*0.8
     while time.time() < stop:
-            # print("salam")
-            # must change
-            # mouthing(TOPLIP,posTop,10)
-            ph = random.randint(1,4)
+            ph = random.randint(1,2)
             mouthing(ph)
-            # mouthing(posBottom)
-            # must change
-            # currentX = x
-    # print("DONE---------------------")
-    time.sleep(0.3)
-    mouthing(1)
-    mouthing(1)
-    mouthing(1)
-    # mouthing(3)
-    # move(TOPLIP,5)
-    # move(BOTTOMLIP,5)
+
+    for i in range(7):
+        mouthing(1)
+        mouthing(1)
+        mouthing(1)
 
 def phonemes_gen(vcname):
-    # import librosa
-    # import soundfile as sf
-    # x,_ = librosa.load(vcname, sr=16000)
-    # sf.write(vcname, x, 16000)
-    # print("in hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-    # waveFile = wave.open(vcname, 'r')
-    # length = waveFile.getnframes()
-    # framerate = waveFile.getframerate()
-    # channels = waveFile.getnchannels()
-    # bytespersample = waveFile.getsampwidth()
-    # global duration
-    # duration = length / float(framerate)
-    # VISEMESPERSEC = 10
-    # chunk = int(waveFile.getframerate() / VISEMESPERSEC)
-    # phonemes = []
-    # times = []
-    # ms = 0
-    # for i in range(0, length - chunk, chunk):
-    #     vol = 0
-    #     buffer = waveFile.readframes(chunk)
-    #     # frame is 1 sample for mono or 2 for stereo
-    #     bytesread = chunk * channels * bytespersample
-    #     # print ('bytesread:', bytesread)
-    #     index = 0;
-    #     for sample in range(0, int(bytesread / (channels * bytespersample))):
-    #         vol += buffer[index]
-    #         vol += buffer[index + 1] * 256
-    #         index += bytespersample
-    #         if channels > 1:
-    #             vol += buffer[index]
-    #             vol += buffer[index + 1] * 256
-    #             index += bytespersample
-
-    #     # print ('viseme', i, ":", ms, ':', vol)
-    #     ms += (1000 / VISEMESPERSEC);
-
-    #     phonemes.append(float(vol))
-    #     times.append(float(ms) / 1000)
-
-    # waveFile.rewind()
-
-    # # Normalise the volume
-    # max = 0
-    # for i in range(0, len(phonemes) - 1):
-    #     if (phonemes[i] > max):
-    #         max = phonemes[i]
-
-    # for i in range(0, len(phonemes) - 1):
-    #     phonemes[i] = phonemes[i] * 10 / max
-    #     # print ('visnorm', i, ":", times[i], ':', phonemes[i])
     phonemes = []
     times = []
     return phonemes, times 
@@ -503,7 +439,6 @@ def close():
 
 # Reset Roobin back to start position
 def reset():
-    #eyeColour(0,0,0)
     for x in range(0,len(restPos)-1):
         move(x,restPos[x]) 
 
@@ -518,18 +453,25 @@ def adjust_again():
         move(i, 2, 2)
         wait(1)
 
-def eye (side="both", statement="neutral"):
+def robotWait(secs):
+    msg = "b0"+str(secs)+"\n"
+    serwrite(secs)
+
+def eye(side="both", statement="neutral", delay="2"):
     spd = 0
     # stateSel = {"blink_left":1 , "blink": 2 , "blink_right" : 3, "look_left": 4 , "look_right" : 5 , "neutral" : 6 }
-    stateSel = {"looksides":1 , "blink": 2 , "neutral" : 3 }
+    stateSel = {"looksides":1 , "blink": 2 , "neutral" : 3,
+                "rightArrow": 4, "leftArrow": 5, "upArrow": 6, "downArrow": 7
+                 }
     sideSel =  {"right":1 , "left" : 2 , "both" : 3}
 	# right --> 01 # left  --> 10 # both  --> 11
-    msg = "q0"+str(stateSel[statement])+","+str(sideSel[side])+","+str(spd)+"\n"
+    msg = "q"+str(sideSel[side])+str(stateSel[statement])+str(delay)+","+str(spd)+"\n"
+    print()
+    print(list(msg))
+    print()
 	# Write message to serial port
     serwrite(msg)
-
-
-
+    # robotWait(3)
 
 
 
