@@ -475,9 +475,13 @@ def eye(side="both", statement="neutral", delay="2"):
 	# Write message to serial port
     serwrite(msg)
     # robotWait(3)
-
+#Changes eyes form
 def change_eye_command(eye_state, eye_side):
     msg = "z" + str(eye_state) + str(eye_side) + "," + "\n"
+    serwrite(msg)
+#Changes mouth form
+def change_mouth_command(mouth_state):
+    msg = "f" + str(mouth_state) + "," + "\n"
     serwrite(msg)
 
 

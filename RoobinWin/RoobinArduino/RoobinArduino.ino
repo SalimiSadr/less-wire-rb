@@ -269,6 +269,10 @@ uint8_t noprocs;
 // Definition of the faces
 //************************
 
+//MOUTH VARIABLES;
+boolean SHOW_MOUTH = true;
+int MOUTH_FORM = 1;
+
 // neutral eye
 byte neutral_eye[8] = {B00000000,
                        B00011000,
@@ -392,17 +396,17 @@ byte closed_eye[8] =     {B11000000,
                           B11000000,
                           B11000000};
 
-// happy mouth           //part 1 
+// happy mouth            
 byte happy_mouth_2[8] = {  B00001000,
-                         B00010000,
-                         B00110000,
-                         B00110000,
-                         B00110000,
-                         B00110000,
-                         B00010000,
-                         B00001000};
+                           B00010000,
+                           B00110000,
+                           B00110000,
+                           B00110000,
+                           B00110000,
+                           B00010000,
+                           B00001000};
                          
-// closed mouth           //part 1 
+// ROOBIN MOUTH---------------------------------------           
 byte closed_mouth[8] = { B00001000,
                          B00011000,
                          B00111000,
@@ -430,7 +434,36 @@ byte open_mouth[8] =        {  B00011111,
                                B11000011,
                                B01100001,
                                B00011111};
+// ----------------------------------------------------                               
+// GHONCHE MOUTH---------------------------------------
+byte closed_mouth_ghonche[8] = { B00000000,
+                                 B00000000,
+                                 B00000000,
+                                 B00011000,
+                                 B00011000,
+                                 B00000000,
+                                 B00000000,
+                                 B00000000};
 
+
+byte semi_closed_mouth_ghonche[8] = {  B00000000,
+                                       B00000000,
+                                       B00111100,
+                                       B01000010,
+                                       B01000010,
+                                       B00111100,
+                                       B00000000,
+                                       B00000000};
+
+byte open_mouth_ghonche[8] =        {  B01111100,
+                                       B10000010,
+                                       B10000010,
+                                       B10000010,
+                                       B10000010,
+                                       B10000010,
+                                       B10000010,
+                                       B01111100};
+// ----------------------------------------------------
 byte happy_mouth[8] = {    B00011100,
                            B00110000,
                            B01100000,
@@ -848,7 +881,12 @@ void loop()
 //    display_eyes(lookright_eye, lookright_eye);
 //    delay(2000);
 //    display_eyes(lookmid_eye, lookmid_eye);
-//    display_mouth(closed_mouth);
+    if (SHOW_MOUTH)
+    {
+        display_mouth(happy_mouth);
+        SHOW_MOUTH = false;
+    }
+    
     // -----
 //    delay(1000);
 //  myservo.write(180, 200);        // move to 180 degrees, use a speed of 30, wait until move is complete
@@ -1009,6 +1047,7 @@ void loop()
     }
   }
 
+// EYES CHANGE
  if (field[0] == 'z')
  {
     if (field[2] == '1')
@@ -1044,27 +1083,56 @@ void loop()
     }
  }
 
+// MOUTH CHANGE
+ if (field[0] == 'f')
+ {    
+          if (field[1] == '1')
+          // TRIANGLE EYES
+            MOUTH_FORM = 1;
+          if (field[1] == '2')
+          // SQUARE EYES
+            MOUTH_FORM = 2;
+ }
  // EYES DONE
  // LIP SYNC ----------------------------------------------------------
 if (field[0] == 'p')
-  {
-    if (field[2] == '1')
-    {
-      // Neutral
-        display_mouth(closed_mouth);
-//        delay(15);
-    }
-    else
-    if (field[2] == '2')
-    {
-      // Neutral
-        display_mouth(semi_closed_mouth);
-//        delay(15);
-    }
-    else
-      display_mouth(open_mouth);
-//      delay(15);
-  }
+ {
+      if (MOUTH_FORM == 1) // ROOBIN(DEFAULT) FORM 
+      {
+            if (field[2] == '1')
+            {
+              // CLOSED
+                display_mouth(closed_mouth);
+            }
+            else
+            if (field[2] == '2')
+            {
+              // MIDDLE
+                display_mouth(semi_closed_mouth);
+            }
+            else
+              // OPEN
+              display_mouth(open_mouth);
+      }
+      
+      if (MOUTH_FORM == 2) // GHONCHE FORM 
+      {
+            if (field[2] == '1')
+            {
+              // CLOSED
+                display_mouth(closed_mouth_ghonche);
+            }
+            else
+            if (field[2] == '2')
+            {
+              // MIDDLE
+                display_mouth(semi_closed_mouth_ghonche);
+            }
+            else
+              // OPEN
+              display_mouth(open_mouth_ghonche);
+      }
+ }
  // LIP SYNC DONE ---------------------------------------------------
 
 	if (field[0] == 'a')

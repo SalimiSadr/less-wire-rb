@@ -989,6 +989,7 @@ class Roobin:
 
     @command(" تغییر چشم %m.eyes_side_list  به %m.eyes_list",defaults=['دایره ای', "چپ"])
     def change_eye(self, eyes_side_list, eyes_list):
+    # Changes eyes form
         eye_state = {
             'دایره ای':4,
             'لوزی':3,
@@ -1005,6 +1006,19 @@ class Roobin:
         print("*" * 10)
         print("*" * 10)
         RoobinControl.change_eye_command(eye_state, eye_side)
+
+    @command(" تغییر فرم دهان به فرم %m.mouth_list" , defaults=['روبین'])
+    def change_mouth(self, mouth_list):
+        # Changes mouth form
+        mouth_state = {
+            'روبین':1,
+            'غنچه':2,
+        }[mouth_list]
+
+        print(f"Mouth state changed to {mouth_state}")
+        print("*" * 10)
+        print("*" * 10)
+        RoobinControl.change_mouth_command(mouth_state)
 
     @command("چشمک بزن")
     def roobinBlink(self):
@@ -1060,7 +1074,8 @@ descriptor = Descriptor(
         pattern_game_difficulty = ["آسان","متوسط","سخت","غیر ممکن"],
         speak_please = ["روش یک(آنلاین)","روش دو"],
         eyes_list = ["مربعی" ,"دایره ای" ,"لوزی","مثلثی"],
-        eyes_side_list = ["راست","چپ    "]
+        eyes_side_list = ["راست","چپ"],
+        mouth_list = ["غنچه","روبین"]
     ),
 )
 
