@@ -396,15 +396,18 @@ def moveSpeechMouth(phonemes, times, name):
     # print(start)
     # print()
     # print()
-    stop = start + duration*0.8
+    stop = start + duration*0.75
     while time.time() < stop:
-            ph = random.randint(1,2)
+            ph = random.randint(1,3)
             mouthing(ph)
 
-    for i in range(7):
+    for i in range(10):
         mouthing(1)
         mouthing(1)
         mouthing(1)
+    time.sleep(0.5)
+    mouthing(1)
+    mouthing(1)
 
 def phonemes_gen(vcname):
     phonemes = []
