@@ -476,6 +476,17 @@ def eye(side="both", statement="neutral", delay="2"):
     serwrite(msg)
     # robotWait(3)
 
+def change_eye_command(eye_state, eye_side):
+    msg = "z" + str(eye_state) + str(eye_side) + "," + "\n"
+    serwrite(msg)
+
+
+"""
+
+COMMAND PREFIXES USED:    a c d e h i k l m n p q r t v w x z
+
+"""
+
 
 
 

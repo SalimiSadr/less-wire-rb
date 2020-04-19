@@ -987,6 +987,25 @@ class Roobin:
         RoobinControl.move(int(motor),int(angle),10)
         print("...")
 
+    @command(" تغییر چشم %m.eyes_side_list  به %m.eyes_list",defaults=['دایره ای', "چپ"])
+    def change_eye(self, eyes_side_list, eyes_list):
+        eye_state = {
+            'دایره ای':4,
+            'لوزی':3,
+            'مربعی':2,
+            'مثلثی': 1,
+        }[eyes_list]
+
+        eye_side = {
+            'راست':2,
+            'چپ': 1,
+        }[eyes_side_list]
+
+        print(f"Eye {eye_side} state changed to {eye_state}")
+        print("*" * 10)
+        print("*" * 10)
+        RoobinControl.change_eye_command(eye_state, eye_side)
+
     @command("چشمک بزن")
     def roobinBlink(self):
         print("Blinking..")
@@ -1039,7 +1058,9 @@ descriptor = Descriptor(
         story = ["دماغ" , "عینکم" , "یکی زیر یکی رو","پسری در طبل","لباس پادشاه","قلعه حیوانات 1","قلعه حیوانات 2","قلعه حیوانات 3","شازده کوچولو 1","شازده کوچولو 2","پسرک بند انگشتی","آدم برفی","سیندرلا","گالیور","حاکم جوان","گربه چکمه پوش","جک و لوبیای سحرآمیز"],
         difficulty = ["سطح 1","سطح 2","سطح 3"],
         pattern_game_difficulty = ["آسان","متوسط","سخت","غیر ممکن"],
-        speak_please = ["روش یک(آنلاین)","روش دو"]
+        speak_please = ["روش یک(آنلاین)","روش دو"],
+        eyes_list = ["مربعی" ,"دایره ای" ,"لوزی","مثلثی"],
+        eyes_side_list = ["راست","چپ    "]
     ),
 )
 
