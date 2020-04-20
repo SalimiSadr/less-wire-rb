@@ -381,19 +381,22 @@ class Roobin:
                     result=page_py.summary.split('.')[0] + page_py.summary.split('.')[1]
                     #say(result)
                     #feel free to use online version of say function(say()) instead of say_offline()
-                    freeze_support()
-                    self.p = Process(target=say_offline, args=(result,))
-                    self.p.start()
-                    # say_offline(result)
-                    time.sleep(12)
+                    # freeze_support()
+                    # print("WTFFFFFFF")
+                    # self.p = Process(target=say_offline, args=(result,))
+                    # self.p.start()
+                    say_offline(result)
+                    time.sleep(20)
+                    # self.p.terminate()
                     #print('yes')
                 except:
                     #print('no')
-                    freeze_support()
-                    self.p = Process(target=say_offline, args=(page_py.summary,))
-                    self.p.start()
-                    # say_offline(page_py.summary)
+                    # freeze_support()
+                    # self.p = Process(target=say_offline, args=(page_py.summary,))
+                    # self.p.start()
+                    say_offline(page_py.summary)
                     time.sleep(12)
+                    # self.p.terminate()
             else:
                 say_offline('این صفحه وجود ندارد')
             A_PROGRAM_IS_RUNNING = False
@@ -1050,6 +1053,7 @@ class Roobin:
             freeze_support()
             self.p = Process(target=playsound, args=(a,))
             self.p.start()
+            self.p.terminate()
             A_PROGRAM_IS_RUNNING = False
 
         elif A_PROGRAM_IS_RUNNING == True:
