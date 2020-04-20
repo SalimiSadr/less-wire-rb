@@ -999,50 +999,44 @@ class Roobin:
         elif A_PROGRAM_IS_RUNNING == True:
             print("A PROGRAM IS RUNNING !!")
 
-    # @command("بازی حدس عدد")
-    # def play_game(self):
-    #     number_from_client = 0
-    #     generated_num = random.randint(1, 100)
-    #     print("*" * 100)
-    #     print(generated_num)
-    #     print("*" * 100)
-    #     win = False
-    #     say_offline("اگه میتونی عدد من را حدس بزن")
-    #     for i in range(3):
-    #         try:
-    #             print("===============Here at getting Voice ..================")
-    #             print("==============----------------------------------------------=========================================")
-    #             file_path = "./voice_commands/Gamequery.wav"
-    #             print('Waiting for the query.')
-    #             listen_and_record(file_path)
-    #             print('Got the answer')
-    #             number_from_client = int(speech_to_text(file_path))
-    #             print(number_from_client)
-    #         except Exception as e :
-    #             print(e)
-    #             print("Problem in Play Game Func")
-    #
-    #         if number_from_client > generated_num:
-    #             print("===============Less than.================")
-    #             print("==============----------------------------------------------=========================================")
-    #             say_offline("پایین تر")
-    #         elif number_from_client < generated_num:
-    #             print("===============Bigger.================")
-    #             print("==============----------------------------------------------=========================================")
-    #             say_offline("بالاتر")
-    #         else:
-    #             print("===============You Won.================")
-    #             print("==============----------------------------------------------=========================================")
-    #             say_offline("تو بردی. تبریک")
-    #             win = True
-    #             break
-    #
-    #     if not win:
-    #         say_offline("من بردم")
-    #         print("===============I Won.================")
-    #         print("==============----------------------------------------------=========================================")
-    #
-    #     print("ANY BUG ????")
+    @command("انتخاب داستان %m.story ", defaults=["قلعه حیوانات 1"])
+    def story_telling(self, story):
+        global A_PROGRAM_IS_RUNNING
+        """
+        CHECKING THE MUTEX FOR NOT RUNNING SIMULTANEOUSLY 
+        """
+        # FOR RUNNING BLOCKS SEQUENTIALLY - IF A COMMAND REACHES HERE , IT HAS TO WAIT FOR THE MUTEX(BLOCK) TO BE FREED.
+        while A_PROGRAM_IS_RUNNING:
+            pass
+        if A_PROGRAM_IS_RUNNING == False:
+            A_PROGRAM_IS_RUNNING = True
+            a = {
+                "دماغ": "./story/127-hamechiz-darbareye-damagh.mp3",
+                "عینکم": "./story/einakam65519.mp3",
+                "یکی زیر یکی رو": "./story/قصه-صوتی-کودکانه-یکی-زیر-یکی-رو.mp3",
+                "پسری در طبل": "./story/قصه-صوتی-کودکانه-پسری-در-طبل.mp3",
+                "شازده کوچولو 1": "./story/Shazdeh.Koochooloo.Part 1.mp3",
+                "شازده کوچولو 2": "./story/Shazdeh.Koochooloo.Part 2.mp3",
+                "قلعه حیوانات 1": "./story/A-fasl-1.mp3",
+                "قلعه حیوانات 2": "./story/B-fasl-2.mp3",
+                "قلعه حیوانات 3": "./story/C-fasl-3.mp3",
+                "آدم برفی": "./story/آدم برفی خندان.mp3",
+                "لباس پادشاه": "./story/Lebase Jadide Padeshah Audio.mp3",
+                "پسرک بند انگشتی": "./story/pesarak.mp3",
+                "سیندرلا": "./story/Cinderella.mp3",
+                "گالیور": "./story/galiver.mp3",
+                "حاکم جوان": "./story/hakem javan.mp3",
+                "گربه چکمه پوش": "./story/gorbe chakme poosh.mp3",
+                "جک و لوبیای سحرآمیز": "./story/jack.mp3",
+
+            }[story]
+            print("Telling the story ..")
+            playsound(a)
+            A_PROGRAM_IS_RUNNING = False
+
+        elif A_PROGRAM_IS_RUNNING == True:
+            print("A PROGRAM IS RUNNING !!")
+
 
     @command("موتور %s را به %s درجه بچرخان")
     def move_motor(self, motor, angle):
@@ -1104,30 +1098,6 @@ class Roobin:
         RoobinControl.eye("both","neutral")
         print("Neutralled :)")
 
-    @command("انتخاب داستان %m.story ",defaults=["قلعه حیوانات 1"])
-    def story_telling(self, story):
-        a = {
-            "دماغ": "./story/127-hamechiz-darbareye-damagh.mp3",
-            "عینکم": "./story/einakam65519.mp3",
-            "یکی زیر یکی رو": "./story/قصه-صوتی-کودکانه-یکی-زیر-یکی-رو.mp3",
-            "پسری در طبل":"./story/قصه-صوتی-کودکانه-پسری-در-طبل.mp3",
-            "شازده کوچولو 1":"./story/Shazdeh.Koochooloo.Part 1.mp3",
-            "شازده کوچولو 2":"./story/Shazdeh.Koochooloo.Part 2.mp3",
-            "قلعه حیوانات 1":"./story/A-fasl-1.mp3",
-            "قلعه حیوانات 2":"./story/B-fasl-2.mp3",
-            "قلعه حیوانات 3":"./story/C-fasl-3.mp3",
-            "آدم برفی":"./story/آدم برفی خندان.mp3",
-            "لباس پادشاه":"./story/Lebase Jadide Padeshah Audio.mp3",
-            "پسرک بند انگشتی":"./story/pesarak.mp3",
-            "سیندرلا":"./story/Cinderella.mp3",
-            "گالیور":"./story/galiver.mp3",
-            "حاکم جوان":"./story/hakem javan.mp3",
-            "گربه چکمه پوش":"./story/gorbe chakme poosh.mp3",
-            "جک و لوبیای سحرآمیز":"./story/jack.mp3",
-
-        }[story]
-        print("salam")
-        playsound(a)
 
 
 descriptor = Descriptor(
