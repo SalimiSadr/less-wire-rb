@@ -24,6 +24,7 @@ from PIL import ImageTk, Image
 import speech_recognition as sr
 from playsound import playsound
 from os.path import isfile, join
+from multiprocessing import Process, freeze_support
 from future.backports.http.client import BadStatusLine
 
 
@@ -250,6 +251,10 @@ class Roobin:
 
     def __init__(self):
         self.foo = 0
+        """
+         P (THE THREAD USED FOR SOME OF BLOCKS FOR EASE OF TERMINATION WITH RED BUTTON)
+        """
+        self.p = "FOR SOUND PLAYING"
 
     def _problem(self):
         if time.time() % 8 > 4:
@@ -262,6 +267,11 @@ class Roobin:
         ...
         (Poetry's not my strong point, you understand.)
         """)
+        try:
+            # TERMINATE P (THE THREAD USED FOR SOME OF BLOCKS FOR EASE OF TERMINATION WITH RED BUTTON)
+            self.p.terminate()
+        except:
+            print("DO NOT TRY ON THIS BLOCK")
 
 
     @command("سرعت گفتار = %s")
@@ -371,12 +381,18 @@ class Roobin:
                     result=page_py.summary.split('.')[0] + page_py.summary.split('.')[1]
                     #say(result)
                     #feel free to use online version of say function(say()) instead of say_offline()
-                    say_offline(result)
+                    freeze_support()
+                    self.p = Process(target=say_offline, args=(result,))
+                    self.p.start()
+                    # say_offline(result)
                     time.sleep(12)
                     #print('yes')
                 except:
                     #print('no')
-                    say_offline(page_py.summary)
+                    freeze_support()
+                    self.p = Process(target=say_offline, args=(page_py.summary,))
+                    self.p.start()
+                    # say_offline(page_py.summary)
                     time.sleep(12)
             else:
                 say_offline('این صفحه وجود ندارد')
@@ -1031,7 +1047,9 @@ class Roobin:
 
             }[story]
             print("Telling the story ..")
-            playsound(a)
+            freeze_support()
+            self.p = Process(target=playsound, args=(a,))
+            self.p.start()
             A_PROGRAM_IS_RUNNING = False
 
         elif A_PROGRAM_IS_RUNNING == True:
