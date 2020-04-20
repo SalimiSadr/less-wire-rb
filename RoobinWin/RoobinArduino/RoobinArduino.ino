@@ -521,7 +521,16 @@ byte full_on[8] = {    B11111111,
                        B11111111,
                        B11111111,
                        B11111111,
-                       B11111111};                    
+                       B11111111};
+
+byte full_off[8] = { B00000000,
+                     B00000000,
+                     B00000000,
+                     B00000000,
+                     B00000000,
+                     B00000000,
+                     B00000000,
+                     B00000000};                                            
                             
 
 //**************
@@ -972,7 +981,7 @@ void loop()
 	}
 
  // EYES
-
+  
   if (field[0] == 'q')
   {
     switch (field[1])
@@ -987,6 +996,8 @@ void loop()
               case '6': display_eyes(full_on, up_arrow);
                   break;
               case '7': display_eyes(full_on, down_arrow);
+                  break;
+              case '8': display_eyes(full_off, full_on);
                   break;
               }
               if (field[3] == '1') delay(1000);
@@ -1005,6 +1016,8 @@ void loop()
               case '6': display_eyes(up_arrow, full_on);
                   break;
               case '7': display_eyes(down_arrow, full_on);
+                  break;
+              case '8': display_eyes(full_on, full_off);
                   break;
               }
               if (field[3] == '1') delay(1000);
