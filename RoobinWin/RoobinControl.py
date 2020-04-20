@@ -441,11 +441,13 @@ def close():
         detach(x)   
 
 # Reset Roobin back to start position
+
 def reset():
     for x in range(0,len(restPos)-1):
         move(x,restPos[x]) 
 
 # Attach all motors.
+
 def adjust():
     for i in range(7):
         move(i, restPos[i], 2)
@@ -464,21 +466,21 @@ def eye(side="both", statement="neutral", delay="2"):
     spd = 0
     # stateSel = {"blink_left":1 , "blink": 2 , "blink_right" : 3, "look_left": 4 , "look_right" : 5 , "neutral" : 6 }
     stateSel = {"looksides":1 , "blink": 2 , "neutral" : 3,
-                "rightArrow": 4, "leftArrow": 5, "upArrow": 6, "downArrow": 7
+                "rightArrow": 4, "leftArrow": 5, "upArrow": 6, "downArrow": 7,
+                "full_on":8
                  }
     sideSel =  {"right":1 , "left" : 2 , "both" : 3}
 	# right --> 01 # left  --> 10 # both  --> 11
     msg = "q"+str(sideSel[side])+str(stateSel[statement])+str(delay)+","+str(spd)+"\n"
-    print()
-    print(list(msg))
-    print()
 	# Write message to serial port
     serwrite(msg)
     # robotWait(3)
+
 #Changes eyes form
 def change_eye_command(eye_state, eye_side):
     msg = "z" + str(eye_state) + str(eye_side) + "," + "\n"
     serwrite(msg)
+
 #Changes mouth form
 def change_mouth_command(mouth_state):
     msg = "f" + str(mouth_state) + "," + "\n"
