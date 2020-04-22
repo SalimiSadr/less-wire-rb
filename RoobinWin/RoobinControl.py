@@ -410,7 +410,7 @@ def moveSpeechMouth(phonemes, times, name):
     # print(start)
     # print()
     # print()
-    stop = start + duration*0.75
+    stop = start + (duration*0.95)
     while time.time() < stop:
             ph = random.randint(1,3)
             mouthing(ph)

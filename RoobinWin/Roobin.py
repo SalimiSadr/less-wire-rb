@@ -220,13 +220,6 @@ def agptts(txt):
 
 def playthesound(vcname):
     playsound(vcname)
-    # Sleep to finish
-    fname = vcname
-    with contextlib.closing(wave.open(fname,'r')) as f:
-        frames = f.getnframes()
-        rate = f.getframerate()
-        duration = frames / float(rate)
-    # time.sleep(duration * 1.1)
     # os.remove(vcname)
 
 def text_to_speech_espeak(text):
@@ -243,6 +236,11 @@ def text_to_speech_espeak(text):
 def say_offline(text):
     print("__In say_offline funcion__")
     vcname = text_to_speech_espeak(text)
+    fname = vcname
+    with contextlib.closing(wave.open(fname,'r')) as f:
+        frames = f.getnframes()
+        rate = f.getframerate()
+        duration = frames / float(rate)
 
     phonemes, times = RoobinControl.phonemes_gen(vcname)
     # Set up a thread for the speech sound synthesis, delay start by soundDelay
@@ -252,6 +250,7 @@ def say_offline(text):
     # Set up a thread for the speech sound synthesis
     t = threading.Thread(target=playthesound, args=(vcname,))      
     t.start()
+    return duration
 
 def say(text):
     print("In say func 1...")
@@ -334,9 +333,12 @@ class Roobin:
         print(f"SPEAKING PITCH CHANGED TO {SPEAKING_PITCH}")
 
 
+
+
     @command("ریکاوری")
     def recovery(self):
     	RoobinControl.recovery_util()
+
 
 
     @command("معرفی")
@@ -352,8 +354,8 @@ class Roobin:
         if A_PROGRAM_IS_RUNNING == False:
             A_PROGRAM_IS_RUNNING = True
             text = "سلام ، من روبین هستم ، دوسته خوبه شما"
-            say_offline(text)
-            time.sleep(4)
+            w = say_offline(text)
+            time.sleep(w * 1.1)
             A_PROGRAM_IS_RUNNING = False
 
         elif A_PROGRAM_IS_RUNNING == True:
@@ -378,8 +380,8 @@ class Roobin:
             print("speech_to_text")
             if "سلام" in speech_to_text_text:
                 text = "سلام.من روبین هستم.از آشنایی با شما خوشحالم"
-                say_offline(text)
-                time.sleep(6)
+                w = say_offline(text)
+                time.sleep(w * 1.1)
 
             A_PROGRAM_IS_RUNNING = False
 
@@ -398,8 +400,8 @@ class Roobin:
             pass
         if A_PROGRAM_IS_RUNNING == False:
             A_PROGRAM_IS_RUNNING = True
-            say_offline(text)
-            time.sleep(5)
+            w = say_offline(text)
+            time.sleep(w * 1.1)
             A_PROGRAM_IS_RUNNING = False
 
         elif A_PROGRAM_IS_RUNNING == True:
@@ -436,8 +438,8 @@ class Roobin:
                     # print("WTFFFFFFF")
                     # self.p = Process(target=say_offline, args=(result,))
                     # self.p.start()
-                    say_offline(result)
-                    time.sleep(20)
+                    w = say_offline(result)
+                    time.sleep(w * 1.1)
                     # self.p.terminate()
                     #print('yes')
                 except:
@@ -445,8 +447,8 @@ class Roobin:
                     # freeze_support()
                     # self.p = Process(target=say_offline, args=(page_py.summary,))
                     # self.p.start()
-                    say_offline(page_py.summary)
-                    time.sleep(12)
+                    w = say_offline(page_py.summary)
+                    time.sleep(w * 1.1)
                     # self.p.terminate()
             else:
                 say_offline('این صفحه وجود ندارد')
@@ -498,8 +500,8 @@ class Roobin:
                 #print(the_list)
                 #say(df['A'][a])
                 #feel free to use online version of say function(say()) instead of say_offline()
-                say_offline(df['A'][a])
-                time.sleep(10)
+                w = say_offline(df['A'][a])
+                time.sleep(w * 1.1)
                 try:
                     url='http://www.google.com/'
                     requests.get(url, timeout=5)
@@ -542,15 +544,15 @@ class Roobin:
                         break
                 if gg==1:
                     print('barikallaaaaaaa')
-                    say_offline("تبریک میگم. جوابت درست بود")
+                    w = say_offline("تبریک میگم. جوابت درست بود")
                     #playsound("./GameVoice/well_done.mp3")
-                    time.sleep(2)
+                    time.sleep(w * 1.1)
 
                 else:
                     print('i dont think so')
-                    say_offline(".جوابه شما اشتباه بود")
+                    w = say_offline(".جوابه شما اشتباه بود")
                     #playsound("./GameVoice/sorry.mp3")
-                    time.sleep(2)
+                    time.sleep(w * 1.1)
 
                 nn=1
             A_PROGRAM_IS_RUNNING = False
@@ -602,15 +604,15 @@ class Roobin:
             if High_Score==0:
                 print("you have no score with this game diffuculty")
             else:
-                say_offline(f"بیشترین امتیازی که در این بازی کسب کرده اید ، {High_Score} بوده است.")
+                w = say_offline(f"بیشترین امتیازی که در این بازی کسب کرده اید ، {High_Score} بوده است.")
                 #roobin must show the score from "./High Scores/repeating pattern game2/GD={}.txt".format(a)
                 print("your high score is in this game difficulty is {}".format(str(High_Score)))
 
-            time.sleep(8)
+            time.sleep(w * 1.1)
             #playsound("./GameVoice/Readdy.mp3")
-            say_offline("آماده باشید")
+            w = say_offline("آماده باشید")
             os.system('cls' if os.name == 'nt' else 'clear')
-            time.sleep(3)
+            time.sleep(w * 1.1)
 
 
             mylist=[]
@@ -618,8 +620,8 @@ class Roobin:
             os.system('cls' if os.name == 'nt' else 'clear')
             print("the pattern will show in 2 seconds")
             #playsound("./GameVoice/in 2 secconds.mp3")
-            say_offline("الگو تا دو ثانیه دیگر نمایش داده می شود")
-            time.sleep(7)
+            w = say_offline("الگو تا دو ثانیه دیگر نمایش داده می شود")
+            time.sleep(w * 1.1)
             print("==============================SENDING======================================")
             for i in range(1000):
                 jjj=random.randint(0,7)
@@ -750,26 +752,26 @@ class Roobin:
             if wrong==1:
                 print("your answer was wrong")
                 #playsound("./GameVoice/wrong answer(arrow).mp3")
-                say_offline("جواب شما اشتباه بود")
+                w = say_offline("جواب شما اشتباه بود")
                 print("REAL ANSWER = ",mylist)
                 print("MY ANSWER = ", result)
-                time.sleep(3)
+                time.sleep(w * 1.1)
             else:
                 print("you answered soooo late")
                 #playsound("./GameVoice/late.mp3")
-                say_offline("خیلی دیر جواب دادی")
-                time.sleep(3)
+                w = say_offline("خیلی دیر جواب دادی")
+                time.sleep(w * 1.1)
 
             print("you lost in level {} with difficulty{}".format(str(len(mylist)),str(a)))
             #playsound("./GameVoice/Game over.mp3")
             if new_score>High_Score:
                 print("this is the highest score!")
                 #playsound("./GameVoice/new_record.mp3")
-                say_offline("تبریک. رکورد جدیدی با این درجه سختی کسب کردی")
+                w = say_offline("تبریک. رکورد جدیدی با این درجه سختی کسب کردی")
                 F = open("./High Scores/arrow game/GD={}.txt".format(str(a)),"w")
                 F.write(str(new_score))
                 F.close()
-                time.sleep(1)
+                time.sleep(w * 1.1)
 
             """
             RELEASES MUTEX
@@ -812,8 +814,8 @@ class Roobin:
 
 
             #playsound("./GameVoice/guide1.mp3")
-            say_offline(guide1)
-            time.sleep(11)
+            w = say_offline(guide1)
+            time.sleep(w * 1.1)
 
 
             F=open("./High Scores/repeating pattern game2/GD={}.txt".format(a),"r")
@@ -828,9 +830,9 @@ class Roobin:
                 print("your high score is in this game difficulty is {}".format(str(High_Score)))
             time.sleep(3.5)
             #playsound("./GameVoice/Readdy.mp3")
-            say_offline("آماده باشید")
+            w = say_offline("آماده باشید")
             os.system('cls' if os.name == 'nt' else 'clear')
-            time.sleep(3)
+            time.sleep(w * 1.1)
 
             gg=0
             while(gg==0):
@@ -839,10 +841,10 @@ class Roobin:
                 os.system('cls' if os.name == 'nt' else 'clear')
                 print("the pattern will show in 2 seconds")
                 #playsound("./GameVoice/in 2 secconds.mp3")
-                say_offline(voice2)
+                w = say_offline(voice2)
                 print("level{}".format(str(n-2)))
                 #say('مرحله {}'.format(str(n-2)))
-                time.sleep(4)
+                time.sleep(w * 1.1)
 
                 for i in range(n):
                     if random.randint(0,1)==0:
@@ -892,8 +894,8 @@ class Roobin:
                 if result==mylist:
                     print("you won level {}".format(str(n-2)))
                     #playsound("./GameVoice/you won.mp3")
-                    say_offline("تبریک میگم. این مرحله را رد کردین")
-                    time.sleep(4)
+                    w = say_offline("تبریک میگم. این مرحله را رد کردین")
+                    time.sleep(w * 1.1)
                     if n-2 > High_Score:
 
                         print("this is the highest score!")
@@ -901,19 +903,19 @@ class Roobin:
                         F.write(str(n-2))
                         F.close()
                         if HSS==0:
-                            say_offline("رکورد جدیدی با این درجه سختی کسب کردی. آفرین")
+                            w = say_offline("رکورد جدیدی با این درجه سختی کسب کردی. آفرین")
                             #playsound("./High Scores/repeating pattern game2/Record{}.mp3".format(str(a)))
                             HSS=1
-                            time.sleep(4)
+                            time.sleep(w * 1.1)
                     n+=1
                 else:
                     print("you lost in level {} with difficulty{}".format(str(n-2),str(a)))
                     #playsound("./GameVoice/Game over.mp3")
-                    say_offline("با عرض پوزش. شما باختید")
+                    w = say_offline("با عرض پوزش. شما باختید")
                     print("======================================")
                     print(mylist)
                     print("======================================")
-                    time.sleep(3)
+                    time.sleep(w * 1.1)
                     break
                     gg=1
             A_PROGRAM_IS_RUNNING = False
@@ -961,8 +963,8 @@ class Roobin:
 
                 print('reading the numbers, pls listen carefully!')
                 #playsound("./GameVoice/numbers comming!.mp3")
-                say_offline("تا ثانیه ای دیگر ، اعداد خوانده خواهند شد. دقت کنید")
-                time.sleep(5)
+                w = say_offline("تا ثانیه ای دیگر ، اعداد خوانده خواهند شد. دقت کنید")
+                time.sleep(w * 1.1)
                 numbersss=df['A'][a]
                 say_offline(numbersss)
 
@@ -1032,8 +1034,8 @@ class Roobin:
                         break
             df.to_excel(the_path,index=False)
 
-            say_offline(df['A'][a])
-            time.sleep(10)
+            w = say_offline(df['A'][a])
+            time.sleep(w * 1.1)
             A_PROGRAM_IS_RUNNING = False
 
         elif A_PROGRAM_IS_RUNNING == True:
@@ -1043,6 +1045,7 @@ class Roobin:
 # --------------------------------------------------
 
 #------------------------------------------------------------
+
 
     @command("توضیحات بازی جهت ها")
     def arrow_explanation(self):
@@ -1056,14 +1059,14 @@ class Roobin:
 
         if A_PROGRAM_IS_RUNNING == False:
             A_PROGRAM_IS_RUNNING = True
-            say_offline(
+            w = say_offline(
                 "در این بازی در چشم های ربات , جهت هایی به طرفه بالا , پایین , چپ و راست نمایش داده می شود.")
-            time.sleep(10)
-            say_offline(" اگر در چشمه راست ربات بود , برعکسه آن را ")
-            time.sleep(4.5)
-            say_offline("و اگر در چشمه چپ ربات بود همان"
+            time.sleep(w*1.1)
+            w = say_offline(" اگر در چشمه راست ربات بود , برعکسه آن را ")
+            time.sleep(w*1.1)
+            w = say_offline("و اگر در چشمه چپ ربات بود همان"
                         "  جهت را در پنجره ای که برایتان باز می شود , وارد نمایید.")
-            time.sleep(6)
+            time.sleep(w + 1)
             A_PROGRAM_IS_RUNNING = False
 
         elif A_PROGRAM_IS_RUNNING == True:
@@ -1109,7 +1112,6 @@ class Roobin:
 
         elif A_PROGRAM_IS_RUNNING == True:
             print("A PROGRAM IS RUNNING !!")
-
 
     @command("موتور %s را به %s درجه بچرخان")
     def move_motor(self, motor, angle):
@@ -1161,9 +1163,25 @@ class Roobin:
 
     @command("به اطراف نگاه کن")
     def roobinLookSides(self):
-        print("LookingSides..")
-        RoobinControl.eye("both","looksides")
-        print("Looked Sides.")
+        global A_PROGRAM_IS_RUNNING
+        """
+        CHECKING THE MUTEX FOR NOT RUNNING SIMULTANEOUSLY 
+        """
+        # FOR RUNNING BLOCKS SEQUENTIALLY - IF A COMMAND REACHES HERE , IT HAS TO WAIT FOR THE MUTEX(BLOCK) TO BE FREED.
+        while A_PROGRAM_IS_RUNNING:
+            pass
+
+        if A_PROGRAM_IS_RUNNING == False:
+            A_PROGRAM_IS_RUNNING = True
+
+            print("LookingSides..")
+            RoobinControl.eye("both","looksides")
+            time.sleep(4.5)
+            print("Looked Sides.")
+            A_PROGRAM_IS_RUNNING = False
+
+        elif A_PROGRAM_IS_RUNNING == True:
+            print("A PROGRAM IS RUNNING !!")
 
     @command("به روبرو نگاه کن")
     def roobinNeutral(self):
