@@ -21,6 +21,7 @@ from os import listdir
 from blockext import *
 from tkinter import PhotoImage
 from PIL import ImageTk, Image
+import serial.tools.list_ports
 import speech_recognition as sr
 from playsound import playsound
 from os.path import isfile, join
@@ -39,7 +40,53 @@ SPEAKING_SPEED = 155
 SPEAKING_PITCH = 100
 NAME_COUNTER = 0
 
+ser = None
+port=""
+
 A_PROGRAM_IS_RUNNING = False
+
+def init(portName):
+    # pickup global instances of port, ser and sapi variables   
+    global port,ser
+    
+    # Search for the Roobin serial port 
+    ports = list(serial.tools.list_ports.comports())
+    for p in ports:
+        # print ("p0:" + p[0])
+        # print ("p1:" + p[1])
+        # If port has Roobin connected save the location
+        if portName in p[1]:
+            port = p[0]
+            print ("Roobin found on port:" + port)
+        elif portName in p[0]:
+            port = p[0]
+            print ("Roobin found on port:" + port)
+
+    # If not found then try the first port
+    if port == "":
+        for p in ports:
+            port = p[0]
+            print ("Roobin probably found on port:" + port)
+            break
+            
+    if port == "":
+        print ("Roobin port " + portName + " not found")
+        return False
+
+    # Open the serial port
+    ser = serial.Serial(port, 19200)
+
+    # Set read timeout and write timeouts to blocking
+    ser.timeout = None
+    ser.write_timeout = None
+
+    # Make an initial call to Festival without playing the sound to check it's all okay
+    text = "Hi"
+        
+    # Create a bash command with the desired text. The command writes two files, a .wav with the speech audio and a .txt file containing the phonemes and the times.
+    #speak (text)
+
+    return True
 
 def listen_and_record(path):
 
@@ -286,6 +333,10 @@ class Roobin:
         SPEAKING_PITCH = int(text)
         print(f"SPEAKING PITCH CHANGED TO {SPEAKING_PITCH}")
 
+
+    @command("ریکاوری")
+    def recovery(self):
+    	RoobinControl.recovery_util()
 
 
     @command("معرفی")

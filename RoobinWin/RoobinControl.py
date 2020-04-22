@@ -147,6 +147,20 @@ except :
     print("Came up without Arduino.")
     pass
 
+
+def recovery_util():
+	ser.close()
+	print("Want to open again now : ")
+	time.sleep(2)
+	print("3")
+	print("2")
+	print("1")
+	try:
+	    init("Arduino")
+	except :
+	    print("Came up without Arduino.")
+	    pass
+
 # Function to move Roobin's motors. Arguments | m (motor) → int (0-6) | pos (position) → int (0-10) | spd (speed) → int (0-10) **eg move(4,3,9) or move(0,9,3)**
 def move(m, pos, spd=3):
     
