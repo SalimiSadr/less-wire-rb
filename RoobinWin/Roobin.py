@@ -297,6 +297,7 @@ class Roobin:
 
     def __init__(self):
         self.foo = 0
+        self.stt_var = ""
         """
          P (THE THREAD USED FOR SOME OF BLOCKS FOR EASE OF TERMINATION WITH RED BUTTON)
         """
@@ -333,6 +334,36 @@ class Roobin:
         print(f"SPEAKING PITCH CHANGED TO {SPEAKING_PITCH}")
 
 
+    @reporter("x")
+    def get_stt_var(self):
+        return self.stt_var
+
+    @command("صدا را بشنو و در x ذخبره کن .")       
+    def set_stt_var(self):
+
+        global A_PROGRAM_IS_RUNNING
+        """
+        CHECKING THE MUTEX FOR NOT RUNNING SIMULTANEOUSLY 
+        """
+        # FOR RUNNING BLOCKS SEQUENTIALLY - IF A COMMAND REACHES HERE , IT HAS TO WAIT FOR THE MUTEX(BLOCK) TO BE FREED.
+        while A_PROGRAM_IS_RUNNING:
+            pass
+
+        if A_PROGRAM_IS_RUNNING == False:
+            A_PROGRAM_IS_RUNNING = True
+            file_path = "./voice_commands/query.wav"
+            print('befor listening!')
+            listen_and_record(file_path)
+            print('after listneing!!!')
+            speech_to_text_text = speech_to_text(file_path)
+            print("speech_to_text")
+
+            self.stt_var = speech_to_text_text
+            time.sleep(2)
+            A_PROGRAM_IS_RUNNING = False
+
+        else:
+            print("A PROGRAM IS RUNNING..")
 
 
     @command("ریکاوری")
