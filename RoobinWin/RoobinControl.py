@@ -72,6 +72,7 @@ def init(portName):
     # Search for the Roobin serial port 
     ports = list(serial.tools.list_ports.comports())
     for p in ports:
+        print(p)
         # print ("p0:" + p[0])
         # print ("p1:" + p[1])
         # If port has Roobin connected save the location
@@ -142,7 +143,7 @@ for child in root:
         
 # initialize with any port that has Arduino in the name
 try:
-    init("Arduino")
+    init("CH340")
 except :
     print("Came up without Arduino.")
     pass
@@ -156,7 +157,7 @@ def recovery_util():
 	print("2")
 	print("1")
 	try:
-	    init("Arduino")
+	    init("CH340")
 	except :
 	    print("Came up without Arduino.")
 	    pass
