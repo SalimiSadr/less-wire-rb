@@ -12,12 +12,12 @@ import time
 import serial
 import random
 import pyaudio
-import logging  # Delete
+# import logging  # Delete
 # import traceback # Delete
 import threading
 import subprocess
 import contextlib
-from lxml import etree # Delete
+from lxml import etree
 from subprocess import call
 import serial.tools.list_ports
 from os import path,getcwd,system
@@ -413,7 +413,7 @@ def moveSpeechMouth(phonemes, times, name):
     # print(start)
     # print()
     # print()
-    stop = start + duration*0.95
+    stop = start + duration*0.91
     while time.time() < stop:
             ph = random.randint(1,3)
             mouthing(ph)
