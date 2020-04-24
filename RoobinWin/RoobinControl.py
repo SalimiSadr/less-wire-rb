@@ -3,21 +3,21 @@
 import os
 import re
 import sys
-import json
+# import json # Delete
 import wave
 import time
-import eyed3    
-import psutil
-import pigpio
+# import eyed3 # Delete
+# import psutil # Delete
+# import pigpio # Delete
 import serial
 import random
 import pyaudio
-import logging    
-import traceback
+import logging  # Delete
+# import traceback # Delete
 import threading
 import subprocess
 import contextlib
-from lxml import etree
+from lxml import etree # Delete
 from subprocess import call
 import serial.tools.list_ports
 from os import path,getcwd,system
@@ -72,7 +72,6 @@ def init(portName):
     # Search for the Roobin serial port 
     ports = list(serial.tools.list_ports.comports())
     for p in ports:
-        print(p)
         # print ("p0:" + p[0])
         # print ("p1:" + p[1])
         # If port has Roobin connected save the location
@@ -148,19 +147,22 @@ except :
     print("Came up without Arduino.")
     pass
 
-
 def recovery_util():
-	ser.close()
-	print("Want to open again now : ")
-	time.sleep(2)
-	print("3")
-	print("2")
-	print("1")
-	try:
-	    init("CH340")
-	except :
-	    print("Came up without Arduino.")
-	    pass
+    try:
+        ser.close()
+    except:
+        pass
+    
+    print("Want to open again now : ")
+    time.sleep(2)
+    print("3")
+    print("2")
+    print("1")
+    try:
+        init("CH340")
+    except :
+        print("Came up without Arduino.")
+        pass
 
 # Function to move Roobin's motors. Arguments | m (motor) → int (0-6) | pos (position) → int (0-10) | spd (speed) → int (0-10) **eg move(4,3,9) or move(0,9,3)**
 def move(m, pos, spd=3):
@@ -411,7 +413,7 @@ def moveSpeechMouth(phonemes, times, name):
     # print(start)
     # print()
     # print()
-    stop = start + (duration*0.95)
+    stop = start + duration*0.95
     while time.time() < stop:
             ph = random.randint(1,3)
             mouthing(ph)

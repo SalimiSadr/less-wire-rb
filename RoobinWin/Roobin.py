@@ -2,6 +2,9 @@
 from __future__ import unicode_literals
 import sys
 import os
+# import csv # -- Delete
+import xlwt
+import xlrd
 import time
 import wave
 import random
@@ -9,10 +12,8 @@ import pyaudio
 import tkinter
 import requests
 import threading
-import xlsxwriter
 import subprocess
 import contextlib
-import pandas as pd
 import wikipediaapi
 import urllib.parse
 import RoobinControl
@@ -21,11 +22,10 @@ from os import listdir
 from blockext import *
 from tkinter import PhotoImage
 from PIL import ImageTk, Image
-import serial.tools.list_ports
 import speech_recognition as sr
 from playsound import playsound
 from os.path import isfile, join
-from multiprocessing import Process, freeze_support
+# from multiprocessing import Process, freeze_support  # Delete
 from future.backports.http.client import BadStatusLine
 
 
@@ -45,11 +45,12 @@ port=""
 
 A_PROGRAM_IS_RUNNING = False
 
+
 def init(portName):
-    # pickup global instances of port, ser and sapi variables   
-    global port,ser
-    
-    # Search for the Roobin serial port 
+    # pickup global instances of port, ser and sapi variables
+    global port, ser
+
+    # Search for the Roobin serial port
     ports = list(serial.tools.list_ports.comports())
     for p in ports:
         # print ("p0:" + p[0])
@@ -68,7 +69,7 @@ def init(portName):
             port = p[0]
             print ("Roobin probably found on port:" + port)
             break
-            
+
     if port == "":
         print ("Roobin port " + portName + " not found")
         return False
@@ -82,9 +83,9 @@ def init(portName):
 
     # Make an initial call to Festival without playing the sound to check it's all okay
     text = "Hi"
-        
+
     # Create a bash command with the desired text. The command writes two files, a .wav with the speech audio and a .txt file containing the phonemes and the times.
-    #speak (text)
+    # speak (text)
 
     return True
 
@@ -220,6 +221,13 @@ def agptts(txt):
 
 def playthesound(vcname):
     playsound(vcname)
+    # Sleep to finish
+    fname = vcname
+    with contextlib.closing(wave.open(fname,'r')) as f:
+        frames = f.getnframes()
+        rate = f.getframerate()
+        duration = frames / float(rate)
+    # time.sleep(duration * 1.1)
     # os.remove(vcname)
 
 def text_to_speech_espeak(text):
@@ -246,9 +254,9 @@ def say_offline(text):
     # Set up a thread for the speech sound synthesis, delay start by soundDelay
     # Set up a thread for the speech movement
     t2 = threading.Thread(target=RoobinControl.moveSpeechMouth, args=(phonemes,times, vcname))
-    t2.start() 
+    t2.start()
     # Set up a thread for the speech sound synthesis
-    t = threading.Thread(target=playthesound, args=(vcname,))      
+    t = threading.Thread(target=playthesound, args=(vcname,))
     t.start()
     return duration
 
@@ -297,11 +305,11 @@ class Roobin:
 
     def __init__(self):
         self.foo = 0
-        self.stt_var = ""
         """
          P (THE THREAD USED FOR SOME OF BLOCKS FOR EASE OF TERMINATION WITH RED BUTTON)
         """
         self.p = "FOR SOUND PLAYING"
+        self.stt_var = ""
 
     def _problem(self):
         if time.time() % 8 > 4:
@@ -320,7 +328,6 @@ class Roobin:
         except:
             print("DO NOT TRY ON THIS BLOCK")
 
-
     @command("سرعت گفتار = %s")
     def set_speak_speed(self, text):
         global SPEAKING_SPEED
@@ -333,12 +340,11 @@ class Roobin:
         SPEAKING_PITCH = int(text)
         print(f"SPEAKING PITCH CHANGED TO {SPEAKING_PITCH}")
 
-
     @reporter("x")
     def get_stt_var(self):
         return self.stt_var
 
-    @command("صدا را بشنو و در x ذخبره کن .")       
+    @command("صدا را بشنو و در x ذخبره کن .")
     def set_stt_var(self):
 
         global A_PROGRAM_IS_RUNNING
@@ -357,20 +363,22 @@ class Roobin:
             print('after listneing!!!')
             speech_to_text_text = speech_to_text(file_path)
             print("speech_to_text")
+            try:
+                print("I HEARD A NUMBER !")
+                speech_to_text_text = int(speech_to_text_text)
+            except:
+                pass
 
             self.stt_var = speech_to_text_text
-            time.sleep(2)
+            time.sleep(1)
             A_PROGRAM_IS_RUNNING = False
 
         else:
             print("A PROGRAM IS RUNNING..")
 
-
     @command("ریکاوری")
     def recovery(self):
-    	RoobinControl.recovery_util()
-
-
+        RoobinControl.recovery_util()
 
     @command("معرفی")
     def introduce(self):
@@ -506,33 +514,72 @@ class Roobin:
             a=0
             #a is my index for df['C']
             file_path = "./voice_commands/Gamequery.wav"
-            the_path="./facts-numbers-riddles/riddles.xlsx"
-            df=pd.read_excel(the_path)
+            the_path="./facts-numbers-riddles/ForGodSake.xls"
+
             the_list=[]
             #yes_list=['بله','بلی','آره','آری','بریم','بریم چیستان بعدی','اره','ار','آر','بعدی','برو','بر']
             while nn==0:
                 nn==1
                 gg=0
+                the_Flist=[]
+
+                wb = xlrd.open_workbook(the_path) 
+                sheet = wb.sheet_by_index(0)
 
 
-                if df['C'][0]==df['C'][len(df['C'])-1]:
+                for i in range(sheet.nrows):
+                    the_Flist.append([sheet.cell_value(i, 0),sheet.cell_value(i, 1),sheet.cell_value(i, 2)])
+
+                a=0
+
+                if sheet.cell_value(0,2)==sheet.cell_value(sheet.nrows - 2,2):
                     a=0
-                    df.loc[0,'C']+=1
+                    if type(the_Flist[0][2]==type(1.23)):
+                        the_Flist[0][2]+=1
+                    else:
+                        temp=float(the_Flist[0][2])
+                        temp+=1
+                        the_Flist[0][2]=temp
+                        
                 else:
-                    for i in range(len(df['C'])):
-                        if df['C'][i] == df['C'][len(df['C'])-1]:
-                            df.loc[i,'C']+=1
+                    for i in range(sheet.nrows-1):
+                        if sheet.cell_value(i,2) == sheet.cell_value(sheet.nrows - 2,2):
                             a=i
+                            if type(the_Flist[i][2])==type(1.23):
+                                the_Flist[i][2]+=1
+                            else:
+                                temp=float(the_Flist[i][2])
+                                temp+=1
+                                the_Flist[i][2]=temp                
                             break
-                df.to_excel(the_path,index=False)
+
+                w = say_offline(sheet.cell_value(a,0))
+                time.sleep(w * 1.1)
+                #print(sheet.cell_value(a,1))
+                the_list=sheet.cell_value(a,1).split(',')
+                #print(the_list)
 
 
-                the_list=df['B'][a].split(',')
+                wbk = xlwt.Workbook()
+                sheet = wbk.add_sheet('python')
+                i=0
+
+                while i<len(the_Flist):
+                    sheet.write(i,0,the_Flist[i][0])
+                    sheet.write(i,1,the_Flist[i][1])
+                    sheet.write(i,2,the_Flist[i][2])
+                    
+                    i+=1
+                wbk.save(the_path)
+
+
+
+                #the_list=df['B'][a].split(',')
                 #print(the_list)
                 #say(df['A'][a])
                 #feel free to use online version of say function(say()) instead of say_offline()
-                w = say_offline(df['A'][a])
-                time.sleep(w * 1.1)
+                #say_offline(df['A'][a])
+                #time.sleep(10)
                 try:
                     url='http://www.google.com/'
                     requests.get(url, timeout=5)
@@ -840,13 +887,13 @@ class Roobin:
 
             voice1 = 'متوجه نشدم. لطفا تکرار کنید'
             voice2 = 'تا دو ثانیه دیگر , بازی شروع می شود'
-            guide1 = "به بازیه الگو ها خوشامدید. در این بازی چشم های ربات،  به صورت رندوم چشمک میزنند. وظیفه ی شما تکرار کردنه الگوها می باشد"
+            guide1 = "در این بازی چشم های ربات،  به صورت رندوم چشمک میزنند. وظیفه ی شما تکرار کردنه الگوها می باشد"
             guide2 = "لطفا الگو را با صدای بلند و بدون توقف زیاد تکرار کنید. به این مثال توجه کنید"
 
 
             #playsound("./GameVoice/guide1.mp3")
-            w = say_offline(guide1)
-            time.sleep(w * 1.1)
+            #say_offline(guide1)
+            #time.sleep(11)
 
 
             F=open("./High Scores/repeating pattern game2/GD={}.txt".format(a),"r")
@@ -879,22 +926,22 @@ class Roobin:
 
                 for i in range(n):
                     if random.randint(0,1)==0:
-                        mylist.append("right")
-                        os.system('cls' if os.name == 'nt' else 'clear')
+                        mylist.append("left")
+                        #os.system('cls' if os.name == 'nt' else 'clear')
                         print("{} - left".format(str(i+1)))
                         #blinking the left eye for game_difficulty seconds
                         RoobinControl.eye("left","full_on",game_difficulty)
                         # time.sleep(game_difficulty)
-                        os.system('cls' if os.name == 'nt' else 'clear')
+                        #os.system('cls' if os.name == 'nt' else 'clear')
 
                     else:
-                        mylist.append("left")
-                        os.system('cls' if os.name == 'nt' else 'clear')
+                        mylist.append("right")
+                        #os.system('cls' if os.name == 'nt' else 'clear')
                         print("{} - right".format(str(i+1)))
                         #blinking the right eye for game_difficulty seconds
                         RoobinControl.eye("right","full_on",game_difficulty)
                         # time.sleep(game_difficulty)
-                        os.system('cls' if os.name == 'nt' else 'clear')
+                        #os.system('cls' if os.name == 'nt' else 'clear')
 
                 window = tkinter.Tk()
                 window.title("Roobin")
@@ -971,32 +1018,74 @@ class Roobin:
             answers=[]
             erfan=[]
             the_path = {
-                "سطح 1":"./facts-numbers-riddles/numbers1.xlsx",
-                "سطح 2":"./facts-numbers-riddles/numbers2.xlsx",
-                "سطح 3":"./facts-numbers-riddles/numbers3.xlsx",
+                "سطح 1":"./facts-numbers-riddles/numbers1.xls",
+                "سطح 2":"./facts-numbers-riddles/numbers2.xls",
+                "سطح 3":"./facts-numbers-riddles/numbers3.xls",
 
             }[difficulty]
-            df=pd.read_excel(the_path)
+
+            
             nn=0
             while nn==0:
                 nn=1
 
-                if df['C'][0] == df['C'][len(df['C'])-1]:
+                loc = (the_path)
+
+                the_Flist=[]
+
+                wb = xlrd.open_workbook(loc) 
+                sheet = wb.sheet_by_index(0)
+
+
+                for i in range(sheet.nrows):
+                    the_Flist.append([sheet.cell_value(i, 0),sheet.cell_value(i, 1),sheet.cell_value(i, 2)])
+
+                a=0
+
+                if sheet.cell_value(0,2)==sheet.cell_value(sheet.nrows - 2,2):
                     a=0
-                    df.loc[0,'C']+=1
+                    if type(the_Flist[0][2]==type(1.23)):
+                        the_Flist[0][2]+=1
+                    else:
+                        temp=float(the_Flist[0][2])
+                        temp+=1
+                        the_Flist[0][2]=temp
+                        
                 else:
-                    for i in range(len(df['C'])):
-                        if df['C'][i]==df['C'][len(df['C'])-1]:
-                            df.loc[i,'C']+=1
+                    for i in range(sheet.nrows-1):
+                        if sheet.cell_value(i,2) == sheet.cell_value(sheet.nrows - 2,2):
                             a=i
+                            if type(the_Flist[i][2])==type(1.23):
+                                the_Flist[i][2]+=1
+                            else:
+                                temp=float(the_Flist[i][2])
+                                temp+=1
+                                the_Flist[i][2]=temp                
                             break
-                df.to_excel(the_path,index=False)
+
+                print(sheet.cell_value(a,0))
+                numbersss=sheet.cell_value(a,0)
+                print(sheet.cell_value(a,1))
+                javab=sheet.cell_value(a,1)
+
+
+                wbk = xlwt.Workbook()
+                sheet = wbk.add_sheet('python')
+                i=0
+
+                while i<len(the_Flist):
+                    sheet.write(i,0,the_Flist[i][0])
+                    sheet.write(i,1,the_Flist[i][1])
+                    sheet.write(i,2,the_Flist[i][2])
+                    
+                    i+=1
+                wbk.save(the_path)
 
                 print('reading the numbers, pls listen carefully!')
                 #playsound("./GameVoice/numbers comming!.mp3")
                 w = say_offline("تا ثانیه ای دیگر ، اعداد خوانده خواهند شد. دقت کنید")
                 time.sleep(w * 1.1)
-                numbersss=df['A'][a]
+                #numbersss=df['A'][a]
                 say_offline(numbersss)
 
 
@@ -1026,13 +1115,13 @@ class Roobin:
 
                 #print(answers[-1])
                 #print(df['B'][a])
-                if int(answers[-1]) == int(df['B'][a]):
+                if int(answers[-1]) == int(javab):
                     #playsound("./GameVoice/True answer.mp3")
-                    say_offline("آفرین جواب شما درست بود")
+                    say_offline("آفرین جوابه شما درست بود")
 
                 else:
                     #playsound("./GameVoice/wrong answer(numbers).mp3")
-                    say_offline("جواب شما اشتباه بود. بیشتر دقت کن")
+                    say_offline("جوابه شما اشتباه بود. بیشتر دقت کن")
             A_PROGRAM_IS_RUNNING = False
 
         elif A_PROGRAM_IS_RUNNING == True:
@@ -1050,22 +1139,57 @@ class Roobin:
 
         if A_PROGRAM_IS_RUNNING == False:
             A_PROGRAM_IS_RUNNING = True
-            the_path="./facts-numbers-riddles/facts.xlsx"
-            df=pd.read_excel(the_path)
-            nn=0
+            the_path="./facts-numbers-riddles/facts.xls"
 
-            if df['B'][0] == df['B'][len(df['B'])-1]:
+            loc = (the_path)
+
+            the_Flist=[]
+
+            wb = xlrd.open_workbook(loc) 
+            sheet = wb.sheet_by_index(0)
+
+
+            for i in range(sheet.nrows):
+                the_Flist.append([sheet.cell_value(i, 0),sheet.cell_value(i, 1)])
+
+            a=0
+
+            if sheet.cell_value(0,1)==sheet.cell_value(sheet.nrows - 2,1):
                 a=0
-                df.loc[0,'B']+=1
+                if type(the_Flist[0][1]==type(1.23)):
+                    the_Flist[0][1]+=1
+                else:
+                    temp=float(the_Flist[0][1])
+                    temp+=1
+                    the_Flist[0][1]=temp
+                    
             else:
-                for i in range(len(df['B'])):
-                    if df['B'][i] == df['B'][len(df['B'])-1]:
+                for i in range(sheet.nrows-1):
+                    if sheet.cell_value(i,1) == sheet.cell_value(sheet.nrows - 2,1):
                         a=i
-                        df.loc[i,'B']+=1
+                        if type(the_Flist[i][1])==type(1.23):
+                            the_Flist[i][1]+=1
+                        else:
+                            temp=float(the_Flist[i][1])
+                            temp+=1
+                            the_Flist[i][1]=temp                
                         break
-            df.to_excel(the_path,index=False)
 
-            w = say_offline(df['A'][a])
+            print(sheet.cell_value(a,0))
+            javab=sheet.cell_value(a,0)
+
+            wbk = xlwt.Workbook()
+            sheet = wbk.add_sheet('python')
+            i=0
+
+            while i<len(the_Flist):
+                sheet.write(i,0,the_Flist[i][0])
+                sheet.write(i,1,the_Flist[i][1])
+                
+                i+=1
+            wbk.save(the_path)
+
+            w = say_offline(javab)
             time.sleep(w * 1.1)
             A_PROGRAM_IS_RUNNING = False
 
@@ -1077,9 +1201,8 @@ class Roobin:
 
 #------------------------------------------------------------
 
-
-    @command("توضیحات بازی جهت ها")
-    def arrow_explanation(self):
+    @command("توضیحات %m.guide", defaults=["جست و جو در ویکی پدیا"])
+    def arrow_explanation(self,guide):
         global A_PROGRAM_IS_RUNNING
         """
         CHECKING THE MUTEX FOR NOT RUNNING SIMULTANEOUSLY 
@@ -1090,14 +1213,39 @@ class Roobin:
 
         if A_PROGRAM_IS_RUNNING == False:
             A_PROGRAM_IS_RUNNING = True
-            w = say_offline(
-                "در این بازی در چشم های ربات , جهت هایی به طرفه بالا , پایین , چپ و راست نمایش داده می شود.")
-            time.sleep(w*1.1)
-            w = say_offline(" اگر در چشمه راست ربات بود , برعکسه آن را ")
-            time.sleep(w*1.1)
-            w = say_offline("و اگر در چشمه چپ ربات بود همان"
-                        "  جهت را در پنجره ای که برایتان باز می شود , وارد نمایید.")
-            time.sleep(w + 1)
+            little_mother = {
+                "جست و جو در ویکی پدیا":4,
+                "چیستان":3,
+                "بازی جهت ها":2,
+                "الگوها آفلاین":1,
+                "دنباله اعداد":0
+            }[guide]
+
+            if little_mother==0:
+                w = say_offline("در این بازی دنباله ای از اعداد با الگوی خاصی به شما داده می شود")
+                time.sleep(w * 1.1)
+                w = say_offline("وظیفه شما پیدا کردنه آن الگو و حدسه عدده بعد می باشد. آن عدد را در پنجره ای که برایتان باز می شود وارد کنید")
+                time.sleep(w * 1.1)
+            elif little_mother==1:
+                guide1 = "در این بازی چشم های ربات،  به صورته رندوم چشمک میزنند. وظیفه ی شما تکرار کردنه الگوها در پنجره می باشد"
+                w = say_offline(guide1)
+                time.sleep(w * 1.1)
+            elif little_mother==2:
+                w = say_offline(
+                    "در این بازی در چشم های ربات , جهت هایی به طرفه بالا , پایین , چپ و راست نمایش داده می شود.")
+                time.sleep(w * 1.1)
+                w = say_offline(" اگر در چشمه راست ربات بود , برعکسه آن را ")
+                time.sleep(w * 1.1)
+                w = say_offline("و اگر در چشمه چپ ربات بود همان"
+                            "  جهت را در پنجره ای که برایتان باز می شود , وارد نمایید.")
+                time.sleep(w * 1.1)
+            elif little_mother==3:
+                w = say_offline("بعد از اجرایه این بازی , چیستانی از شما پرسیده می شود. سعی کنید جوابه خود را با صدای رسا اعلام کنید")
+                time.sleep(w * 1.1)
+            elif little_mother==4:
+                w = say_offline("بعد از شنیدنه صدای بوق , کلمه ای را بگویید. من آن را در ویکی پدیا سرچ می کنم و خلاصه ای از نتیجه را برای شما می خوانم")
+                time.sleep(w * 1.1)
+
             A_PROGRAM_IS_RUNNING = False
 
         elif A_PROGRAM_IS_RUNNING == True:
@@ -1134,11 +1282,11 @@ class Roobin:
                 "جک و لوبیای سحرآمیز": "./story/jack.mp3",
 
             }[story]
-            print("Telling the story ..")
-            freeze_support()
+            '''freeze_support()
             self.p = Process(target=playsound, args=(a,))
             self.p.start()
-            self.p.terminate()
+            self.p.terminate()'''
+            playsound(a)
             A_PROGRAM_IS_RUNNING = False
 
         elif A_PROGRAM_IS_RUNNING == True:
@@ -1188,9 +1336,25 @@ class Roobin:
 
     @command("چشمک بزن")
     def roobinBlink(self):
-        print("Blinking..")
-        RoobinControl.eye("both","blink")
-        print("Blinked..")
+        global A_PROGRAM_IS_RUNNING
+        """
+        CHECKING THE MUTEX FOR NOT RUNNING SIMULTANEOUSLY 
+        """
+        # FOR RUNNING BLOCKS SEQUENTIALLY - IF A COMMAND REACHES HERE , IT HAS TO WAIT FOR THE MUTEX(BLOCK) TO BE FREED.
+        while A_PROGRAM_IS_RUNNING:
+            pass
+
+        if A_PROGRAM_IS_RUNNING == False:
+            A_PROGRAM_IS_RUNNING = True
+            # ========================FUNCTION BODY COMES HERE============================
+            print("Blinking..")
+            RoobinControl.eye("both", "blink")
+            print("Blinked..")
+            # ============================================================================
+            A_PROGRAM_IS_RUNNING = False
+
+        elif A_PROGRAM_IS_RUNNING == True:
+            print("A PROGRAM IS RUNNING !!")
 
     @command("به اطراف نگاه کن")
     def roobinLookSides(self):
@@ -1233,7 +1397,8 @@ descriptor = Descriptor(
         speak_please = ["روش یک(آنلاین)","روش دو"],
         eyes_list = ["مربعی" ,"دایره ای" ,"لوزی","مثلثی"],
         eyes_side_list = ["راست","چپ"],
-        mouth_list = ["غنچه","روبین"]
+        mouth_list = ["غنچه","روبین"],
+        guide=["جست و جو در ویکی پدیا","چیستان","بازی جهت ها","الگوها آفلاین","دنباله اعداد"]
     ),
 )
 
