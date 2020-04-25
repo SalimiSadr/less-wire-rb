@@ -17,7 +17,7 @@ import pyaudio
 import threading
 import subprocess
 import contextlib
-from lxml import etree
+# from lxml import etree
 from subprocess import call
 import serial.tools.list_ports
 from os import path,getcwd,system
@@ -109,12 +109,25 @@ def init(portName):
     return True
 
 # Startup Code
-# xml file for motor definitions
-dir = "./"
-file = os.path.join(dir, 'MotorDefinitionsv21.omd')
 
-tree = etree.parse(file)
-root = tree.getroot()
+# xml file for motor definitions
+# dir = "./"
+# file = os.path.join(dir, 'MotorDefinitionsv21.omd')
+
+# tree = etree.parse(file)
+# print(tree)
+# root = tree.getroot()
+# print("-----------------")
+# print(root)
+
+root = [{"Name":"HeadTurn", "Min":"0", "Max":"1000", "Motor":"1", "Speed":"40", "Reverse":"False", "Acceleration":"60", "RestPosition":"5", "Avoid":""},
+		{"Name":"HeadNod", "Min":"140", "Max":"700", "Motor":"0", "Speed":"0", "Reverse":"True", "Acceleration":"60", "RestPosition":"5", "Avoid":""},
+		{"Name":"EyeTurn", "Min":"380", "Max":"780", "Motor":"2", "Speed":"0", "Reverse":"False", "Acceleration":"0", "RestPosition":"5", "Avoid":""},
+		{"Name":"EyeTilt", "Min":"520", "Max":"920", "Motor":"6", "Speed":"0", "Reverse":"False", "Acceleration":"30", "RestPosition":"5", "Avoid":""},
+		{"Name":"TopLip", "Min":"0", "Max":"550", "Motor":"4", "Speed":"0", "Reverse":"True", "Acceleration":"0", "RestPosition":"5", "Avoid":"BottomLip"},
+		{"Name":"BottomLip", "Min":"0", "Max":"550", "Motor":"5", "Speed":"0", "Reverse":"True", "Acceleration":"0", "RestPosition":"5", "Avoid":"TopLip"},
+		{"Name":"LidBlink", "Min":"35", "Max":"305", "Motor":"3", "Speed":"0", "Reverse":"False", "Acceleration":"0", "RestPosition":"10", "Avoid":""},
+		{"Name":"MouthOpen", "Min":"80", "Max":"460", "Motor":"7", "Speed":"0", "Reverse":"False", "Acceleration":"0", "RestPosition":"10", "Avoid":""}]
 
 # Put motor ranges into lists
 motorPos = [11,11,11,11,11,11,11,11]
@@ -124,16 +137,24 @@ motorRev = [False,False,False,False,False,False,False,False]
 restPos = [0,0,0,0,0,0,0,0]
 isAttached = [False,False,False,False,False,False,False,False]
 
+
 # For each line in motor defs file
 for child in root:
-    indexStr = child.get("Motor")
+    indexStr = child["Motor"]
     index = int(indexStr)
-    motorMins[index] = int(int(child.get("Min"))/1000*180)
-    motorMaxs[index] = int(int(child.get("Max"))/1000*180)
-    motorPos[index] = int(child.get("RestPosition"))
-    restPos[index] = int(child.get("RestPosition"))
-
-    if child.get("Reverse") == "True":
+    print(indexStr)
+    motorMins[index] = int(int(child["Min"])/1000*180)
+    motorMaxs[index] = int(int(child["Max"])/1000*180)
+    motorPos[index] = int(child["RestPosition"])
+    restPos[index] = int(child["RestPosition"])
+    print(motorMins)
+    print(motorMaxs)
+    print(motorPos)
+    print(restPos)
+    print(child["Reverse"])
+    print("========================================")
+    print("========================================")
+    if child["Reverse"] == "True":
         rev = True
         motorRev[index] = rev
     else:
