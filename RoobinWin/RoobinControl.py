@@ -3,21 +3,15 @@
 import os
 import re
 import sys
-# import json # Delete
 import wave
 import time
-# import eyed3 # Delete
-# import psutil # Delete
-# import pigpio # Delete
 import serial
 import random
 import pyaudio
-# import logging  # Delete
-# import traceback # Delete
 import threading
 import subprocess
 import contextlib
-# from lxml import etree
+# from lxml import etree #Delete
 from subprocess import call
 import serial.tools.list_ports
 from os import path,getcwd,system
@@ -142,18 +136,10 @@ isAttached = [False,False,False,False,False,False,False,False]
 for child in root:
     indexStr = child["Motor"]
     index = int(indexStr)
-    print(indexStr)
     motorMins[index] = int(int(child["Min"])/1000*180)
     motorMaxs[index] = int(int(child["Max"])/1000*180)
     motorPos[index] = int(child["RestPosition"])
     restPos[index] = int(child["RestPosition"])
-    print(motorMins)
-    print(motorMaxs)
-    print(motorPos)
-    print(restPos)
-    print(child["Reverse"])
-    print("========================================")
-    print("========================================")
     if child["Reverse"] == "True":
         rev = True
         motorRev[index] = rev
