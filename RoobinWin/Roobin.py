@@ -698,7 +698,7 @@ class Roobin:
             os.system('cls' if os.name == 'nt' else 'clear')
             print("the pattern will show in 2 seconds")
             #playsound("./GameVoice/in 2 secconds.mp3")
-            w = say_offline("الگو تا دو ثانیه دیگر نمایش داده می شود")
+            w = say_offline("الگو تا دو ثانیه ی دیگر نمایش داده می شود")
             time.sleep(w * 1.1)
             print("==============================SENDING======================================")
             for i in range(1000):
@@ -830,7 +830,7 @@ class Roobin:
             if wrong==1:
                 print("your answer was wrong")
                 #playsound("./GameVoice/wrong answer(arrow).mp3")
-                w = say_offline("جواب شما اشتباه بود")
+                w = say_offline("جوابه شما اشتباه بود")
                 print("REAL ANSWER = ",mylist)
                 print("MY ANSWER = ", result)
                 time.sleep(w * 1.1)
@@ -845,7 +845,7 @@ class Roobin:
             if new_score>High_Score:
                 print("this is the highest score!")
                 #playsound("./GameVoice/new_record.mp3")
-                w = say_offline("تبریک. رکورد جدیدی با این درجه سختی کسب کردی")
+                w = say_offline("تبریک. رکورده جدیدی با این درجه سختی کسب کردی")
                 F = open("./High Scores/arrow game/GD={}.txt".format(str(a)),"w")
                 F.write(str(new_score))
                 F.close()
@@ -886,7 +886,7 @@ class Roobin:
             n=3
 
             voice1 = 'متوجه نشدم. لطفا تکرار کنید'
-            voice2 = 'تا دو ثانیه دیگر , بازی شروع می شود'
+            voice2 = 'تا دو ثانیه ی دیگر , بازی شروع می شود'
             guide1 = "در این بازی چشم های ربات،  به صورت رندوم چشمک میزنند. وظیفه ی شما تکرار کردنه الگوها می باشد"
             guide2 = "لطفا الگو را با صدای بلند و بدون توقف زیاد تکرار کنید. به این مثال توجه کنید"
 
@@ -972,7 +972,7 @@ class Roobin:
                 if result==mylist:
                     print("you won level {}".format(str(n-2)))
                     #playsound("./GameVoice/you won.mp3")
-                    w = say_offline("تبریک میگم. این مرحله را رد کردین")
+                    w = say_offline("تبریک میگم. این مرحله را رد کردی")
                     time.sleep(w * 1.1)
                     if n-2 > High_Score:
 
@@ -981,7 +981,7 @@ class Roobin:
                         F.write(str(n-2))
                         F.close()
                         if HSS==0:
-                            w = say_offline("رکورد جدیدی با این درجه سختی کسب کردی. آفرین")
+                            w = say_offline("رکورده جدیدی با این درجه سختی کسب کردی. آفرین")
                             #playsound("./High Scores/repeating pattern game2/Record{}.mp3".format(str(a)))
                             HSS=1
                             time.sleep(w * 1.1)
@@ -1224,7 +1224,7 @@ class Roobin:
             if little_mother==0:
                 w = say_offline("در این بازی دنباله ای از اعداد با الگوی خاصی به شما داده می شود")
                 time.sleep(w * 1.1)
-                w = say_offline("وظیفه شما پیدا کردنه آن الگو و حدسه عدده بعد می باشد. آن عدد را در پنجره ای که برایتان باز می شود وارد کنید")
+                w = say_offline("وظیفه ی شما پیدا کردنه آن الگو و حدسه عدده بعد می باشد. آن عدد را در پنجره ای که برایتان باز می شود وارد کنید")
                 time.sleep(w * 1.1)
             elif little_mother==1:
                 guide1 = "در این بازی چشم های ربات،  به صورته رندوم چشمک میزنند. وظیفه ی شما تکرار کردنه الگوها در پنجره می باشد"
@@ -1234,7 +1234,7 @@ class Roobin:
                 w = say_offline(
                     "در این بازی در چشم های ربات , جهت هایی به طرفه بالا , پایین , چپ و راست نمایش داده می شود.")
                 time.sleep(w * 1.1)
-                w = say_offline(" اگر در چشمه راست ربات بود , برعکسه آن را ")
+                w = say_offline(" اگر در چشمه راسته ربات بود , برعکسه آن را ")
                 time.sleep(w * 1.1)
                 w = say_offline("و اگر در چشمه چپ ربات بود همان"
                             "  جهت را در پنجره ای که برایتان باز می شود , وارد نمایید.")
