@@ -39,6 +39,7 @@ VOICES_PATH = "./robot_voices/"
 SPEAKING_SPEED = 155
 SPEAKING_PITCH = 100
 NAME_COUNTER = 0
+LANG = "fa"
 
 ser = None
 port=""
@@ -115,14 +116,13 @@ def listen_and_record(path):
             print(e)
 
 def speech_to_text(file_path, Lang="fa-IR"):
-    print("1")
+    global LANG
     #AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), file_path)
     AUDIO_FILE = "./" + file_path
-    print("2")
     with sr.AudioFile(AUDIO_FILE) as source:
         audio = r.record(source)
         print ("Now recognizing...")
-        if Lang == "fa-IR":
+        if LANG == "fa-IR":
             print("In first fa-IR")
             try:
                 print("Trying ..")
@@ -158,7 +158,7 @@ def speech_to_text(file_path, Lang="fa-IR"):
                 print(e)
         else:
             try:
-                Text = r.recognize_google(audio, language=Lang)
+                Text = r.recognize_google(audio, language=LANG)
                 print ("Recognized:  " + Text)
                 return Text
             except sr.UnknownValueError:
@@ -168,7 +168,7 @@ def speech_to_text(file_path, Lang="fa-IR"):
                 # if it cannot recognize anything, it listens again for 100 times
                 while (counter < 100) & (data == "NONE"):
                     listen_and_record('speech.wav')
-                    data = speech_to_text('speech.wav', Lang)
+                    data = speech_to_text('speech.wav', LANG)
                 if counter >= 100:
                     return "NONE"
                 else:
@@ -231,14 +231,17 @@ def playthesound(vcname):
     # os.remove(vcname)
 
 def text_to_speech_espeak(text):
-    global NAME_COUNTER
+    global NAME_COUNTER, LANG
     NAME_COUNTER += 1
     rvcfilename = VOICES_PATH + "vcm" + str(NAME_COUNTER) + ".wav" 
     text_file_path='text.txt'
     F=open(text_file_path,"w", encoding="utf8")
     F.write(text)
     F.close()
-    os.system(f'espeak -vmb-ir1 -p{SPEAKING_PITCH} -g13 -s{SPEAKING_SPEED} -w {rvcfilename} -f {text_file_path}')
+    if LANG == "fa":
+        os.system(f'espeak -vmb-ir1 -p{SPEAKING_PITCH} -g13 -s{SPEAKING_SPEED} -w {rvcfilename} -f {text_file_path}')
+    elif LANG == "en":
+        os.system(f'espeak -p{SPEAKING_PITCH} -g13 -s{SPEAKING_SPEED} -w {rvcfilename} -f {text_file_path}')
     return rvcfilename
 
 def say_offline(text):
@@ -328,6 +331,20 @@ class Roobin:
         except:
             print("DO NOT TRY ON THIS BLOCK")
 
+    @command("تغییر زبان به  %m.lang_list", defaults=['fa'])
+    def set_language(self, lang_list):
+        global LANG
+        selected_lang = {
+            "fa": 1,
+            "en": 2
+        }[lang_list]
+
+        if selected_lang == 1:
+            LANG = "fa"
+        elif selected_lang == 2:
+            LANG = "en"
+
+
     @command("سرعت گفتار = %s")
     def set_speak_speed(self, text):
         global SPEAKING_SPEED
@@ -414,7 +431,7 @@ class Roobin:
             file_path = "./voice_commands/query.wav"
             print('befor listening!')
             listen_and_record(file_path)
-            print('after listneing!!!')
+            print('after listening!!!')
             speech_to_text_text = speech_to_text(file_path)
             print("speech_to_text")
             if "سلام" in speech_to_text_text:
@@ -1197,10 +1214,6 @@ class Roobin:
             print("A PROGRAM IS RUNNING !!")
 
 
-# --------------------------------------------------
-
-#------------------------------------------------------------
-
     @command("توضیحات %m.guide", defaults=["جست و جو در ویکی پدیا"])
     def arrow_explanation(self,guide):
         global A_PROGRAM_IS_RUNNING
@@ -1398,7 +1411,8 @@ descriptor = Descriptor(
         eyes_list = ["مربعی" ,"دایره ای" ,"لوزی","مثلثی"],
         eyes_side_list = ["راست","چپ"],
         mouth_list = ["غنچه","روبین"],
-        guide=["جست و جو در ویکی پدیا","چیستان","بازی جهت ها","الگوها آفلاین","دنباله اعداد"]
+        guide=["جست و جو در ویکی پدیا","چیستان","بازی جهت ها","الگوها آفلاین","دنباله اعداد"],
+        lang_list = ["en", "fa"]
     ),
 )
 

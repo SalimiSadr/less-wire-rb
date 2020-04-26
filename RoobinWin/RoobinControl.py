@@ -114,6 +114,8 @@ def init(portName):
 # print("-----------------")
 # print(root)
 
+# Motor Definitions
+
 root = [{"Name":"HeadTurn", "Min":"0", "Max":"1000", "Motor":"1", "Speed":"40", "Reverse":"False", "Acceleration":"60", "RestPosition":"5", "Avoid":""},
 		{"Name":"HeadNod", "Min":"140", "Max":"700", "Motor":"0", "Speed":"0", "Reverse":"True", "Acceleration":"60", "RestPosition":"5", "Avoid":""},
 		{"Name":"EyeTurn", "Min":"380", "Max":"780", "Motor":"2", "Speed":"0", "Reverse":"False", "Acceleration":"0", "RestPosition":"5", "Avoid":""},
