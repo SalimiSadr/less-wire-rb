@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 import sys
 import os
-# import csv # -- Delete
 import xlwt
 import xlrd
 import time
@@ -25,7 +24,8 @@ from PIL import ImageTk, Image
 import speech_recognition as sr
 from playsound import playsound
 from os.path import isfile, join
-# from multiprocessing import Process, freeze_support  # Delete
+from num2fawords import words, ordinal_words
+from persiantools.jdatetime import JalaliDate
 from future.backports.http.client import BadStatusLine
 
 
@@ -344,7 +344,6 @@ class Roobin:
         elif selected_lang == 2:
             LANG = "en"
 
-
     @command("سرعت گفتار = %s")
     def set_speak_speed(self, text):
         global SPEAKING_SPEED
@@ -393,9 +392,36 @@ class Roobin:
         else:
             print("A PROGRAM IS RUNNING..")
 
+    @command("عدد رندوم بین %s و %s")
+    def myRandom(self,FNum,SNum):
+
+        global A_PROGRAM_IS_RUNNING
+        """
+        CHECKING THE MUTEX FOR NOT RUNNING SIMULTANEOUSLY 
+        """
+        # FOR RUNNING BLOCKS SEQUENTIALLY - IF A COMMAND REACHES HERE , IT HAS TO WAIT FOR THE MUTEX(BLOCK) TO BE FREED.
+        while A_PROGRAM_IS_RUNNING:
+            pass
+
+        if A_PROGRAM_IS_RUNNING == False:
+            A_PROGRAM_IS_RUNNING = True
+            try:
+                A=max(int(FNum),int(SNum))
+                B=min(int(FNum),int(SNum))
+                res=random.randint(B,A)
+                print(res)
+                #dg hamin stt_var ro copy kardam
+                self.stt_var = res
+                time.sleep(0.5)
+            except:
+                pass
+            A_PROGRAM_IS_RUNNING = False
+        else:
+            print("A PROGRAM IS RUNNING..")
+
     @command("ریکاوری")
     def recovery(self):
-        RoobinControl.recovery_util()
+        RoobinControl.recovery_util()        
 
     @command("معرفی")
     def introduce(self):
@@ -431,7 +457,7 @@ class Roobin:
             file_path = "./voice_commands/query.wav"
             print('befor listening!')
             listen_and_record(file_path)
-            print('after listening!!!')
+            print('after listneing!!!')
             speech_to_text_text = speech_to_text(file_path)
             print("speech_to_text")
             if "سلام" in speech_to_text_text:
@@ -650,6 +676,144 @@ class Roobin:
                     time.sleep(w * 1.1)
 
                 nn=1
+            A_PROGRAM_IS_RUNNING = False
+
+        elif A_PROGRAM_IS_RUNNING == True:
+            print("A PROGRAM IS RUNNING !!")
+
+    @command("تاریخ امروز")
+    def today(self):
+        global A_PROGRAM_IS_RUNNING
+        """
+        CHECKING THE MUTEX FOR NOT RUNNING SIMULTANEOUSLY 
+        """
+        # FOR RUNNING BLOCKS SEQUENTIALLY - IF A COMMAND REACHES HERE , IT HAS TO WAIT FOR THE MUTEX(BLOCK) TO BE FREED.
+        while A_PROGRAM_IS_RUNNING:
+            pass
+
+        if A_PROGRAM_IS_RUNNING == False:
+            A_PROGRAM_IS_RUNNING = True
+            erfan = (JalaliDate.today().strftime("%c"))
+            ls_erfan=erfan.split(" ")
+            rooz=ls_erfan[0]
+            chandom=ls_erfan[1]
+            maah=ls_erfan[2]
+            saal=ls_erfan[3]
+            if rooz == "Yekshanbeh":
+                rooz="يکشنبه"
+            elif rooz == "Doshanbeh":
+                rooz="دوشنبه"
+            elif rooz == "Seshanbeh":
+                rooz="سه شنبه"
+            elif rooz == "Chaharshanbeh":
+                rooz="چهار شنبه"
+            elif rooz == "Panjshanbeh":
+                rooz="پنج شنبه"
+            elif rooz == "Jomeh":
+                rooz="جمعه"
+            else:
+                rooz = "شنبه"
+
+
+            chandom= ordinal_words(int(chandom)) + "ه"
+
+            if maah=="Farvardin":
+                maah="فروردينه"
+            elif maah=="Ordibehesht":
+                maah="ارديبهشته"
+            elif maah=="Khordad":
+                maah="خرداده"
+            elif maah=="Tir":
+                maah="تيره"
+            elif maah=="Mordad":
+                maah="مرداده"
+            elif maah=="Shahrivar":
+                maah="شهريوره"
+            elif maah=="Mehr":
+                maah="مهره"
+            elif maah=="Aban":
+                maah="آبانه"
+            elif maah=="Azar":
+                maah="آذره"
+            elif maah=="Dey":
+                maah="ديه"
+            elif maah=="Bahman":
+                maah="بهمنه"
+            elif maah=="Esfand":
+                maah="اسفنده"
+
+
+            result = "امروز" + " , " + rooz + " , " + chandom + " , " + maah + " , " + saal + " , " + "مي باشد."
+            w = say_offline(result)
+            time.sleep(w * 1.1)
+            A_PROGRAM_IS_RUNNING = False
+
+        elif A_PROGRAM_IS_RUNNING == True:
+            print("A PROGRAM IS RUNNING !!")
+
+    @command("اون روز چند شنبه بود")
+    def chan_shanbeh(self):
+        global A_PROGRAM_IS_RUNNING
+        """
+        CHECKING THE MUTEX FOR NOT RUNNING SIMULTANEOUSLY 
+        """
+        # FOR RUNNING BLOCKS SEQUENTIALLY - IF A COMMAND REACHES HERE , IT HAS TO WAIT FOR THE MUTEX(BLOCK) TO BE FREED.
+        while A_PROGRAM_IS_RUNNING:
+            pass
+
+        if A_PROGRAM_IS_RUNNING == False:
+            A_PROGRAM_IS_RUNNING = True
+            answers=[]
+            window = tkinter.Tk()
+            window.title("Roobin")
+            #window.geometry('240x170')
+            window.configure(bg='red')
+            window.attributes("-topmost", True)
+            window.iconbitmap('.\photo6019163393241493720__1___4__rCb_icon.ico')
+            e = tkinter.Entry(window,width=5,borderwidth=5)
+            e.grid(row=0, column=1)
+            e.insert(0, "1399")
+
+            e1 = tkinter.Entry(window,width=5,borderwidth=5)
+            e1.grid(row=0,column=2)
+            e1.insert(0,"10")
+
+            e2 = tkinter.Entry(window,width=5,borderwidth=5)
+            e2.grid(row=0,column=3)
+            e2.insert(0,"15")
+
+
+            def button_done():
+                answers.append(e.get())
+                answers.append(e1.get())
+                answers.append(e2.get())
+                window.destroy()
+
+            myButton_done = tkinter.Button(window, text="چند شنبه",borderwidth=5,padx=40,font='boldfont' ,command=button_done,fg="#1227D3",bg="#209139")
+
+            myButton_done.grid(row=1,column=0,columnspan=4)
+            window.mainloop()
+
+            erfan = (JalaliDate(int(answers[0]),int(answers[1]),int(answers[2])).strftime("%c"))
+            ls_erfan=erfan.split(" ")
+            rooz=ls_erfan[0]
+            if rooz == "Yekshanbeh":
+                rooz="يکشنبه"
+            elif rooz == "Doshanbeh":
+                rooz="دوشنبه"
+            elif rooz == "Seshanbeh":
+                rooz="سه شنبه"
+            elif rooz == "Chaharshanbeh":
+                rooz="چهار شنبه"
+            elif rooz == "Panjshanbeh":
+                rooz="پنج شنبه"
+            elif rooz == "Jomeh":
+                rooz="جمعه"
+            else:
+                rooz = "شنبه"
+            w = say_offline(rooz)
+            time.sleep(w*1.1)
+
             A_PROGRAM_IS_RUNNING = False
 
         elif A_PROGRAM_IS_RUNNING == True:
@@ -1213,6 +1377,10 @@ class Roobin:
         elif A_PROGRAM_IS_RUNNING == True:
             print("A PROGRAM IS RUNNING !!")
 
+
+# --------------------------------------------------
+
+#------------------------------------------------------------
 
     @command("توضیحات %m.guide", defaults=["جست و جو در ویکی پدیا"])
     def arrow_explanation(self,guide):
