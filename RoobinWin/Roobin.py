@@ -26,6 +26,7 @@ from playsound import playsound
 from os.path import isfile, join
 from num2fawords import words, ordinal_words
 from persiantools.jdatetime import JalaliDate
+from persiantools import characters, digits
 from future.backports.http.client import BadStatusLine
 
 
@@ -534,6 +535,71 @@ class Roobin:
                     # self.p.terminate()
             else:
                 say_offline('این صفحه وجود ندارد')
+            A_PROGRAM_IS_RUNNING = False
+
+        elif A_PROGRAM_IS_RUNNING == True:
+            print("A PROGRAM IS RUNNING !!")
+
+    @command("سرچ در ویکی پدیا %s")
+    def search_in_wikipedia2(self,text):
+        global A_PROGRAM_IS_RUNNING
+        """
+        CHECKING THE MUTEX FOR NOT RUNNING SIMULTANEOUSLY 
+        """
+        # FOR RUNNING BLOCKS SEQUENTIALLY - IF A COMMAND REACHES HERE , IT HAS TO WAIT FOR THE MUTEX(BLOCK) TO BE FREED.
+        while A_PROGRAM_IS_RUNNING:
+            pass
+
+        if A_PROGRAM_IS_RUNNING == False:
+            A_PROGRAM_IS_RUNNING = True
+            wiki_wiki = wikipediaapi.Wikipedia('fa')
+            page_py = wiki_wiki.page(text) 
+            if page_py.exists() == True:
+                try:
+                    result=page_py.summary.split('.')[0] + page_py.summary.split('.')[1]
+                    #say(result)
+                    #feel free to use online version of say function(say()) instead of say_offline()
+                    # freeze_support()
+                    # print("WTFFFFFFF")
+                    # self.p = Process(target=say_offline, args=(result,))
+                    # self.p.start()
+                    self.stt_var = (result)
+                    #time.sleep(w * 1.1)
+                    # self.p.terminate()
+                    #print('yes')
+                except:
+                    #print('no')
+                    # freeze_support()
+                    # self.p = Process(target=say_offline, args=(page_py.summary,))
+                    # self.p.start()
+                    self.stt_var = (page_py.summary)
+                    #time.sleep(w * 1.1)
+                    # self.p.terminate()
+            else:
+                self.stt_var = 'این صفحه وجود ندارد'
+            A_PROGRAM_IS_RUNNING = False
+
+        elif A_PROGRAM_IS_RUNNING == True:
+            print("A PROGRAM IS RUNNING !!")
+
+    @command("دمای هوای شهر %s")
+    def temperature(self,text):
+        global A_PROGRAM_IS_RUNNING
+        """
+        CHECKING THE MUTEX FOR NOT RUNNING SIMULTANEOUSLY 
+        """
+        # FOR RUNNING BLOCKS SEQUENTIALLY - IF A COMMAND REACHES HERE , IT HAS TO WAIT FOR THE MUTEX(BLOCK) TO BE FREED.
+        while A_PROGRAM_IS_RUNNING:
+            pass
+
+        if A_PROGRAM_IS_RUNNING == False:
+            A_PROGRAM_IS_RUNNING = True
+            result = requests.get("http://parsijoo.ir/api?serviceType=weather-API&q={}".format(text))
+            if result.status_code == 200 and len(result.text)>200:
+                Fres=(result.text[result.text.find("<temp><![CDATA[")+len("<temp><![CDATA["):result.text.find("<temp><![CDATA[")+len("<temp><![CDATA[")+2])
+                self.stt_var=int(digits.fa_to_en(Fres))
+            else:
+                self.stt_var="اطلاعاتی درمورده شهر شما یافت نشد"
             A_PROGRAM_IS_RUNNING = False
 
         elif A_PROGRAM_IS_RUNNING == True:
