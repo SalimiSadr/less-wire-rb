@@ -332,6 +332,8 @@ class Roobin:
     #     #     print("DO NOT TRY ON THIS BLOCK")
     #     print("asdadsas")    
 
+# Setup =================================================================================
+
     @command("تغییر زبان به  %m.lang_list", defaults=['fa'])
     def set_language(self, lang_list):
         global LANG
@@ -392,6 +394,41 @@ class Roobin:
 
         else:
             print("A PROGRAM IS RUNNING..")
+
+    @command(" تغییر چشم %m.eyes_side_list  به %m.eyes_list",defaults=['دایره ای', "چپ"])
+    def change_eye(self, eyes_side_list, eyes_list):
+    # Changes eyes form
+        eye_state = {
+            'دایره ای':4,
+            'لوزی':3,
+            'مربعی':2,
+            'مثلثی': 1,
+        }[eyes_list]
+
+        eye_side = {
+            'راست':2,
+            'چپ': 1,
+        }[eyes_side_list]
+
+        print(f"Eye {eye_side} state changed to {eye_state}")
+        print("*" * 10)
+        print("*" * 10)
+        RoobinControl.change_eye_command(eye_state, eye_side)
+
+    @command(" تغییر فرم دهان به فرم %m.mouth_list" , defaults=['روبین'])
+    def change_mouth(self, mouth_list):
+        # Changes mouth form
+        mouth_state = {
+            'روبین':1,
+            'غنچه':2,
+        }[mouth_list]
+
+        print(f"Mouth state changed to {mouth_state}")
+        print("*" * 10)
+        print("*" * 10)
+        RoobinControl.change_mouth_command(mouth_state)
+
+# Blocks =================================================================================
 
     @command("عدد رندوم بین %s و %s")
     def myRandom(self,FNum,SNum):
@@ -1378,7 +1415,6 @@ class Roobin:
         elif A_PROGRAM_IS_RUNNING == True:
             print("A PROGRAM IS RUNNING !!")
 
-
     @command("توضیحات %m.guide", defaults=["جست و جو در ویکی پدیا"])
     def arrow_explanation(self,guide):
         global A_PROGRAM_IS_RUNNING
@@ -1479,39 +1515,6 @@ class Roobin:
         RoobinControl.move(int(motor),int(angle),10)
         print("...")
 
-    @command(" تغییر چشم %m.eyes_side_list  به %m.eyes_list",defaults=['دایره ای', "چپ"])
-    def change_eye(self, eyes_side_list, eyes_list):
-    # Changes eyes form
-        eye_state = {
-            'دایره ای':4,
-            'لوزی':3,
-            'مربعی':2,
-            'مثلثی': 1,
-        }[eyes_list]
-
-        eye_side = {
-            'راست':2,
-            'چپ': 1,
-        }[eyes_side_list]
-
-        print(f"Eye {eye_side} state changed to {eye_state}")
-        print("*" * 10)
-        print("*" * 10)
-        RoobinControl.change_eye_command(eye_state, eye_side)
-
-    @command(" تغییر فرم دهان به فرم %m.mouth_list" , defaults=['روبین'])
-    def change_mouth(self, mouth_list):
-        # Changes mouth form
-        mouth_state = {
-            'روبین':1,
-            'غنچه':2,
-        }[mouth_list]
-
-        print(f"Mouth state changed to {mouth_state}")
-        print("*" * 10)
-        print("*" * 10)
-        RoobinControl.change_mouth_command(mouth_state)
-
     @command("چشمک بزن")
     def roobinBlink(self):
         global A_PROGRAM_IS_RUNNING
@@ -1565,7 +1568,7 @@ class Roobin:
 
 
 descriptor = Descriptor(
-    name = "Roobin blocks",
+    name = "Roobin Setup",
     port = 1234,
     blocks = get_decorated_blocks_from_class(Roobin),
     menus= dict(
