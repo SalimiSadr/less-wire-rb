@@ -269,8 +269,8 @@ def setSynthesizer(params):
         
 # Function to limit values so they are between 0 - 10
 def limit(val):
-     if int(val) > 50:
-       return 50
+     if int(val) > 80:
+       return 80
      elif int(val) < 0: 
         return 0
      else:

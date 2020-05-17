@@ -40,6 +40,8 @@ SPEAKING_SPEED = 155
 SPEAKING_PITCH = 100
 NAME_COUNTER = 0
 LANG = "fa"
+NECKPOS = 25
+HEADPOS = 25
 
 ser = None
 port=""
@@ -397,7 +399,6 @@ class Roobin:
 
     @command(" تغییر چشم %m.eyes_side_list  به %m.eyes_list",defaults=['دایره ای', "چپ"])
     def change_eye(self, eyes_side_list, eyes_list):
-    # Changes eyes form
         eye_state = {
             'دایره ای':4,
             'لوزی':3,
@@ -1506,14 +1507,49 @@ class Roobin:
         elif A_PROGRAM_IS_RUNNING == True:
             print("A PROGRAM IS RUNNING !!")
 
-    @command("موتور %s را به %s درجه بچرخان")
+    @command("موتور %m.motors را به %s درجه ببر", defaults=["گردن"])
     def move_motor(self, motor, angle):
+        motor = {
+            "گردن":1,
+            "سر":0
+        }[motor]
         print("move {motor} by {angle} degrees!".format(motor=motor, angle=angle))
         print("*" * 10)
         print(int(motor),int(angle))
         print("*" * 10)
         RoobinControl.move(int(motor),int(angle),10)
-        print("...")
+
+    @command("موتور  %m.motors را  %s درجه بچرخان", defaults=["گردن"])
+    def move_motor_droplist(self, motor, angle):
+        global NECKPOS, HEADPOS
+        motor = {
+            "گردن":1,
+            "سر":0
+        }[motor]
+
+        if motor :
+            NECKPOS -= int(angle)
+            NECKPOS = 80 if NECKPOS >= 80 else NECKPOS
+            NECKPOS = 0   if NECKPOS <= 0 else NECKPOS
+            RoobinControl.move(int(motor),int(abs(NECKPOS)),10)
+            print("*" * 10)
+            print("move {motor} by {angle} degrees!".format(motor=motor, angle=NECKPOS))
+        else :
+            HEADPOS -= int(angle)
+            HEADPOS = 100 if HEADPOS >= 100 else HEADPOS
+            HEADPOS = 0   if HEADPOS <= 0 else HEADPOS
+            RoobinControl.move(int(motor),int(abs(HEADPOS)),10)
+            print("*" * 10)
+            print("move {motor} by {angle} degrees!".format(motor=motor, angle=HEADPOS))
+        
+        # print("*" * 10)
+        # print("move {motor} by {angle} degrees!".format(motor=motor, angle=angle))
+        # print("*" * 10)
+        # print("*" * 10)
+        # print(int(motor),int(angle))
+        # print("*" * 10)
+        # RoobinControl.move(int(motor),int(angle),10)
+        # print("...")
 
     @command("چشمک بزن")
     def roobinBlink(self):
@@ -1580,7 +1616,8 @@ descriptor = Descriptor(
         eyes_side_list = ["راست","چپ"],
         mouth_list = ["غنچه","روبین"],
         guide=["جست و جو در ویکی پدیا","چیستان","بازی جهت ها","الگوها آفلاین","دنباله اعداد"],
-        lang_list = ["en", "fa"]
+        lang_list = ["en", "fa"],
+        motors = ["سر" , "گردن"]
     ),
 )
 
