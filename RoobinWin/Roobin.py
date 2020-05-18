@@ -355,12 +355,24 @@ class Roobin:
         SPEAKING_SPEED = int(text)
         print(f"SPEAKING SPEED CHANGED TO {SPEAKING_SPEED}")
 
+    @command("سرعت صدا را %s تغییر بده")
+    def set_speak_speed(self, text):
+        global SPEAKING_SPEED
+        SPEAKING_SPEED += int(text)
+        print(f"SPEAKING SPEED CHANGED TO {SPEAKING_SPEED}")
+
     @command("نازکی صدا = %s")
     def set_speak_pitch(self, text):
         global SPEAKING_PITCH
         SPEAKING_PITCH = int(text)
         print(f"SPEAKING PITCH CHANGED TO {SPEAKING_PITCH}")
 
+    @command("نازکی صدا را %s تغییر بده")
+    def change_speak_pitch(self, text):
+        global SPEAKING_PITCH
+        SPEAKING_PITCH += int(text)
+        print(f"SPEAKING PITCH CHANGED TO {SPEAKING_PITCH}")
+        
     @reporter("جواب")
     def get_stt_var(self):
         return self.stt_var
