@@ -48,7 +48,7 @@ port=""
 
 A_PROGRAM_IS_RUNNING = False
 
-
+# Helpers
 def init(portName):
     # pickup global instances of port, ser and sapi variables
     global port, ser
@@ -577,6 +577,37 @@ class Roobin:
 
         elif A_PROGRAM_IS_RUNNING == True:
             print("A PROGRAM IS RUNNING !!")
+
+    @command("%s را در ویکی پدیا جستجو کن")
+    def search_sth_in_wikipedia(self,phrase):
+        global A_PROGRAM_IS_RUNNING
+        """
+        CHECKING THE MUTEX FOR NOT RUNNING SIMULTANEOUSLY 
+        """
+        # FOR RUNNING BLOCKS SEQUENTIALLY - IF A COMMAND REACHES HERE , IT HAS TO WAIT FOR THE MUTEX(BLOCK) TO BE FREED.
+        while A_PROGRAM_IS_RUNNING:
+            pass
+
+        if A_PROGRAM_IS_RUNNING == False:
+            A_PROGRAM_IS_RUNNING = True
+            
+            wiki_wiki = wikipediaapi.Wikipedia('fa')
+            page_py = wiki_wiki.page(phrase)
+            if page_py.exists() == True:
+                try:
+                    result=page_py.summary.split('.')[0] + page_py.summary.split('.')[1]
+                    w = say_offline(result)
+                    time.sleep(w * 1.1)
+                except:
+                    w = say_offline(page_py.summary)
+                    time.sleep(w * 1.1)
+            else:
+                say_offline('این صفحه وجود ندارد')
+            A_PROGRAM_IS_RUNNING = False
+
+        elif A_PROGRAM_IS_RUNNING == True:
+            print("A PROGRAM IS RUNNING !!")
+
 
     @command("چیستان")
     def riddle_game(self):
