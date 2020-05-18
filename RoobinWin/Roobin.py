@@ -361,11 +361,11 @@ class Roobin:
         SPEAKING_PITCH = int(text)
         print(f"SPEAKING PITCH CHANGED TO {SPEAKING_PITCH}")
 
-    @reporter("x")
+    @reporter("جواب")
     def get_stt_var(self):
         return self.stt_var
 
-    @command("صدا را بشنو و در x ذخبره کن .")
+    @command("صدا را بشنو و در جواب ذخبره کن")
     def set_stt_var(self):
 
         global A_PROGRAM_IS_RUNNING
