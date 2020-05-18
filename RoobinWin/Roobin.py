@@ -529,6 +529,24 @@ class Roobin:
             print("A PROGRAM IS RUNNING !!")
         #os.system()
 
+    @command("سوال کن %s و صبر کن برای جواب")
+    def askNwait(self,text):
+        global A_PROGRAM_IS_RUNNING
+        """
+        CHECKING THE MUTEX FOR NOT RUNNING SIMULTANEOUSLY 
+        """
+        # FOR RUNNING BLOCKS SEQUENTIALLY - IF A COMMAND REACHES HERE , IT HAS TO WAIT FOR THE MUTEX(BLOCK) TO BE FREED.
+        while A_PROGRAM_IS_RUNNING:
+            pass
+        if A_PROGRAM_IS_RUNNING == False:
+            A_PROGRAM_IS_RUNNING = True
+            w = say_offline(text)
+            time.sleep(w * 1.1)
+            A_PROGRAM_IS_RUNNING = False
+
+        elif A_PROGRAM_IS_RUNNING == True:
+            print("A PROGRAM IS RUNNING !!")
+
     @command("جست و جو در ویکی پدیا")
     def search_in_wikipedia(self):
         global A_PROGRAM_IS_RUNNING
@@ -607,7 +625,6 @@ class Roobin:
 
         elif A_PROGRAM_IS_RUNNING == True:
             print("A PROGRAM IS RUNNING !!")
-
 
     @command("چیستان")
     def riddle_game(self):
