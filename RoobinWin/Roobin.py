@@ -336,7 +336,7 @@ class Roobin:
 
 # Setup =================================================================================
 
-    @command("تغییر زبان گفتار و نوشتار  به  %m.lang_list", defaults=['fa'])
+    @command("تغییر زبان به  %m.lang_list", defaults=['fa'])
     def set_language(self, lang_list):
         global LANG
         selected_lang = {
@@ -409,7 +409,7 @@ class Roobin:
         else:
             print("A PROGRAM IS RUNNING..")
 
-    @command(" شکل چشم %m.eyes_side_list را %m.eyes_list کن",defaults=['دایره ای', "چپ"])
+    @command(" تغییر چشم %m.eyes_side_list  به %m.eyes_list",defaults=['دایره ای', "چپ"])
     def change_eye(self, eyes_side_list, eyes_list):
         eye_state = {
             'دایره ای':4,
@@ -428,7 +428,7 @@ class Roobin:
         print("*" * 10)
         RoobinControl.change_eye_command(eye_state, eye_side)
 
-    @command("  شکل دهان را  %m.mouth_list کن" , defaults=['روبین'])
+    @command(" تغییر فرم دهان به فرم %m.mouth_list" , defaults=['روبین'])
     def change_mouth(self, mouth_list):
         # Changes mouth form
         mouth_state = {
@@ -474,7 +474,7 @@ class Roobin:
     def recovery(self):
         RoobinControl.recovery_util()        
 
-    @command("خودت رو معرفی کن")
+    @command("معرفی")
     def introduce(self):
         print("IN INTRODUCE !!!!")
         global A_PROGRAM_IS_RUNNING
@@ -777,7 +777,6 @@ class Roobin:
             print("A PROGRAM IS RUNNING !!")
 
 # Games ==================================================================================
-
     @command("چیستان")
     def riddle_game(self):
         global A_PROGRAM_IS_RUNNING
@@ -1617,7 +1616,7 @@ class Roobin:
 
 # Eyes ==================================================================================
 
-    @command("پلک بزن")
+    @command("چشمک بزن")
     def roobinBlink(self):
         global A_PROGRAM_IS_RUNNING
         """
