@@ -320,19 +320,18 @@ class Roobin:
         if time.time() % 8 > 4:
             return "The Scratch Sensor board is not connected. Foo."
 
-    # def _on_reset(self):
-    #     print("""
-    #     Reset! The red stop button has been clicked,
-    #     And now everything is how it was.
-    #     ...
-    #     (Poetry's not my strong point, you understand.)
-    #     """)
-    #     # try:
-    #     #     # TERMINATE P (THE THREAD USED FOR SOME OF BLOCKS FOR EASE OF TERMINATION WITH RED BUTTON)
-    #     #     self.p.terminate()
-    #     # except:
-    #     #     print("DO NOT TRY ON THIS BLOCK")
-    #     print("asdadsas")    
+    def _on_reset(self):
+        print("""
+        Reset! The red stop button has been clicked,
+        And now everything is how it was.
+        ...
+        (Poetry's not my strong point, you understand.)
+        """)
+        # try:
+        #     # TERMINATE P (THE THREAD USED FOR SOME OF BLOCKS FOR EASE OF TERMINATION WITH RED BUTTON)
+        #     self.p.terminate()
+        # except:
+        #     print("DO NOT TRY ON THIS BLOCK") 
 
 # Setup =================================================================================
 
@@ -477,7 +476,7 @@ class Roobin:
     @command("معرفی")
     def introduce(self):
         print("IN INTRODUCE !!!!")
-        global A_PROGRAM_IS_RUNNING
+        global A_PROGRAM_IS_RUNNING, LANG
         """
         CHECKING THE MUTEX FOR NOT RUNNING SIMULTANEOUSLY 
         """
@@ -486,7 +485,10 @@ class Roobin:
             pass
         if A_PROGRAM_IS_RUNNING == False:
             A_PROGRAM_IS_RUNNING = True
-            text = "سلام ، من روبین هستم ، دوسته خوبه شما"
+            if LANG == "en":
+                text = "Hello . I am roobin. Your good friend !"
+            else:
+                text = "سلام ، من روبین هستم ، دوسته خوبه شما"
             w = say_offline(text)
             time.sleep(w * 1.1)
             A_PROGRAM_IS_RUNNING = False
