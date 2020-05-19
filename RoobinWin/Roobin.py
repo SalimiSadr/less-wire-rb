@@ -117,6 +117,7 @@ def listen_and_record(path):
         except Exception as e:
             print(e)
 
+# FA & EN
 def speech_to_text(file_path, Lang="fa-IR"):
     global LANG
     #AUDIO_FILE = path.join(path.dirname(path.realpath(__file__)), file_path)
@@ -246,6 +247,7 @@ def text_to_speech_espeak(text):
         os.system(f'espeak -p{SPEAKING_PITCH} -g13 -s{SPEAKING_SPEED} -w {rvcfilename} -f {text_file_path}')
     return rvcfilename
 
+# FA & EN
 def say_offline(text):
     print("__In say_offline funcion__")
     vcname = text_to_speech_espeak(text)
