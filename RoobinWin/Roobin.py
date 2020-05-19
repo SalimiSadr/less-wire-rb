@@ -473,6 +473,7 @@ class Roobin:
     def recovery(self):
         RoobinControl.recovery_util()        
 
+    # FA & EN
     @command("معرفی")
     def introduce(self):
         print("IN INTRODUCE !!!!")
@@ -496,6 +497,7 @@ class Roobin:
         elif A_PROGRAM_IS_RUNNING == True:
             print("A PROGRAM IS RUNNING !!")
 
+    # FA & EN
     @command("سلام کن")
     def say_hello(self):
         global A_PROGRAM_IS_RUNNING
@@ -513,8 +515,11 @@ class Roobin:
             print('after listneing!!!')
             speech_to_text_text = speech_to_text(file_path)
             print("speech_to_text")
-            if "سلام" in speech_to_text_text:
-                text = "سلام.من روبین هستم.از آشنایی با شما خوشحالم"
+            if "سلام" in speech_to_text_text or "hello" in speech_to_text_text:
+                if LANG == "en":
+                    text = "Hello. I am Roobin. Nice to meet you !"
+                else:
+                    text = "سلام.من روبین هستم.از آشنایی با شما خوشحالم"
                 w = say_offline(text)
                 time.sleep(w * 1.1)
 
@@ -523,6 +528,7 @@ class Roobin:
         elif A_PROGRAM_IS_RUNNING == True:
             print("A PROGRAM IS RUNNING !!")
 
+    # FA & EN
     @command("بگو آفلاین %s")
     def begoo(self,text):
         print("IN BEGOO !!!!")
@@ -543,6 +549,7 @@ class Roobin:
             print("A PROGRAM IS RUNNING !!")
         #os.system()
 
+    # FA & EN
     @command("سوال کن %s و صبر کن برای جواب")
     def askNwait(self,text):
         global A_PROGRAM_IS_RUNNING
@@ -561,6 +568,7 @@ class Roobin:
         elif A_PROGRAM_IS_RUNNING == True:
             print("A PROGRAM IS RUNNING !!")
 
+    # FA & EN
     @command("جست و جو در ویکی پدیا")
     def search_in_wikipedia(self):
         global A_PROGRAM_IS_RUNNING
@@ -580,7 +588,12 @@ class Roobin:
             speech_to_text_text = speech_to_text(file_path)
             print("speech_to_text")
             print(speech_to_text_text)
-            wiki_wiki = wikipediaapi.Wikipedia('fa')
+
+            if LANG == "en":
+                wiki_wiki = wikipediaapi.Wikipedia('en')
+            else:
+                wiki_wiki = wikipediaapi.Wikipedia('en')
+
             page_py = wiki_wiki.page(speech_to_text_text)
             if page_py.exists() == True:
                 try:
@@ -604,12 +617,17 @@ class Roobin:
                     time.sleep(w * 1.1)
                     # self.p.terminate()
             else:
-                say_offline('این صفحه وجود ندارد')
+                if LANG == "en":
+                    text = "Page not found"
+                else:
+                    text = 'این صفحه وجود ندارد'
+                say_offline(text)
             A_PROGRAM_IS_RUNNING = False
 
         elif A_PROGRAM_IS_RUNNING == True:
             print("A PROGRAM IS RUNNING !!")
 
+    # FA & EN
     @command("%s را در ویکی پدیا جستجو کن")
     def search_sth_in_wikipedia(self,phrase):
         global A_PROGRAM_IS_RUNNING
@@ -623,7 +641,11 @@ class Roobin:
         if A_PROGRAM_IS_RUNNING == False:
             A_PROGRAM_IS_RUNNING = True
             
-            wiki_wiki = wikipediaapi.Wikipedia('fa')
+            if LANG == "en":
+                wiki_wiki = wikipediaapi.Wikipedia('en')
+            else:
+                wiki_wiki = wikipediaapi.Wikipedia('fa')
+
             page_py = wiki_wiki.page(phrase)
             if page_py.exists() == True:
                 try:
@@ -634,7 +656,11 @@ class Roobin:
                     w = say_offline(page_py.summary)
                     time.sleep(w * 1.1)
             else:
-                say_offline('این صفحه وجود ندارد')
+                if LANG == "en":
+                    text = "Page not found"
+                else:
+                    text = 'این صفحه وجود ندارد'
+                say_offline(text)
             A_PROGRAM_IS_RUNNING = False
 
         elif A_PROGRAM_IS_RUNNING == True:
@@ -1480,7 +1506,7 @@ class Roobin:
             print("A PROGRAM IS RUNNING !!")
 
     @command("توضیحات %m.guide", defaults=["جست و جو در ویکی پدیا"])
-    def arrow_explanation(self,guide):
+    def games_explanation(self,guide):
         global A_PROGRAM_IS_RUNNING
         """
         CHECKING THE MUTEX FOR NOT RUNNING SIMULTANEOUSLY 
