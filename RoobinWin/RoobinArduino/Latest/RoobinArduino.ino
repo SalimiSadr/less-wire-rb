@@ -1027,7 +1027,8 @@ void loop()
 	}
 
  // EYES
-  
+
+  // arrow and ... games
   if (field[0] == 'q')
   {
     switch (field[1])
@@ -1104,6 +1105,11 @@ void loop()
               if (field[3] == '4') delay(4000);
               break;
     }
+
+    // Defualt eye
+    display_eyes(org_eye, org_eye);
+
+    
   }
 
 // EYES CHANGE
