@@ -413,6 +413,7 @@ class Roobin:
     @command(" تغییر چشم %m.eyes_side_list  به %m.eyes_list",defaults=['دایره ای', "چپ"])
     def change_eye(self, eyes_side_list, eyes_list):
         eye_state = {
+            'اصل':5,
             'دایره ای':4,
             'لوزی':3,
             'مربعی':2,
@@ -1696,6 +1697,27 @@ class Roobin:
         RoobinControl.eye("both","neutral")
         print("Neutralled :)")
 
+    @command("چشم را در موقعیت %s و %s %m.on_or_off کن ")
+    def draw_on_eyes(self, x, y, on_or_off):
+        onOroff = {
+                "خاموش":0,
+                "روشن":1
+            }[on_or_off]
+        print(f"( {x} {y} ) on matrix is now {onOroff}")
+        RoobinControl.matrix_eye(x, y, onOroff)
+
+    @command("چشم %m.eyes_side_list را برای نقاشی خاموش کن  ")
+    def clean_the_eyes(self,eyes_side_list):
+        eye_side = {
+            'راست':1,
+            'چپ': 2,
+        }[eyes_side_list]
+        print("Cleaning the field to be messed ..")
+        RoobinControl.clean_eye(str(eye_side))
+        print("Cleaned.")
+    
+
+
 
 
 descriptor = Descriptor(
@@ -1707,12 +1729,13 @@ descriptor = Descriptor(
         difficulty = ["سطح 1","سطح 2","سطح 3"],
         pattern_game_difficulty = ["آسان","متوسط","سخت","غیر ممکن"],
         speak_please = ["روش یک(آنلاین)","روش دو"],
-        eyes_list = ["مربعی" ,"دایره ای" ,"لوزی","مثلثی"],
+        eyes_list = ["اصل" ,"دایره ای" ,"لوزی","مثلثی", "مثلثی"],
         eyes_side_list = ["راست","چپ"],
         mouth_list = ["غنچه","روبین"],
         guide=["جست و جو در ویکی پدیا","چیستان","بازی جهت ها","الگوها آفلاین","دنباله اعداد"],
         lang_list = ["en", "fa"],
-        motors = ["سر" , "گردن"]
+        motors = ["سر" , "گردن"],
+        on_or_off = ["روشن", "خاموش"]
     ),
 )
 

@@ -507,6 +507,21 @@ def change_eye_command(eye_state, eye_side):
     msg = "z" + str(eye_state) + str(eye_side) + "," + "\n"
     serwrite(msg)
 
+def matrix_eye(x, y, onOroff):
+    msg = "b" + str(x) + str(y) + str(onOroff) + "\n"
+    serwrite(msg)
+
+# Clean (side) eye for drawing.
+def clean_eye(side):
+
+    if side == "2":
+        tosend = "r"
+    else:
+        tosend = "l"
+
+    msg = "g" + str(tosend) + "\n"
+    serwrite(msg)
+
 #Changes mouth form
 def change_mouth_command(mouth_state):
     msg = "f" + str(mouth_state) + "," + "\n"
@@ -515,7 +530,7 @@ def change_mouth_command(mouth_state):
 
 """
 
-COMMAND PREFIXES USED:    a c d e h i k l m n p q r t v w x z
+COMMAND PREFIXES USED:    a b c d e f g h i k l m n p q r t v w x z
 
 """
 
@@ -530,7 +545,7 @@ if __name__ == "__main__":
     reset()
 
     try:
-        print("here")
+        print("Everything's fine. Coming up ..")
         # move(5,1,10)
         # move(5,5,10)
         # move(5,10,3)
