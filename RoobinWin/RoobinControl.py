@@ -507,8 +507,8 @@ def change_eye_command(eye_state, eye_side):
     msg = "z" + str(eye_state) + str(eye_side) + "," + "\n"
     serwrite(msg)
 
-def matrix_eye(x, y, onOroff):
-    msg = "b" + str(x) + str(y) + str(onOroff) + "\n"
+def matrix_eye(x, y, onOroff, eye_side):
+    msg = "b" + str(x) + str(y) + str(onOroff) + str(eye_side) + "\n"
     serwrite(msg)
 
 # Clean (side) eye for drawing.

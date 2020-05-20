@@ -1697,14 +1697,19 @@ class Roobin:
         RoobinControl.eye("both","neutral")
         print("Neutralled :)")
 
-    @command("چشم را در موقعیت %s و %s %m.on_or_off کن ")
-    def draw_on_eyes(self, x, y, on_or_off):
+    @command("چشم %m.eyes_side_list را در موقعیت %s و %s %m.on_or_off کن ")
+    def draw_on_eyes(self, eyes_side_list, x, y, on_or_off):
         onOroff = {
                 "خاموش":0,
                 "روشن":1
             }[on_or_off]
+
+        eye_side = {
+            'راست':1,
+            'چپ': 2,
+        }[eyes_side_list]
         print(f"( {x} {y} ) on matrix is now {onOroff}")
-        RoobinControl.matrix_eye(x, y, onOroff)
+        RoobinControl.matrix_eye(x, y, onOroff, eye_side)
 
     @command("چشم %m.eyes_side_list را برای نقاشی خاموش کن  ")
     def clean_the_eyes(self,eyes_side_list):

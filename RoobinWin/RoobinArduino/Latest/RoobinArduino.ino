@@ -1,4 +1,4 @@
-/*****************************
+  /*****************************
 * V1.8  Servo Controller for Ohbot Robot using Ohbrain board
 *
 * This sketch needs the following libraries which are both available under GNU public licence: Adafruit Neopixel, VarSpeedServo.
@@ -347,7 +347,17 @@ byte triangle_eye_left[8] = {    B00000000,
                                  B00010100,
                                  B00011000,
                                  B00010000,
-                                 B00000000};                                 
+                                 B00000000}; 
+
+byte triangle_eye[8] = {    B00000000,
+                                 B00011000,
+                                 B00010100,
+                                 B00010010,
+                                 B00010100,
+                                 B00011000,
+                                 B00010000,
+                                 B00000000};  
+                                                                                                  
 
 byte lookleft_eye[8] = {B01111110,
                          B10011001,
@@ -416,6 +426,15 @@ byte eye_right[8] =  { B00000000,
                        B00000000,
                        B00000000,
                        B00000000}; 
+
+byte org_eye[8] =  {   B00000000,
+                       B00000000,
+                       B00000000,
+                       B00011000,
+                       B00011000,
+                       B00000000,
+                       B00000000,
+                       B00000000};
 
 // happy mouth            
 byte happy_mouth_2[8] = {  B00001000,
@@ -575,6 +594,8 @@ void setup()
   lc.shutdown(4,false);
   lc.setIntensity(4,1);
   lc.clearDisplay(4);
+
+  display_eyes(eye_left, eye_right);
 
 
   
@@ -910,7 +931,7 @@ void loop()
 	// Roobin init
 //    display_eyes(lookleft_eye, lookleft_eye);
 //    delay(2000);
-    display_eyes(eye_left, eye_right);
+//    display_eyes(eye_left, eye_right);
 //    delay(2000);
 //    display_eyes(lookright_eye, lookright_eye);
 //    delay(2000);
@@ -1102,6 +1123,9 @@ void loop()
           if (field[1] == '4')
             // CIRCLE EYES
             memcpy(eye_right, lookmid_eye, sizeof eye_right);
+		  if (field[1] == '5')
+            // ORIGINAL EYES
+            memcpy(eye_right, org_eye, sizeof eye_right);
     }
 
         if (field[2] == '2')
@@ -1118,9 +1142,56 @@ void loop()
           if (field[1] == '4')
             // CIRCLE EYES
             memcpy(eye_left, lookmid_eye, sizeof eye_left);
+		  if (field[1] == '5')
+            // ORIGINAL EYES
+            memcpy(eye_left, org_eye, sizeof eye_left);
     }
  }
 
+// Clear to Draw !!
+if (field[0] == 'g')
+ { 
+  
+          if (field[1] == 'r')
+            	display_right_eye(full_off);
+		      if (field[1] == 'l')
+            	display_left_eye(full_off);	   
+ }
+
+ if (field[0] == 'b')
+ { 
+   char xstr[2];
+   xstr[0] = field[1];
+   xstr[1] = '\0';
+
+   char ystr[2];
+   ystr[0] = field[2];
+   ystr[1] = '\0';
+
+   char statestr[2];
+   statestr[0] = field[3];
+   statestr[1] = '\0';
+   
+	 int x_d = atoi(xstr);
+	 int y_d = atoi(ystr);
+   byte state = atoi(statestr);
+   
+	 
+   if (state == 1){
+      if (field[4] == '1')
+        lc.setLed(1,x_d,y_d,true);
+      if (field[4] == '2')
+        lc.setLed(0,x_d,y_d,true);
+   }
+   else {
+      if (field[4] == '1')
+        lc.setLed(1,x_d,y_d,false);
+      if (field[4] == '2')
+        lc.setLed(0,x_d,y_d,false);}
+//
+//	 eye_left[x_d][y_d] = state;
+//	 eye_right[x_d][y_d] = state;	   
+ }
 // MOUTH CHANGE
  if (field[0] == 'f')
  {    
@@ -1354,6 +1425,18 @@ void display_eyes(byte right_eye[], byte left_eye[]) {
   for(int i=0;i<8;i++) {
    lc.setRow(0,i,left_eye[i]);
    lc.setRow(1,i,right_eye[i]);
+  } 
+}
+
+void display_right_eye(byte right_eye[]) {
+  for(int i=0;i<8;i++) {
+   lc.setRow(0,i,right_eye[i]);
+  } 
+}
+
+void display_left_eye(byte left_eye[]) {
+  for(int i=0;i<8;i++) {
+   lc.setRow(1,i,left_eye[i]);
   } 
 }
 
