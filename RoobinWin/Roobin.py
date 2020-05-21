@@ -242,7 +242,7 @@ def text_to_speech_espeak(text):
     F.write(text)
     F.close()
     if LANG == "fa":
-        os.system(f'espeak -vmb-ir1 -p{SPEAKING_PITCH} -g13 -s{SPEAKING_SPEED} -w {rvcfilename} -f {text_file_path}')
+        os.system(f'espeak -vmb-ir1 --path="C:" -p{SPEAKING_PITCH} -g13 -s{SPEAKING_SPEED} -w {rvcfilename} -f {text_file_path}')
     elif LANG == "en":
         os.system(f'espeak -p{SPEAKING_PITCH} -g13 -s{SPEAKING_SPEED} -w {rvcfilename} -f {text_file_path}')
     return rvcfilename
