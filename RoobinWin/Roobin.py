@@ -1645,7 +1645,7 @@ class Roobin:
         # RoobinControl.move(int(motor),int(angle),10)
         # print("...")
 
-# Eyes ==================================================================================
+# Eyes and Mouth ==================================================================================
 
     @command("چشمک بزن")
     def roobinBlink(self):
@@ -1711,14 +1711,26 @@ class Roobin:
         print(f"( {x} {y} ) on matrix is now {onOroff}")
         RoobinControl.matrix_eye(x, y, onOroff, eye_side)
 
-    @command("چشم %m.eyes_side_list را برای نقاشی خاموش کن  ")
-    def clean_the_eyes(self,eyes_side_list):
-        eye_side = {
-            'راست':1,
-            'چپ': 2,
-        }[eyes_side_list]
+
+    @command("دهان را در موقعیت %s و %s %m.on_or_off کن ")
+    def draw_on_mouth(self, x, y, on_or_off):
+        onOroff = {
+                "خاموش":0,
+                "روشن":1
+            }[on_or_off]
+
+        print(f"( {x} {y} ) on mouth matrix is now {onOroff}")
+        RoobinControl.matrix_mouth(x, y, onOroff)
+
+    @command(" %m.matrices را برای نقاشی خاموش کن  ")
+    def clean_the_matrices(self,matrices):
+        mat = {
+            'چشم راست':1,
+            'چشم چپ': 2,
+            'دهان': 3,
+        }[matrices]
         print("Cleaning the field to be messed ..")
-        RoobinControl.clean_eye(str(eye_side))
+        RoobinControl.clean_eye(str(mat))
         print("Cleaned.")
     
 
@@ -1740,7 +1752,8 @@ descriptor = Descriptor(
         guide=["جست و جو در ویکی پدیا","چیستان","بازی جهت ها","الگوها آفلاین","دنباله اعداد"],
         lang_list = ["en", "fa"],
         motors = ["سر" , "گردن"],
-        on_or_off = ["روشن", "خاموش"]
+        on_or_off = ["روشن", "خاموش"],
+        matrices = ["چشم راست","چشم چپ", "دهان"],
     ),
 )
 

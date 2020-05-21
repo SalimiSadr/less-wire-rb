@@ -511,13 +511,19 @@ def matrix_eye(x, y, onOroff, eye_side):
     msg = "b" + str(x) + str(y) + str(onOroff) + str(eye_side) + "\n"
     serwrite(msg)
 
+def matrix_mouth(x, y, onOroff):
+    msg = "j" + str(x) + str(y) + str(onOroff) + "\n"
+    serwrite(msg)
+
 # Clean (side) eye for drawing.
 def clean_eye(side):
 
     if side == "2":
         tosend = "r"
-    else:
+    elif side == "1":
         tosend = "l"
+    else:
+        tosend = "m"
 
     msg = "g" + str(tosend) + "\n"
     serwrite(msg)
@@ -530,7 +536,7 @@ def change_mouth_command(mouth_state):
 
 """
 
-COMMAND PREFIXES USED:    a b c d e f g h i k l m n p q r t v w x z
+COMMAND PREFIXES USED:    a b c d e f g h i j k l m n p q r t v w x z
 
 """
 

@@ -1161,9 +1161,12 @@ if (field[0] == 'g')
           if (field[1] == 'r')
             	display_right_eye(full_off);
 		      if (field[1] == 'l')
-            	display_left_eye(full_off);	   
+            	display_left_eye(full_off);
+          if (field[1] == 'm')
+              display_mouth(full_off);  	   
  }
-
+ 
+// EYE DRAW
  if (field[0] == 'b')
  { 
    char xstr[2];
@@ -1198,6 +1201,34 @@ if (field[0] == 'g')
 //	 eye_left[x_d][y_d] = state;
 //	 eye_right[x_d][y_d] = state;	   
  }
+
+// MOUTH DRAW
+
+if (field[0] == 'j')
+ { 
+   char xstr[2];
+   xstr[0] = field[1];
+   xstr[1] = '\0';
+
+   char ystr[2];
+   ystr[0] = field[2];
+   ystr[1] = '\0';
+
+   char statestr[2];
+   statestr[0] = field[3];
+   statestr[1] = '\0';
+   
+   int x_d = atoi(xstr);
+   int y_d = atoi(ystr);
+   byte state = atoi(statestr);
+   
+   
+   if (state == 1)
+        lc.setLed(2,x_d,y_d,true);
+   else 
+        lc.setLed(2,x_d,y_d,false);
+}
+
 // MOUTH CHANGE
  if (field[0] == 'f')
  {    
