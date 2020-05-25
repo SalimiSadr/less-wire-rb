@@ -5,7 +5,7 @@ import re
 import sys
 import wave
 import time
-import serial
+from serial import Serial
 import random
 import pyaudio
 import threading
@@ -88,7 +88,9 @@ def init(portName):
         return False
 
     # Open the serial port
-    ser = serial.Serial(port, 19200)
+    print("---------------->   1")
+    ser = Serial(port, 19200)
+    print("---------------->   2")
 
     # Set read timeout and write timeouts to blocking
     ser.timeout = None
@@ -96,10 +98,10 @@ def init(portName):
 
     # Make an initial call to Festival without playing the sound to check it's all okay
     text = "Hi"
-        
+    print("---------------->   3")
     # Create a bash command with the desired text. The command writes two files, a .wav with the speech audio and a .txt file containing the phonemes and the times.
     #speak (text)
-
+    print("DONE !")
     return True
 
 # Startup Code

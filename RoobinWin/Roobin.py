@@ -48,6 +48,7 @@ port=""
 
 A_PROGRAM_IS_RUNNING = False
 
+
 # Helpers
 def init(portName):
     # pickup global instances of port, ser and sapi variables
@@ -525,6 +526,40 @@ class Roobin:
                     text = "سلام.من روبین هستم.از آشنایی با شما خوشحالم"
                 w = say_offline(text)
                 time.sleep(w * 1.1)
+
+            A_PROGRAM_IS_RUNNING = False
+
+        elif A_PROGRAM_IS_RUNNING == True:
+            print("A PROGRAM IS RUNNING !!")
+
+    @command("بخند")
+    def chuckle(self):
+
+        global A_PROGRAM_IS_RUNNING, LANG
+        """
+        CHECKING THE MUTEX FOR NOT RUNNING SIMULTANEOUSLY 
+        """
+        # FOR RUNNING BLOCKS SEQUENTIALLY - IF A COMMAND REACHES HERE , IT HAS TO WAIT FOR THE MUTEX(BLOCK) TO BE FREED.
+        while A_PROGRAM_IS_RUNNING:
+            pass
+        if A_PROGRAM_IS_RUNNING == False:
+            A_PROGRAM_IS_RUNNING = True
+
+
+            motor = 1
+            startpos = 10
+            deg1 = 10
+            deg2 = 60
+
+            # start laughing
+            RoobinControl.move(int(motor),int(startpos),10)
+            time.sleep(1)
+            for i in range(20):
+                time.sleep(0.1)
+                RoobinControl.move(int(motor),int(deg1),10)
+                RoobinControl.move(int(motor),int(deg2),10)
+            # finish laughing
+
 
             A_PROGRAM_IS_RUNNING = False
 
@@ -1761,6 +1796,7 @@ extension = Extension(Roobin, descriptor)
 
 
 if __name__ == "__main__":
+
 
     delete_all_voices()
     t1_s2e = threading.Thread(target=save_generated_s2e) 
