@@ -1,4 +1,4 @@
-from tkinter import *
+from tkinter import Tk , Label , LabelFrame , StringVar , OptionMenu , Button
 from PIL import Image, ImageTk
 from utils import *
 
@@ -26,11 +26,77 @@ myimage1 = ImageTk.PhotoImage(Image.open(".\\images\\Webp.net-resizeimage(final)
 
 the_label = Label(image=myimage1)
 the_label.grid(row=0,column=0,columnspan=2)
+
+guides=["جست و جو در ویکی پدیا","چیستان","بازی جهت ها","الگوها آفلاین","دنباله اعداد"]
+
+clicked123 = StringVar()
+clicked123.set("راهنما")
+
+
+b0 = OptionMenu(root,clicked123,*guides)
+b0.config(bg="#271c42",fg="white",width=25)
+b0.place(x=455,y=0)
+
+def rahnamaee_kon():
+    global A_PROGRAM_IS_RUNNING
+    """
+    CHECKING THE MUTEX FOR NOT RUNNING SIMULTANEOUSLY 
+    """
+    # FOR RUNNING BLOCKS SEQUENTIALLY - IF A COMMAND REACHES HERE , IT HAS TO WAIT FOR THE MUTEX(BLOCK) TO BE FREED.
+    while A_PROGRAM_IS_RUNNING:
+        pass
+
+    if A_PROGRAM_IS_RUNNING == False:
+        A_PROGRAM_IS_RUNNING = True
+        '''little_mother = {
+            "جست و جو در ویکی پدیا":4,
+            "چیستان":3,
+            "بازی جهت ها":2,
+            "الگوها آفلاین":1,
+            "دنباله اعداد":0
+        }[guide]'''
+        guides=["جست و جو در ویکی پدیا","چیستان","بازی جهت ها","الگوها آفلاین","دنباله اعداد"]
+
+        if clicked123.get()==guides[4]:
+            w = say_offline("در این بازی دنباله ای از اعداد با الگوی خاصی به شما داده می شود")
+            time.sleep(w * 1.1)
+            w = say_offline("وظیفه ی شما پیدا کردنه آن الگو و حدسه عدده بعد می باشد. آن عدد را در پنجره ای که برایتان باز می شود وارد کنید")
+            time.sleep(w * 1.1)
+        elif clicked123.get()==guides[3]:
+            guide1 = "در این بازی چشم های ربات،  به صورته رندوم چشمک میزنند. وظیفه ی شما تکرار کردنه الگوها در پنجره می باشد"
+            w = say_offline(guide1)
+            time.sleep(w * 1.1)
+        elif clicked123.get()==guides[2]:
+            w = say_offline(
+                "در این بازی در چشم های ربات , جهت هایی به طرفه بالا , پایین , چپ و راست نمایش داده می شود.")
+            time.sleep(w * 1.1)
+            w = say_offline(" اگر در چشمه راسته ربات بود , برعکسه آن را ")
+            time.sleep(w * 1.1)
+            w = say_offline("و اگر در چشمه چپ ربات بود همان"
+                        "  جهت را در پنجره ای که برایتان باز می شود , وارد نمایید.")
+            time.sleep(w * 1.1)
+        elif clicked123.get()==guides[1]:
+            w = say_offline("بعد از اجرایه این بازی , چیستانی از شما پرسیده می شود. سعی کنید جوابه خود را با صدای رسا اعلام کنید")
+            time.sleep(w * 1.1)
+        elif clicked123.get()==guides[0]:
+            w = say_offline("بعد از شنیدنه صدای بوق , کلمه ای را بگویید. من آن را در ویکی پدیا سرچ می کنم و خلاصه ای از نتیجه را برای شما می خوانم")
+            time.sleep(w * 1.1)
+        else:
+            w = say_offline("انتخاب کنيد که در مورده کدام بازي راهنمايي ميخواهيد")
+            time.sleep(w * 1.1)
+
+        A_PROGRAM_IS_RUNNING = False
+
+    elif A_PROGRAM_IS_RUNNING == True:
+        print("A PROGRAM IS RUNNING !!")
+        
+begoo= Button(root, text="  بگو  ",border=10,fg="white",bg="#271c42",command=rahnamaee_kon)
+begoo.place(x=550,y=30)
 ##################################################################################################################
 
 BACKGROUND_COLOR = "#1f0d4a"
 
-frame = LabelFrame(root,padx=10,pady=10,background=BACKGROUND_COLOR)
+frame = LabelFrame(root,padx=10,pady=10,background="#271c42")
 # making inside bigger(padx and pady)
 
 frame.grid(row=1,column=0,padx=1,pady=1,sticky="we")
@@ -42,14 +108,14 @@ the_label = Label(frame,image=F1myimage1,padx=20,border=0)
 the_label.grid(row=0,column=6,sticky='NE')
 #the_label.pack(side='top')
 
-mylabel=Label(frame, text="",font='boldfont',fg="white",bg=BACKGROUND_COLOR)
+mylabel=Label(frame, text="",font='boldfont',fg="white",bg="#271c42")
 mylabel.grid(row=1,column=2)
 
 
 #mylabel=Label(frame, text="داستان ها",padx=10,pady=10,font='boldfont',fg="white",bg="#271c42")
 #mylabel.grid(row=1,column=1)
 
-mylabel=Label(frame, text="آيا مي دانستيد؟",pady=10,font='boldfont',fg="white",bg=BACKGROUND_COLOR)
+mylabel=Label(frame, text="آيا مي دانستيد؟",pady=10,font='boldfont',fg="white",bg="#271c42")
 mylabel.grid(row=2,column=1)
 
 facts_image = ImageTk.PhotoImage(file = ".\\images\\aya midanestid.png")
@@ -538,7 +604,8 @@ def playAG():
                 window1.attributes("-topmost", True)
                 window1.iconbitmap('.\photo6019163393241493720__1___4__rCb_icon.ico')
                 window1.config(bg="black")
-
+                #window1.attributes('-disabled', True)
+                window1.overrideredirect(True)
                 def button_click_left():
                     mylabel=Label(window1,text="left ")
                     result.append(("0","6"))
@@ -562,6 +629,11 @@ def playAG():
                     result.append(("3","5"))
                     window1.quit()
                     window1.destroy()
+                
+                def button_click_exit():
+                    result.append("exit")
+                    window1.quit()
+                    window1.destroy()
 
 
                 #there is a problem with adding image to buttons
@@ -569,18 +641,26 @@ def playAG():
                 myButton_right = Button(window1, text="right",font='boldfont',padx=26,pady=40, command=button_click_right, fg="black", bg="#EF1839")
                 myButton_bot = Button(window1, text="bot",font='boldfont',padx=26,pady=40 ,command=button_click_bot,fg="black",bg="#209139")
                 myButton_top = Button(window1, text="top",font = 'boldfont',padx = 27,pady=40,command = button_click_top, fg ="black" , bg = "yellow")
+                myButton_exit = Button(window1, text="exit",font = 'boldfont', padx=7,pady=7,command = button_click_exit,fg="black", bg="white" )
                 
                 myButton_left.grid(row=1,column=0)
                 myButton_right.grid(row=1,column=2)
                 myButton_bot.grid(row=1,column=1)
                 myButton_top.grid(row=0,column=1)
+                myButton_exit.place(x=222,y=0)
 
                 window1.mainloop()
                 end=time.time()
                 quest_time=(end-start)
-
+                
                 wrong=0
-                if (mylist[-1]!=result[-1][0] and  mylist[i]!=result[-1][1]) or quest_time>game_difficulty+1.5:
+                
+                if result[-1]=='exit':
+                    wrong=-1
+                    break
+                
+                
+                elif (mylist[-1]!=result[-1][0] and  mylist[i]!=result[-1][1]) or quest_time>game_difficulty+1.5:
                     if mylist[-1]!=result[-1][0] and  mylist[i]!=result[-1][1]:
                         wrong=1
                     new_score=i
@@ -593,11 +673,15 @@ def playAG():
                 print("REAL ANSWER = ",mylist)
                 print("MY ANSWER = ", result)
                 time.sleep(w * 1.1)
-            else:
+            elif wrong==0:
                 print("you answered soooo late")
                 #playsound("./GameVoice/late.mp3")
                 w = say_offline("خیلی دیر جواب دادی")
                 time.sleep(w * 1.1)
+            
+            else:
+                pass
+                
 
             print("you lost in level {} with difficulty{}".format(str(len(mylist)),str(a)))
             #playsound("./GameVoice/Game over.mp3")
