@@ -418,12 +418,8 @@ def moveSpeechMouth(phonemes, times, name):
         duration = frames / float(rate)
         print(f"{name} : {duration}")
     print("=-=-=-=-=-=-=-=-=-=-=-=-=")
-    # print(duration)
     start = time.time()
-    # print()
-    # print(start)
-    # print()
-    # print()
+
     stop = start + duration*0.91
     while time.time() < stop:
             ph = random.randint(1,3)
@@ -437,10 +433,42 @@ def moveSpeechMouth(phonemes, times, name):
     mouthing(1)
     mouthing(1)
 
+
+def laughmoves(phonemes, times, name):
+
+    start = time.time()
+    duration = 1.5
+    stop = start + duration*0.91
+    motor = 1
+    startpos = 10
+    deg1 = 10
+    deg2 = 30
+    while time.time() < stop:
+            ph = random.randint(1,2)
+            mouthing(ph)
+            time.sleep(0.03)
+            move(int(motor),int(deg1),10)
+            move(int(motor),int(deg2),10)
+    # std neck pose
+    time.sleep(1)
+    move(int(motor),int(deg2),10)
+    move(int(motor),int(deg2),0)      
+    move(int(motor),int(deg2),0)
+    # std lip pose
+    for i in range(10):
+        mouthing(1)
+        mouthing(1)
+        mouthing(1)
+    time.sleep(0.5)
+    mouthing(1)
+    mouthing(1)
+
+
 def phonemes_gen(vcname):
     phonemes = []
     times = []
     return phonemes, times 
+
 
 def mouthing(ph):
     msg = "p0"+str(ph)+"\n"

@@ -223,14 +223,15 @@ def agptts(txt):
     print(r)
     return vcfilename
 
-def playthesound(vcname):
+def playthesound(vcname, feeling="n"):
     playsound(vcname)
     # Sleep to finish
-    fname = vcname
-    with contextlib.closing(wave.open(fname,'r')) as f:
-        frames = f.getnframes()
-        rate = f.getframerate()
-        duration = frames / float(rate)
+    if feeling == "n":
+        fname = vcname
+        with contextlib.closing(wave.open(fname,'r')) as f:
+            frames = f.getnframes()
+            rate = f.getframerate()
+            duration = frames / float(rate)
     # time.sleep(duration * 1.1)
     # os.remove(vcname)
 
@@ -267,6 +268,18 @@ def say_offline(text):
     t = threading.Thread(target=playthesound, args=(vcname,))
     t.start()
     return duration
+
+def laugh(vcname):
+
+    phonemes, times = RoobinControl.phonemes_gen(vcname)
+    # Set up a thread for the speech sound synthesis, delay start by soundDelay
+    # Set up a thread for the speech movement
+    t2 = threading.Thread(target=RoobinControl.laughmoves, args=(phonemes,times, vcname))
+    t2.start()
+    # Set up a thread for the speech sound synthesis
+    t = threading.Thread(target=playthesound, args=(vcname,"l"))
+    t.start()
+    return "Laughed !"
 
 def say(text):
     print("In say func 1...")
@@ -558,12 +571,7 @@ class Roobin:
             deg2 = 60
 
             # start laughing
-            RoobinControl.move(int(motor),int(startpos),10)
-            time.sleep(1)
-            for i in range(20):
-                time.sleep(0.1)
-                RoobinControl.move(int(motor),int(deg1),10)
-                RoobinControl.move(int(motor),int(deg2),10)
+            laugh("Sounds/laugh1.mp3")
             # finish laughing
 
 
