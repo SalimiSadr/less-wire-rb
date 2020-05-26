@@ -132,7 +132,7 @@ VarSpeedServo myservo;
 #include <avr/power.h>
 #include <Adafruit_NeoPixel.h>
 #include <Wire.h>
-#include "LedControl.h"
+  #include "LedControl.h"
 
 //Pin 13 = DIN, Pin 12 = CLK, Pin 11 = CS. 5 = number of displays
 LedControl lc = LedControl(13,12,11,5); 
@@ -436,6 +436,65 @@ byte org_eye[8] =  {   B00000000,
                        B00000000,
                        B00000000};
 
+
+
+
+
+byte batman_eye[8] =   { B00000000,
+                       B00000000,
+                       B00000000,
+                       B00011000,
+                       B00011000,
+                       B00000000,
+                       B00000000,
+                       B00000000};
+
+byte bob_eye[8] =  { B00000000,
+                       B00000000,
+                       B00000000,
+                       B00011000,
+                       B00011000,
+                       B00000000,
+                       B00000000,
+                       B00000000}; 
+
+byte kitty_eye[8] =  {B00111100,
+                       B01000010,
+                       B10011001,
+                       B10110101,
+                       B10111101,
+                       B10011001,
+                       B01000010,
+                       B00111100};
+
+byte salivan_eye[8] =   { B00000000,
+                       B00000000,
+                       B00000000,
+                       B00011000,
+                       B00011000,
+                       B00000000,
+                       B00000000,
+                       B00000000};
+
+byte minion_eye[8] =  { B00000000,
+                       B00000000,
+                       B00000000,
+                       B00011000,
+                       B00011000,
+                       B00000000,
+                       B00000000,
+                       B00000000}; 
+
+byte bird_eye[8] =  {   B00000000,
+                       B00000000,
+                       B00000000,
+                       B00011000,
+                       B00011000,
+                       B00000000,
+                       B00000000,
+                       B00000000};
+                       
+
 // happy mouth            
 byte happy_mouth_2[8] = {  B00001000,
                            B00010000,
@@ -596,6 +655,33 @@ void setup()
   lc.clearDisplay(4);
 
   display_eyes(eye_left, eye_right);
+
+//  servar[0].write(0,200);
+//delay(2000);
+//servar[1].write(0,200);
+//delay(2000);
+//servar[2].write(0,200);
+//delay(2000);
+//servar[3].write(0,200);
+//delay(2000);
+//servar[4].write(0,200);
+//delay(2000);
+//servar[5].write(0,200);
+//delay(2000);
+//servar[6].write(0,200);
+//delay(2000);
+//servar[7].write(0,200);
+//delay(2000);
+//servar[8].write(0,200);
+//delay(2000);
+//servar[9].write(0,200);
+//delay(2000);
+//servar[10].write(0,200);
+//delay(2000);
+//servar[11].write(0,200);
+//delay(2000);
+
+
 
 
   
@@ -947,6 +1033,7 @@ void loop()
 //  myservo.write(180, 200);        // move to 180 degrees, use a speed of 30, wait until move is complete
 //  delay(1000);
 //  myservo.write(0, 200);        // move to 0 degrees, use a speed of 30, wait until move is complete
+
     // ----
 	boolean domore = true;
 	byte inChar;
@@ -1115,42 +1202,66 @@ void loop()
 // EYES CHANGE
  if (field[0] == 'z')
  {
-    if (field[2] == '1')
+    	if (field[2] == '1') // right eye
     {     
           if (field[1] == '1')
           // TRIANGLE EYES
-            memcpy(eye_right, triangle_eye_right, sizeof eye_right);
+		  	display_right_eye(triangle_eye);
+            // memcpy(eye_right, triangle_eye_right, sizeof eye_right);
           if (field[1] == '2')
           // SQUARE EYES
-            memcpy(eye_right, square_eye, sizeof eye_right);
+		  	display_right_eye(square_eye);
+            // memcpy(eye_right, square_eye, sizeof eye_right);
           if (field[1] == '3')
           // DIAMOND EYES
-            memcpy(eye_right, neutral_eye, sizeof eye_right);
+		  	display_right_eye(neutral_eye);
+            // memcpy(eye_right, neutral_eye, sizeof eye_right);
           if (field[1] == '4')
             // CIRCLE EYES
-            memcpy(eye_right, lookmid_eye, sizeof eye_right);
+			display_right_eye(lookmid_eye);
+            // memcpy(eye_right, lookmid_eye, sizeof eye_right);
 		  if (field[1] == '5')
             // ORIGINAL EYES
-            memcpy(eye_right, org_eye, sizeof eye_right);
+			display_right_eye(org_eye);
+            // memcpy(eye_right, org_eye, sizeof eye_right);
+     if (field[1] == 'a') display_right_eye(bird_eye);
+     if (field[1] == 'y') display_right_eye(bob_eye);
+     if (field[1] == 's') display_right_eye(salivan_eye);
+     if (field[1] == 'm') display_right_eye(minion_eye);
+     if (field[1] == 'k') display_right_eye(kitty_eye);
+     if (field[1] == 'b') display_right_eye(batman_eye);
     }
 
-        if (field[2] == '2')
+        if (field[2] == '2') // left eye
     {
           if (field[1] == '1')
           // TRIANGLE EYES
-            memcpy(eye_left, triangle_eye_left, sizeof eye_left);
+		  	display_left_eye(triangle_eye);
+            // memcpy(eye_left, triangle_eye_left, sizeof eye_left);
           if (field[1] == '2')
           // SQUARE EYES
-            memcpy(eye_left, square_eye, sizeof eye_left);
+		  	display_left_eye(square_eye);
+            // memcpy(eye_left, square_eye, sizeof eye_left);
           if (field[1] == '3')
           // DIAMOND EYES
-            memcpy(eye_left, neutral_eye, sizeof eye_left);
+		  	display_left_eye(neutral_eye);
+            // memcpy(eye_left, neutral_eye, sizeof eye_left);
           if (field[1] == '4')
             // CIRCLE EYES
-            memcpy(eye_left, lookmid_eye, sizeof eye_left);
+			display_left_eye(lookmid_eye);
+            // memcpy(eye_left, lookmid_eye, sizeof eye_left);
 		  if (field[1] == '5')
             // ORIGINAL EYES
-            memcpy(eye_left, org_eye, sizeof eye_left);
+			display_left_eye(org_eye);
+            // memcpy(eye_left, org_eye, sizeof eye_left);
+            
+		 if (field[1] == 'a') display_left_eye(bird_eye);
+     if (field[1] == 'y') display_left_eye(bob_eye);
+     if (field[1] == 's') display_left_eye(salivan_eye);
+     if (field[1] == 'm') display_left_eye(minion_eye);
+     if (field[1] == 'k') display_left_eye(kitty_eye);
+     if (field[1] == 'b') display_left_eye(batman_eye);
+     
     }
  }
 
@@ -1232,12 +1343,14 @@ if (field[0] == 'j')
 // MOUTH CHANGE
  if (field[0] == 'f')
  {    
-          if (field[1] == '1')
+          if (field[1] == '1'){
           // TRIANGLE EYES
             MOUTH_FORM = 1;
-          if (field[1] == '2')
+            display_mouth(closed_mouth);}
+          if (field[1] == '2'){
           // SQUARE EYES
             MOUTH_FORM = 2;
+            display_mouth(closed_mouth_ghonche);}
  }
  // EYES DONE
  // LIP SYNC ----------------------------------------------------------
