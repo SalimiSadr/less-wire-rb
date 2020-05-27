@@ -93,6 +93,12 @@ def init(portName):
 
     return True
 
+def motors_init():
+    print("Init motors ...")
+    RoobinControl.move(1,10)
+    RoobinControl.move(0,50)
+    print("Motors Done.")
+
 def listen_and_record(path):
 
     global r
@@ -315,6 +321,8 @@ def save_generated_s2e():
     link = "http://localhost:1234/_generate_blocks/scratch/en/Scratch%20Fancy%20Spaceship%20English.s2e"
     print(requests.get(link))
     urllib.request.urlretrieve(link, 'S2e_file/Roobin.s2e')
+    time.sleep(2)
+    motors_init() 
 
 def delete_all_voices():
     mydir = "robot_voices"
@@ -1815,8 +1823,8 @@ if __name__ == "__main__":
     delete_all_voices()
     t1_s2e = threading.Thread(target=save_generated_s2e) 
     t2_server = threading.Thread(target=server_run_forever_func)
-
     t1_s2e.start() 
     t2_server.start()  
     t1_s2e.join() 
-    t2_server.join() 
+    t2_server.join()
+    
