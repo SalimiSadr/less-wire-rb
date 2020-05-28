@@ -1,6 +1,8 @@
-from tkinter import Tk , Label , LabelFrame , StringVar , OptionMenu , Button
+from tkinter import Tk , Label , LabelFrame , DISABLED , Entry , Toplevel , StringVar , OptionMenu , Button
 from PIL import Image, ImageTk
 from utils import *
+import tkinter.font as tkFont
+
 
 root=Tk()
 
@@ -48,13 +50,7 @@ def rahnamaee_kon():
 
     if A_PROGRAM_IS_RUNNING == False:
         A_PROGRAM_IS_RUNNING = True
-        '''little_mother = {
-            "جست و جو در ویکی پدیا":4,
-            "چیستان":3,
-            "بازی جهت ها":2,
-            "الگوها آفلاین":1,
-            "دنباله اعداد":0
-        }[guide]'''
+
         guides=["جست و جو در ویکی پدیا","چیستان","بازی جهت ها","الگوها آفلاین","دنباله اعداد"]
 
         if clicked123.get()==guides[4]:
@@ -63,8 +59,7 @@ def rahnamaee_kon():
             w = say_offline("وظیفه ی شما پیدا کردنه آن الگو و حدسه عدده بعد می باشد. آن عدد را در پنجره ای که برایتان باز می شود وارد کنید")
             time.sleep(w * 1.1)
         elif clicked123.get()==guides[3]:
-            guide1 = "در این بازی چشم های ربات،  به صورته رندوم چشمک میزنند. وظیفه ی شما تکرار کردنه الگوها در پنجره می باشد"
-            w = say_offline(guide1)
+            w = say_offline("در این بازی چشم های ربات،  به صورته رندوم چشمک میزنند. وظیفه ی شما تکرار کردنه الگوها در پنجره می باشد")
             time.sleep(w * 1.1)
         elif clicked123.get()==guides[2]:
             w = say_offline(
@@ -454,6 +449,671 @@ pattern_image = ImageTk.PhotoImage(file = ".\\images\\Webp.net-resizeimage(b).pn
 numbers_image = ImageTk.PhotoImage(file = ".\\images\\numbers.png")
 
 pattern_game_difficulty = ["آسان","متوسط","سخت","غیر ممکن"]
+
+
+
+def _504_func():
+    _504_ = Toplevel()
+    
+    _504_.title('Roobin')
+
+    _504_.attributes("-topmost", True)
+    _504_.iconbitmap("photo6019163393241493720__1___4__rCb_icon.ico")
+    _504_.configure(bg="#271c42")
+    
+    lock_image = ImageTk.PhotoImage(file = ".\\images\\lock.png")
+    
+    def words(number):
+        import xlrd
+        the_path="./504 Absolutely Essential Words complete book.xlsx"
+        loc = (the_path)
+        wb = xlrd.open_workbook(loc)
+        sheet = wb.sheet_by_index(0)
+        the_font = tkFont.Font(family="AWLUnicode", size=12)
+        A=int(number)
+
+
+
+        word_list=[]
+        persian_list=[]
+        definition_list=[]
+        ex1_list=[]
+        ex1m_list=[]
+        ex2_list=[]
+        ex2m_list=[]
+
+        def begoooo(chi):
+            #<======================================================================ALI ENGLISI BEKHOON
+            w = say_offline(chi)
+            time.sleep(1.05 * w)
+            
+        def definition(chi):
+            FGS = Toplevel()
+            FGS.attributes("-topmost", True)
+            mylabel=Label(FGS, text=chi , font = the_font , bg = "#947755")
+            #mylabel.config(border=10)
+            mylabel.grid(row=0,column=0)
+            #<=======================================================================ALI ENGLISI BEKHOON
+            w = say_offline(chi)
+            time.sleep(1.05 * w)
+            
+        def persion(chi):
+            WHAT_IS_THIS = Toplevel()
+            WHAT_IS_THIS.attributes("-topmost", True)
+            mylabel=Label(WHAT_IS_THIS, text=chi ,font="bold" , bg = "#f0f02e")
+            mylabel.config(width=20)
+            mylabel.grid(row=0,column=0)
+            w = say_offline(chi)
+            time.sleep(1.05 * w)
+            print(chi)
+            
+        def examples(ex1,ex1m,ex2,ex2m):
+            LAST_WINDOW = Toplevel()
+            LAST_WINDOW.attributes("-topmost", True)
+            LAST_WINDOW.config(bg="#00a4f0")
+            mylabel=Label(LAST_WINDOW, text=ex1, font=the_font,bg="#00a4f0")
+            mylabel.grid(row=0,column=0)
+            mylabel1=Label(LAST_WINDOW, text=ex1m, font="bold",bg="#00a4f0")
+            mylabel1.grid(row=1,column=0)
+            mylabelH=Label(LAST_WINDOW, text="*****************************************",fg="white",bg="black")
+            mylabelH.grid(row=2,column=0)
+            mylabel2=Label(LAST_WINDOW, text=ex2,font=the_font,bg="#00a4f0")
+            mylabel2.grid(row=3,column=0)
+            mylabel3=Label(LAST_WINDOW, text=ex2m,font="bold",bg="#00a4f0")
+            mylabel3.grid(row=4,column=0)
+            
+            
+            
+            
+        def quiz_time():
+            Roobin_504 = Toplevel()
+            Roobin_504.attributes("-topmost",True)
+            Roobin_504.configure(bg="#00a4f0")
+            
+            
+            def checking():
+                if ("Yes" in ee.get()) or ("yes" in ee.get()) or ("YES" in ee.get()):
+                    F=open("./High Scores/504 essential words/level.txt","r")
+                    line=F.readline()
+                    the_level=int(line)
+                    F.close()
+                    if A == the_level:
+                        the_level+=1
+                        F=open("./High Scores/504 essential words/level.txt","w")
+                        F.write(str(the_level))
+                        F.close()
+                    Roobin_504.destroy()
+                    the_end.destroy()
+                    _504_.destroy()
+                    _504_func()
+                    
+                
+            mylabel=Label(Roobin_504, text="Enter Yes to pass this lesson!" ,bg="#00a4f0", font=the_font )
+            mylabel.grid(row=0,column=0)
+            ee= Entry(Roobin_504,width=62)
+            ee.grid(row=1,column=0)
+            passs= Button(Roobin_504,text="pass",font=the_font,command=checking)
+            passs.grid(row=2,column=0)
+
+            
+        
+        for i in range(((A-1)*12)+1,(A*12)+1):
+            word_list.append(sheet.cell_value(i, 1))
+            persian_list.append(sheet.cell_value(i, 2))
+            definition_list.append(sheet.cell_value(i, 3))
+            ex1_list.append(sheet.cell_value(i,5))
+            ex1m_list.append(sheet.cell_value(i,6))
+            ex2_list.append(sheet.cell_value(i,7))
+            ex2m_list.append(sheet.cell_value(i,8))
+            
+        the_end = Toplevel()
+        the_end.title('Roobin')
+
+        the_end.attributes("-topmost", True)
+        the_end.iconbitmap("photo6019163393241493720__1___4__rCb_icon.ico")
+        the_end.configure(bg="#271c42")
+        the_end.geometry("595x636")
+        B="Definition"
+        C="Farsi"
+        D="examples"
+        the_font = tkFont.Font(family="AWLUnicode", size=12)
+        
+        the_quiz = ImageTk.PhotoImage(Image.open(".\\images\\quiz.png"))
+        
+        the_label_quiz = Button(the_end,image=the_quiz,command=quiz_time)
+        the_label_quiz.place(x=210,y=480)
+
+
+
+        but00 = Button(the_end ,text=word_list[0],bg="#f96802",font=the_font, command = lambda: begoooo(word_list[0]))
+        but00.config(width=15,height=0)
+        but00.place(x=0,y=0)
+
+        but01 = Button(the_end ,text=B,bg="#947755",font=the_font, command = lambda: definition(definition_list[0]))
+        but01.config(width=15,height=0)
+        but01.place(x=150,y=0)
+
+        but02 = Button(the_end ,text=C,bg="#f0f02e",font=the_font, command = lambda: persion(persian_list[0]))
+        but02.config(width=15,height=0)
+        but02.place(x=300,y=0)
+
+        but03 = Button(the_end ,text=D,bg="#00a4f0",font=the_font, command = lambda: examples(ex1_list[0],ex1m_list[0],ex2_list[0],ex2m_list[0]))
+        but03.config(width=15,height=0)
+        but03.place(x=450,y=0)
+
+        ###############################################################
+
+        but10 = Button(the_end ,text=word_list[1],bg="#f96802",font=the_font, command = lambda: begoooo(word_list[1]))
+        but10.config(width=15,height=0)
+        but10.place(x=0,y=40)
+
+        but11 = Button(the_end ,text=B,bg="#947755",font=the_font, command = lambda: definition(definition_list[1]))
+        but11.config(width=15,height=0)
+        but11.place(x=150,y=40)
+
+        but12 = Button(the_end ,text=C,bg="#f0f02e",font=the_font, command = lambda: persion(persian_list[1]))
+        but12.config(width=15,height=0)
+        but12.place(x=300,y=40)
+
+        but13 = Button(the_end ,text=D,bg="#00a4f0",font=the_font, command = lambda: examples(ex1_list[1],ex1m_list[1],ex2_list[1],ex2m_list[1]))
+        but13.config(width=15,height=0)
+        but13.place(x=450,y=40)
+
+        #################################################################
+
+        but20 = Button(the_end ,text=word_list[2],bg="#f96802",font=the_font, command = lambda: begoooo(word_list[2]))
+        but20.config(width=15,height=0)
+        but20.place(x=0,y=80)
+
+        but21 = Button(the_end ,text=B,bg="#947755",font=the_font, command = lambda: definition(definition_list[2]))
+        but21.config(width=15,height=0)
+        but21.place(x=150,y=80)
+
+        but22 = Button(the_end ,text=C,bg="#f0f02e",font=the_font, command = lambda: persion(persian_list[2]))
+        but22.config(width=15,height=0)
+        but22.place(x=300,y=80)
+
+        but23 = Button(the_end ,text=D,bg="#00a4f0",font=the_font, command = lambda: examples(ex1_list[2],ex1m_list[2],ex2_list[2],ex2m_list[2]))
+        but23.config(width=15,height=0)
+        but23.place(x=450,y=80)
+
+        #################################################################
+
+        but30 = Button(the_end ,text=word_list[3],bg="#f96802",font=the_font, command = lambda: begoooo(word_list[3]))
+        but30.config(width=15,height=0)
+        but30.place(x=0,y=120)
+
+        but31 = Button(the_end ,text=B,bg="#947755",font=the_font, command = lambda: definition(definition_list[3]))
+        but31.config(width=15,height=0)
+        but31.place(x=150,y=120)
+
+        but32 = Button(the_end ,text=C,bg="#f0f02e",font=the_font, command = lambda: persion(persian_list[3]))
+        but32.config(width=15,height=0)
+        but32.place(x=300,y=120)
+
+        but33 = Button(the_end ,text=D,bg="#00a4f0",font=the_font, command = lambda: examples(ex1_list[3],ex1m_list[3],ex2_list[3],ex2m_list[3]))
+        but33.config(width=15,height=0)
+        but33.place(x=450,y=120)
+
+        #################################################################
+
+        but40 = Button(the_end ,text=word_list[4],bg="#f96802",font=the_font, command = lambda: begoooo(word_list[4]))
+        but40.config(width=15,height=0)
+        but40.place(x=0,y=160)
+
+        but41 = Button(the_end ,text=B,bg="#947755",font=the_font, command = lambda: definition(definition_list[4]))
+        but41.config(width=15,height=0)
+        but41.place(x=150,y=160)
+
+        but42 = Button(the_end ,text=C,bg="#f0f02e",font=the_font, command = lambda: persion(persian_list[4]))
+        but42.config(width=15,height=0)
+        but42.place(x=300,y=160)
+
+        but43 = Button(the_end ,text=D,bg="#00a4f0",font=the_font, command = lambda: examples(ex1_list[4],ex1m_list[4],ex2_list[4],ex2m_list[4]))
+        but43.config(width=15,height=0)
+        but43.place(x=450,y=160)
+
+        ################################################################
+
+        but50 = Button(the_end ,text=word_list[5],bg="#f96802",font=the_font, command = lambda: begoooo(word_list[5]))
+        but50.config(width=15,height=0)
+        but50.place(x=0,y=200)
+
+        but51 = Button(the_end ,text=B,bg="#947755",font=the_font, command = lambda: definition(definition_list[5]))
+        but51.config(width=15,height=0)
+        but51.place(x=150,y=200)
+
+        but52 = Button(the_end ,text=C,bg="#f0f02e",font=the_font, command = lambda: persion(persian_list[5]))
+        but52.config(width=15,height=0)
+        but52.place(x=300,y=200)
+
+        but53 = Button(the_end ,text=D,bg="#00a4f0",font=the_font, command = lambda: examples(ex1_list[5],ex1m_list[5],ex2_list[5],ex2m_list[5]))
+        but53.config(width=15,height=0)
+        but53.place(x=450,y=200)
+
+        ###############################################################
+
+        but60 = Button(the_end ,text=word_list[6],bg="#f96802",font=the_font, command = lambda: begoooo(word_list[6]))
+        but60.config(width=15,height=0)
+        but60.place(x=0,y=240)
+
+        but61 = Button(the_end ,text=B,bg="#947755",font=the_font, command = lambda: definition(definition_list[6]))
+        but61.config(width=15,height=0)
+        but61.place(x=150,y=240)
+
+        but62 = Button(the_end ,text=C,bg="#f0f02e",font=the_font, command = lambda: persion(persian_list[6]))
+        but62.config(width=15,height=0)
+        but62.place(x=300,y=240)
+
+        but63 = Button(the_end ,text=D,bg="#00a4f0",font=the_font, command = lambda: examples(ex1_list[6],ex1m_list[6],ex2_list[6],ex2m_list[6]))
+        but63.config(width=15,height=0)
+        but63.place(x=450,y=240)
+
+        ###############################################################
+
+        but70 = Button(the_end ,text=word_list[7],bg="#f96802",font=the_font, command = lambda: begoooo(word_list[7]))
+        but70.config(width=15,height=0)
+        but70.place(x=0,y=280)
+
+        but71 = Button(the_end ,text=B,bg="#947755",font=the_font, command = lambda: definition(definition_list[7]))
+        but71.config(width=15,height=0)
+        but71.place(x=150,y=280)
+
+        but72 = Button(the_end ,text=C,bg="#f0f02e",font=the_font, command = lambda: persion(persian_list[7]))
+        but72.config(width=15,height=0)
+        but72.place(x=300,y=280)
+
+        but73 = Button(the_end ,text=D,bg="#00a4f0",font=the_font, command = lambda: examples(ex1_list[7],ex1m_list[7],ex2_list[7],ex2m_list[7]))
+        but73.config(width=15,height=0)
+        but73.place(x=450,y=280)
+
+        ###############################################################
+
+        but80 = Button(the_end ,text=word_list[8],bg="#f96802",font=the_font, command = lambda: begoooo(word_list[8]))
+        but80.config(width=15,height=0)
+        but80.place(x=0,y=320)
+
+        but81 = Button(the_end ,text=B,bg="#947755",font=the_font, command = lambda: definition(definition_list[8]))
+        but81.config(width=15,height=0)
+        but81.place(x=150,y=320)
+
+        but82 = Button(the_end ,text=C,bg="#f0f02e",font=the_font, command = lambda: persion(persian_list[8]))
+        but82.config(width=15,height=0)
+        but82.place(x=300,y=320)
+
+        but83 = Button(the_end ,text=D,bg="#00a4f0",font=the_font, command = lambda: examples(ex1_list[8],ex1m_list[8],ex2_list[8],ex2m_list[8]))
+        but83.config(width=15,height=0)
+        but83.place(x=450,y=320)
+
+        ###############################################################
+
+        but90 = Button(the_end ,text=word_list[9],bg="#f96802",font=the_font, command = lambda: begoooo(word_list[9]))
+        but90.config(width=15,height=0)
+        but90.place(x=0,y=360)
+
+        but91 = Button(the_end ,text=B,bg="#947755",font=the_font, command = lambda: definition(definition_list[9]))
+        but91.config(width=15,height=0)
+        but91.place(x=150,y=360)
+
+        but92 = Button(the_end ,text=C,bg="#f0f02e",font=the_font, command = lambda: persion(persian_list[9]))
+        but92.config(width=15,height=0)
+        but92.place(x=300,y=360)
+
+        but93 = Button(the_end ,text=D,bg="#00a4f0",font=the_font, command = lambda: examples(ex1_list[9],ex1m_list[9],ex2_list[9],ex2m_list[9]))
+        but93.config(width=15,height=0)
+        but93.place(x=450,y=360)
+
+        ###############################################################
+
+        but100 = Button(the_end ,text=word_list[10],bg="#f96802",font=the_font, command = lambda: begoooo(word_list[10]))
+        but100.config(width=15,height=0)
+        but100.place(x=0,y=400)
+
+        but101 = Button(the_end ,text=B,bg="#947755",font=the_font, command = lambda: definition(definition_list[10]))
+        but101.config(width=15,height=0)
+        but101.place(x=150,y=400)
+
+        but102 = Button(the_end ,text=C,bg="#f0f02e",font=the_font, command = lambda: persion(persian_list[10]))
+        but102.config(width=15,height=0)
+        but102.place(x=300,y=400)
+
+        but103 = Button(the_end ,text=D,bg="#00a4f0",font=the_font, command = lambda: examples(ex1_list[10],ex1m_list[10],ex2_list[10],ex2m_list[10]))
+        but103.config(width=15,height=0)
+        but103.place(x=450,y=400)
+
+        ################################################################
+
+        but110 = Button(the_end ,text=word_list[11],bg="#f96802",font=the_font, command = lambda: begoooo(word_list[11]))
+        but110.config(width=15,height=0)
+        but110.place(x=0,y=440)
+
+        but111 = Button(the_end ,text=B,bg="#947755",font=the_font, command = lambda: definition(definition_list[11]))
+        but111.config(width=15,height=0)
+        but111.place(x=150,y=440)
+
+        but112 = Button(the_end ,text=C,bg="#f0f02e",font=the_font, command = lambda: persion(persian_list[11]))
+        but112.config(width=15,height=0)
+        but112.place(x=300,y=440)
+
+        but113 = Button(the_end ,text=D,bg="#00a4f0",font=the_font, command = lambda: examples(ex1_list[11],ex1m_list[11],ex2_list[11],ex2m_list[11]))
+        but113.config(width=15,height=0)
+        but113.place(x=450,y=440)
+        
+        
+        the_end.mainloop()
+        
+    
+    F=open("./High Scores/504 essential words/level.txt","r")
+    line=F.readline()
+    the_level=int(line)
+    F.close()
+      
+    level1 = Button(_504_  ,text="level \n1 " ,font="bold" ,bg="#f96802",command=lambda : words(1) )
+    level1.grid(row = 0 , column = 0)
+    
+    if the_level >= 2:
+        level2 = Button(_504_ , text="level \n2 "  ,font="bold" ,bg="#f96802",command=lambda : words(2))
+        level2.grid(row = 0 , column = 1)
+    else:
+        level2 = Button(_504_ , text="مرحله 2" , image=lock_image ,bg="#271c42" )
+        level2.grid(row = 0 , column = 1)
+        
+    if the_level >= 3:
+        level3 = Button(_504_ , text="level \n3 "  ,font="bold" ,bg="#f96802",command=lambda : words(3))
+        level3.grid(row = 0 , column = 2)
+    else:
+        level3 = Button(_504_ , text="مرحله 3" , image=lock_image  ,bg="#271c42")
+        level3.grid(row = 0 , column = 2)
+        
+    if the_level >= 4:
+        level4 = Button(_504_ , text="level \n4 "  ,font="bold" ,bg="#f96802",command=lambda : words(4))
+        level4.grid(row = 0 , column = 3)
+    else:
+        level4 = Button(_504_ , text="مرحله 4" , image=lock_image  ,bg="#271c42")
+        level4.grid(row = 0 , column = 3)
+    
+    if the_level >= 5:
+        level5 = Button(_504_ , text="level \n5 "  ,font="bold" ,bg="#f96802",command=lambda : words(5))
+        level5.grid(row = 0 , column = 4)
+    else:
+        level5 = Button(_504_ , text="مرحله 5" , image=lock_image  ,bg="#271c42")
+        level5.grid(row = 0 , column = 4)
+    
+    if the_level >= 6:
+        level6 = Button(_504_ , text="level \n6 "  ,font="bold" ,bg="#f96802",command=lambda : words(6))
+        level6.grid(row = 0 , column = 5)
+    else:
+        level6 = Button(_504_ , text="مرحله 6" , image=lock_image  ,bg="#271c42")
+        level6.grid(row = 0 , column = 5)
+        
+    if the_level >= 7:
+        level7 = Button(_504_ , text="level \n7 "  ,font="bold" ,bg="#f96802",command=lambda : words(7))
+        level7.grid(row = 1 , column = 0)
+    else:
+        level7 = Button(_504_ , text="مرحله 7" , image=lock_image  ,bg="#271c42")
+        level7.grid(row = 1 , column = 0)
+        
+    if the_level >= 8:
+        level8 = Button(_504_ , text="level \n8 "  ,font="bold" ,bg="#f96802",command=lambda : words(8))
+        level8.grid(row = 1 , column = 1)
+    else:
+        level8 = Button(_504_ , text="مرحله 8" , image=lock_image  ,bg="#271c42")
+        level8.grid(row = 1 , column = 1)
+        
+    if the_level >= 9:
+        level9 = Button(_504_ , text="level \n9 "  ,font="bold" ,bg="#f96802",command=lambda : words(9))
+        level9.grid(row = 1 , column = 2)
+    else:
+        level9 = Button(_504_ , text="مرحله 9" , image=lock_image  ,bg="#271c42")
+        level9.grid(row = 1 , column = 2)
+
+    if the_level >= 10:
+        level10 = Button(_504_ , text="level \n10"  ,font="bold" ,bg="#f96802",command=lambda : words(10))
+        level10.grid(row = 1 , column = 3)
+    else:
+        level10 = Button(_504_ , text="مرحله 10" , image=lock_image  ,bg="#271c42")
+        level10.grid(row = 1 , column = 3)
+        
+    if the_level >= 11:
+        level11 = Button(_504_ , text="level \n11"  ,font="bold" ,bg="#f96802",command=lambda : words(11))
+        level11.grid(row = 1 , column = 4)
+    else:
+        level11 = Button(_504_ , text="مرحله 11" , image=lock_image  ,bg="#271c42")
+        level11.grid(row = 1 , column = 4)
+        
+    if the_level >= 12:
+        level12 = Button(_504_ , text="level \n12"  ,font="bold" ,bg="#f96802",command=lambda : words(12))
+        level12.grid(row = 1 , column = 5)
+    else:
+        level12 = Button(_504_ , text="مرحله 12" , image=lock_image  ,bg="#271c42")
+        level12.grid(row = 1 , column = 5)
+        
+    if the_level >= 13:
+        level13 = Button(_504_ , text="level \n13"  ,font="bold" ,bg="#f96802",command=lambda : words(13))
+        level13.grid(row = 2 , column = 0)
+    else:
+        level13 = Button(_504_ , text="مرحله 13" , image=lock_image  ,bg="#271c42")
+        level13.grid(row = 2 , column = 0)
+        
+    if the_level >= 14:
+        level14 = Button(_504_ , text="level \n14"  ,font="bold" ,bg="#f96802",command=lambda : words(14))
+        level14.grid(row = 2 , column = 1)
+    else:
+        level14 = Button(_504_ , text="مرحله 14" , image=lock_image  ,bg="#271c42")
+        level14.grid(row = 2 , column = 1)
+        
+    if the_level >= 15:
+        level15 = Button(_504_ , text="level \n15"  ,font="bold" ,bg="#f96802",command=lambda : words(15))
+        level15.grid(row = 2 , column = 2)
+    else:
+        level15 = Button(_504_ , text="مرحله 15" , image=lock_image  ,bg="#271c42")
+        level15.grid(row = 2 , column = 2)
+        
+    if the_level >= 16:
+        level16 = Button(_504_ , text="level \n16"  ,font="bold" ,bg="#f96802",command=lambda : words(16))
+        level16.grid(row = 2 , column = 3)
+    else:
+        level16 = Button(_504_ , text="مرحله 16" , image=lock_image  ,bg="#271c42")
+        level16.grid(row = 2 , column = 3)
+        
+    if the_level >= 17:
+        level17 = Button(_504_ , text="level \n17"  ,font="bold" ,bg="#f96802",command=lambda : words(17))
+        level17.grid(row = 2 , column = 4)
+    else:
+        level17 = Button(_504_ , text="مرحله 17" , image=lock_image  ,bg="#271c42")
+        level17.grid(row = 2 , column = 4)
+    
+    if the_level >= 18:
+        level18 = Button(_504_ , text="level \n18"  ,font="bold" ,bg="#f96802",command=lambda : words(18))
+        level18.grid(row = 2 , column = 5)
+    else:
+        level18 = Button(_504_ , text="مرحله 18" , image=lock_image  ,bg="#271c42")
+        level18.grid(row = 2 , column = 5)
+        
+    if the_level >= 19:
+        level19 = Button(_504_ , text="level \n19"  ,font="bold" ,bg="#f96802",command=lambda : words(19))
+        level19.grid(row = 3 , column = 0)
+    else:
+        level19 = Button(_504_ , text="مرحله 19" , image=lock_image  ,bg="#271c42")
+        level19.grid(row = 3 , column = 0)
+        
+    if the_level >= 20:
+        level20 = Button(_504_ , text="level \n20"  ,font="bold" ,bg="#f96802",command=lambda : words(20))
+        level20.grid(row = 3 , column = 1)
+    else:
+        level20 = Button(_504_ , text="مرحله 20" , image=lock_image  ,bg="#271c42")
+        level20.grid(row = 3 , column = 1)
+        
+    if the_level >= 21:
+        level21 = Button(_504_ , text="level \n21"  ,font="bold" ,bg="#f96802",command=lambda : words(21))
+        level21.grid(row = 3 , column = 2)
+    else:
+        level21 = Button(_504_ , text="مرحله 21" , image=lock_image  ,bg="#271c42")
+        level21.grid(row = 3 , column = 2)
+        
+    if the_level >= 22:
+        level22 = Button(_504_ , text="level \n22"  ,font="bold" ,bg="#f96802",command=lambda : words(22))
+        level22.grid(row = 3 , column = 3)
+    else:
+        level22 = Button(_504_ , text="مرحله 22" , image=lock_image  ,bg="#271c42")
+        level22.grid(row = 3 , column = 3)
+
+    if the_level >= 23:
+        level23 = Button(_504_ , text="level \n23"  ,font="bold" ,bg="#f96802",command=lambda : words(23))
+        level23.grid(row = 3 , column = 4)
+    else:
+        level23 = Button(_504_ , text="مرحله 23" , image=lock_image  ,bg="#271c42")
+        level23.grid(row = 3 , column = 4)
+
+    if the_level >= 24:
+        level24 = Button(_504_ , text="level \n24"  ,font="bold" ,bg="#f96802",command=lambda : words(24))
+        level24.grid(row = 3 , column = 5)
+    else:
+        level24 = Button(_504_ , text="مرحله 24" , image=lock_image  ,bg="#271c42")
+        level24.grid(row = 3 , column = 5)
+
+    if the_level >= 25:
+        level25 = Button(_504_ , text="level \n25"  ,font="bold" ,bg="#f96802",command=lambda : words(25))
+        level25.grid(row = 4 , column = 0)
+    else:
+        level25 = Button(_504_ , text="مرحله 25" , image=lock_image  ,bg="#271c42")
+        level25.grid(row = 4 , column = 0)
+
+    if the_level >= 26:
+        level26 = Button(_504_ , text="level \n26"  ,font="bold" ,bg="#f96802",command=lambda : words(26))
+        level26.grid(row = 4 , column = 1)
+    else:
+        level26 = Button(_504_ , text="مرحله 26" , image=lock_image  ,bg="#271c42")
+        level26.grid(row = 4 , column = 1)
+
+    if the_level >= 27:
+        level27 = Button(_504_ , text="level \n27"  ,font="bold" ,bg="#f96802",command=lambda : words(27))
+        level27.grid(row = 4 , column = 2)
+    else:
+        level27 = Button(_504_ , text="مرحله 27" , image=lock_image  ,bg="#271c42")
+        level27.grid(row = 4 , column = 2)
+        
+    if the_level >= 28:
+        level28 = Button(_504_ , text="level \n28"  ,font="bold" ,bg="#f96802",command=lambda : words(28))
+        level28.grid(row = 4 , column = 3)
+    else:
+        level28 = Button(_504_ , text="مرحله 28" , image=lock_image  ,bg="#271c42")
+        level28.grid(row = 4 , column = 3)
+        
+    if the_level >= 29:
+        level29 = Button(_504_ , text="level \n29"  ,font="bold" ,bg="#f96802",command=lambda : words(29))
+        level29.grid(row = 4 , column = 4)
+    else:
+        level29 = Button(_504_ , text="مرحله 29" , image=lock_image  ,bg="#271c42")
+        level29.grid(row = 4 , column = 4)
+        
+    if the_level >= 30:
+        level30 = Button(_504_ , text="level \n30"  ,font="bold" ,bg="#f96802",command=lambda : words(30))
+        level30.grid(row = 4 , column = 5)
+    else:
+        level30 = Button(_504_ , text="مرحله 30" , image=lock_image  ,bg="#271c42")
+        level30.grid(row = 4 , column = 5)
+        
+    if the_level >= 31:
+        level31 = Button(_504_ , text="level \n31"  ,font="bold" ,bg="#f96802",command=lambda : words(31))
+        level31.grid(row = 5 , column = 0)
+    else:
+        level31 = Button(_504_ , text="مرحله 31" , image=lock_image  ,bg="#271c42")
+        level31.grid(row = 5 , column = 0)
+        
+    if the_level >= 32:
+        level32 = Button(_504_ , text="level \n32"  ,font="bold" ,bg="#f96802",command=lambda : words(32))
+        level32.grid(row = 5 , column = 1)
+    else:
+        level32 = Button(_504_ , text="مرحله 32" , image=lock_image  ,bg="#271c42")
+        level32.grid(row = 5 , column = 1)
+        
+    if the_level >= 33:
+        level33 = Button(_504_ , text="level \n33"  ,font="bold" ,bg="#f96802",command=lambda : words(33))
+        level33.grid(row = 5 , column = 2)
+    else:
+        level33 = Button(_504_ , text="مرحله 33" , image=lock_image  ,bg="#271c42")
+        level33.grid(row = 5 , column = 2)
+        
+    if the_level >= 34:
+        level34 = Button(_504_ , text="level \n34"  ,font="bold" ,bg="#f96802",command=lambda : words(34))
+        level34.grid(row = 5 , column = 3)
+    else:
+        level34 = Button(_504_ , text="مرحله 34" , image=lock_image  ,bg="#271c42")
+        level34.grid(row = 5 , column = 3)
+        
+    if the_level >= 35:
+        level35 = Button(_504_ , text="level \n35"  ,font="bold" ,bg="#f96802",command=lambda : words(35))
+        level35.grid(row = 5 , column = 4)
+    else:
+        level35 = Button(_504_ , text="مرحله 35" , image=lock_image  ,bg="#271c42")
+        level35.grid(row = 5 , column = 4)
+        
+    if the_level >= 36:
+        level36 = Button(_504_ , text="level \n36"  ,font="bold" ,bg="#f96802",command=lambda : words(36))
+        level36.grid(row = 5 , column = 5)
+    else:
+        level36 = Button(_504_ , text="مرحله 36" , image=lock_image  ,bg="#271c42")
+        level36.grid(row = 5 , column = 5)
+        
+    if the_level >= 37:
+        level37 = Button(_504_ , text="level \n37"  ,font="bold" ,bg="#f96802",command=lambda : words(37))
+        level37.grid(row = 6 , column = 0)
+    else:
+        level37 = Button(_504_ , text="مرحله 37" , image=lock_image  ,bg="#271c42")
+        level37.grid(row = 6 , column = 0)
+        
+    if the_level >= 38:
+        level38 = Button(_504_ , text="level \n38"  ,font="bold" ,bg="#f96802",command=lambda : words(38))
+        level38.grid(row = 6 , column = 1)
+    else:
+        level38 = Button(_504_ , text="مرحله 38" , image=lock_image  ,bg="#271c42")
+        level38.grid(row = 6 , column = 1)
+        
+    if the_level >= 39:
+        level39 = Button(_504_ , text="level \n39"  ,font="bold" ,bg="#f96802",command=lambda : words(39))
+        level39.grid(row = 6 , column = 2)
+    else:
+        level39 = Button(_504_ , text="مرحله 39" , image=lock_image  ,bg="#271c42")
+        level39.grid(row = 6 , column = 2)
+        
+    if the_level >= 40:
+        level40 = Button(_504_ , text="level \n40"  ,font="bold" ,bg="#f96802",command=lambda : words(40))
+        level40.grid(row = 6 , column = 3)
+    else:
+        level40 = Button(_504_ , text="مرحله 40" , image=lock_image  ,bg="#271c42")
+        level40.grid(row = 6 , column = 3)
+        
+    if the_level >= 41:
+        level41 = Button(_504_ , text="level \n41"  ,font="bold" ,bg="#f96802",command=lambda : words(41))
+        level41.grid(row = 6 , column = 4)
+    else:
+        level41 = Button(_504_ , text="مرحله 41" , image=lock_image  ,bg="#271c42")
+        level41.grid(row = 6 , column = 4)
+        
+    if the_level >= 42:
+        level42 = Button(_504_ , text="level \n42"  ,font="bold" ,bg="#f96802",command=lambda : words(42))
+        level42.grid(row = 6 , column = 5)
+    else:
+        level42 = Button(_504_ , text="مرحله 42" ,  image=lock_image  ,bg="#271c42")
+        level42.grid(row = 6 , column = 5)
+    
+    
+    
+    
+    _504_.mainloop()
+    
+
+myflabel = Label(frame2,text="کلمات 504",font="bold",fg="white",bg='#271c42')
+myflabel.place(x=80,y=20)
+
+    
+_504_image = ImageTk.PhotoImage(Image.open(".\\images\\504.jpg"))
+
+
+_504 = Button(frame2 , text="504",image=_504_image , command=_504_func )
+_504.config(border=0,bg='#271c42')
+_504.place(x=2 , y= 20)
 
 def playAG():
     global A_PROGRAM_IS_RUNNING
