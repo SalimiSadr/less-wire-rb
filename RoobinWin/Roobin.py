@@ -112,9 +112,13 @@ def listen_and_record(path):
             print("Set minimum energy threshold to {}".format(r.energy_threshold))
             print("*" * 100, "\n", "*" * 100)
             print("Start Speaking")
+            # print("passed 1")
             data = r.listen(source, timeout=100)
+            # print("passed 2")
             wavdata = data.get_wav_data()
+            # print("passed 3")
             record_to_file(path, wavdata)
+            # print("passed 4")
 
         except sr.WaitTimeoutError as e:
             print (e)
@@ -241,6 +245,7 @@ def playthesound(vcname, feeling="n"):
     # time.sleep(duration * 1.1)
     # os.remove(vcname)
 
+# FA & EN
 def text_to_speech_espeak(text):
     global NAME_COUNTER, LANG
     NAME_COUNTER += 1
@@ -252,13 +257,18 @@ def text_to_speech_espeak(text):
     if LANG == "fa":
         os.system(f'espeak -vmb-ir1 --path="C:" -p{SPEAKING_PITCH} -g13 -s{SPEAKING_SPEED} -w {rvcfilename} -f {text_file_path}')
     elif LANG == "en":
-        os.system(f'espeak -p{SPEAKING_PITCH} -g13 -s{SPEAKING_SPEED} -w {rvcfilename} -f {text_file_path}')
+        os.system(f'espeak -s150 -p{SPEAKING_PITCH} -g13 -s{SPEAKING_SPEED} -w {rvcfilename} -f {text_file_path}')
     return rvcfilename
 
 # FA & EN
-def say_offline(text):
+def say_offline(text, exlang="fa"):
+    global LANG
+    langtemp = LANG
+    if exlang == "en": #exlang for menu.py
+        LANG = "en"
     print("__In say_offline funcion__")
     vcname = text_to_speech_espeak(text)
+    LANG = langtemp # convert to what it was
     fname = vcname
     with contextlib.closing(wave.open(fname,'r')) as f:
         frames = f.getnframes()
@@ -1795,7 +1805,7 @@ class Roobin:
 
 
 descriptor = Descriptor(
-    name = "Roobin Setup",
+    name = "1.Roobin Setup",
     port = 1234,
     blocks = get_decorated_blocks_from_class(Roobin),
     menus= dict(

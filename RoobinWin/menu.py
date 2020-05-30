@@ -19,11 +19,6 @@ A_PROGRAM_IS_RUNNING = False
 
 root.resizable(0,0)
 
-lefti = ImageTk.PhotoImage(file=(".\\arrow keys\\download.jpg"))
-boti = ImageTk.PhotoImage(file=(".\\arrow keys\\download(1).jpg"))
-righti = ImageTk.PhotoImage(file=(".\\arrow keys\\download(2).jpg"))
-topi = ImageTk.PhotoImage(file=(".\\arrow keys\\download(3).jpg"))
-
 myimage1 = ImageTk.PhotoImage(Image.open(".\\images\\Webp.net-resizeimage(final).png"))
 
 the_label = Label(image=myimage1)
@@ -213,9 +208,9 @@ def playS():
         elif clicked.get()==story[1]:
             playsound("./story/einakam65519.mp3")
         elif clicked.get()==story[2]:
-            playsound("./story/قصه-صوتی-کودکانه-یکی-زیر-یکی-رو.mp3")
+            playsound("./story/yeki_zir_yeki_roo.mp3")
         elif clicked.get()==story[3]:
-            playsound("./story/قصه-صوتی-کودکانه-پسری-در-طبل.mp3")
+            playsound("./story/pesari_dar_tabl.mp3")
         elif clicked.get()==story[4]:
             playsound("./story/Shazdeh.Koochooloo.Part 1.mp3")
         elif clicked.get()==story[5]:
@@ -227,7 +222,7 @@ def playS():
         elif clicked.get()==story[8]:
             playsound("./story/C-fasl-3.mp3")
         elif clicked.get()==story[9]:
-            playsound("./story/آدم برفی خندان.mp3")
+            playsound("./story/happy_snowman.mp3")
         elif clicked.get()==story[10]:
             playsound("./story/Lebase Jadide Padeshah Audio.mp3")
         elif clicked.get()==story[11]:
@@ -431,15 +426,6 @@ def chEstan():
 mylabel=Label(frame2, text="چيستان!",font='boldfont',fg="white",bg="#271c42")
 mylabel.grid(row=1,column=1)
 
-#mylabel=Label(frame2, text="بازي جهت ها",padx=5,pady=15,font='boldfont',fg="white",bg="#271c42")
-#mylabel.grid(row=2,column=1)
-
-#mylabel=Label(frame2, text="الگوها",pady=15,font='boldfont',fg="white",bg="#271c42")
-#mylabel.grid(row=3,column=1)
-
-#mylabel=Label(frame2, text="دنباله اعداد",pady=6,font='boldfont',fg="white",bg="#271c42")
-#mylabel.grid(row=4,column=1)
-
 arrow_image = ImageTk.PhotoImage(file = ".\\images\\Webp.net-resizeimage(a).png")
 
 cheestan_image = ImageTk.PhotoImage(file = ".\\images\\Webp.net-resizeimage(2).png")
@@ -460,6 +446,7 @@ def _504_func():
     _504_.attributes("-topmost", True)
     _504_.iconbitmap("photo6019163393241493720__1___4__rCb_icon.ico")
     _504_.configure(bg="#271c42")
+    _504_.resizable(0,0)
     
     lock_image = ImageTk.PhotoImage(file = ".\\images\\lock.png")
     
@@ -484,22 +471,24 @@ def _504_func():
 
         def begoooo(chi):
             #<======================================================================ALI ENGLISI BEKHOON
-            w = say_offline(chi)
+            w = say_offline(chi, "en")
             time.sleep(1.05 * w)
             
         def definition(chi):
             FGS = Toplevel()
             FGS.attributes("-topmost", True)
+            FGS.resizable(0,0)
             mylabel=Label(FGS, text=chi , font = the_font , bg = "#947755")
             #mylabel.config(border=10)
             mylabel.grid(row=0,column=0)
             #<=======================================================================ALI ENGLISI BEKHOON
-            w = say_offline(chi)
+            w = say_offline(chi,"en")
             time.sleep(1.05 * w)
             
         def persion(chi):
             WHAT_IS_THIS = Toplevel()
             WHAT_IS_THIS.attributes("-topmost", True)
+            WHAT_IS_THIS.resizable(0,0)
             mylabel=Label(WHAT_IS_THIS, text=chi ,font="bold" , bg = "#f0f02e")
             mylabel.config(width=20)
             mylabel.grid(row=0,column=0)
@@ -511,6 +500,7 @@ def _504_func():
             LAST_WINDOW = Toplevel()
             LAST_WINDOW.attributes("-topmost", True)
             LAST_WINDOW.config(bg="#00a4f0")
+            LAST_WINDOW.resizable(0,0)
             mylabel=Label(LAST_WINDOW, text=ex1, font=the_font,bg="#00a4f0")
             mylabel.grid(row=0,column=0)
             mylabel1=Label(LAST_WINDOW, text=ex1m, font="bold",bg="#00a4f0")
@@ -529,6 +519,7 @@ def _504_func():
             Roobin_504 = Toplevel()
             Roobin_504.attributes("-topmost",True)
             Roobin_504.configure(bg="#00a4f0")
+            Roobin_504.resizable(0,0)
             
             
             def checking():
@@ -573,6 +564,7 @@ def _504_func():
         the_end.iconbitmap("photo6019163393241493720__1___4__rCb_icon.ico")
         the_end.configure(bg="#271c42")
         the_end.geometry("595x636")
+        the_end.resizable(0,0)
         B="Definition"
         C="Farsi"
         D="examples"
@@ -1259,7 +1251,7 @@ def playAG():
                     #os.system('cls' if os.name == 'nt' else 'clear')
 
                 start=time.time()
-                window1 = Tk()
+                window1 = Toplevel()
                 window1.title("ROOBIN")
                 window1.attributes("-topmost", True)
                 window1.iconbitmap('.\photo6019163393241493720__1___4__rCb_icon.ico')
@@ -1294,20 +1286,25 @@ def playAG():
                     result.append("exit")
                     window1.quit()
                     window1.destroy()
-
+                
+                image_left = ImageTk.PhotoImage(Image.open(".\\images\\arrow.jpg"))
+                image_right = ImageTk.PhotoImage(Image.open(".\\images\\arrow2.jpg"))
+                image_bot = ImageTk.PhotoImage(Image.open(".\\images\\arrow1.jpg"))
+                image_top = ImageTk.PhotoImage(Image.open(".\\images\\arrow3.jpg"))
+                image_exit = ImageTk.PhotoImage(Image.open(".\\images\\exit.png"))
 
                 #there is a problem with adding image to buttons
-                myButton_left = Button(window1, text="left",font='boldfont',padx=28,pady=40, command=button_click_left, fg="black", bg="#fc0394")
-                myButton_right = Button(window1, text="right",font='boldfont',padx=26,pady=40, command=button_click_right, fg="black", bg="#EF1839")
-                myButton_bot = Button(window1, text="bot",font='boldfont',padx=26,pady=40 ,command=button_click_bot,fg="black",bg="#209139")
-                myButton_top = Button(window1, text="top",font = 'boldfont',padx = 27,pady=40,command = button_click_top, fg ="black" , bg = "yellow")
-                myButton_exit = Button(window1, text="exit",font = 'boldfont', padx=7,pady=7,command = button_click_exit,fg="black", bg="white" )
+                myButton_left = Button(window1, text="left",image=image_left,font='boldfont',padx=28,pady=40, command=button_click_left, fg="black", bg="#fc0394")
+                myButton_right = Button(window1, text="right",image=image_right,font='boldfont',padx=26,pady=40, command=button_click_right, fg="black", bg="#EF1839")
+                myButton_bot = Button(window1, text="bot",image=image_bot,font='boldfont',padx=26,pady=40 ,command=button_click_bot,fg="black",bg="#209139")
+                myButton_top = Button(window1, text="top",image=image_top,font = 'boldfont',padx = 27,pady=40,command = button_click_top, fg ="black" , bg = "yellow")
+                myButton_exit = Button(window1, text="exit",image=image_exit,font = 'boldfont', padx=7,pady=7,command = button_click_exit,fg="black", bg="white" )
                 
                 myButton_left.grid(row=1,column=0)
                 myButton_right.grid(row=1,column=2)
                 myButton_bot.grid(row=1,column=1)
                 myButton_top.grid(row=0,column=1)
-                myButton_exit.place(x=222,y=0)
+                myButton_exit.place(x=150,y=0)
 
                 window1.mainloop()
                 end=time.time()
@@ -1353,6 +1350,9 @@ def playAG():
                 F.write(str(new_score))
                 F.close()
                 time.sleep(w * 1.1)
+                
+                
+            
 
             """
             RELEASES MUTEX
@@ -1470,6 +1470,7 @@ def patternn():
             window.title("roobin")
             window.attributes("-topmost", True)
             window.iconbitmap('.\photo6019163393241493720__1___4__rCb_icon.ico')
+            window.resizable(0,0)
 
             def button_click_left():
                 mylabel=tkinter.Label(window,text="left ")
