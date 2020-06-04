@@ -175,7 +175,7 @@ def text_to_speech_espeak(text):
     if LANG == "fa":
         os.system(f'espeak -vmb-ir1 -p{SPEAKING_PITCH} -g13 -s{SPEAKING_SPEED} -w {rvcfilename} -f {text_file_path}')
     elif LANG == "en":
-        os.system(f'espeak -s150 -p{SPEAKING_PITCH} -g13 -s{SPEAKING_SPEED} -w {rvcfilename} -f {text_file_path}')
+        os.system(f'espeak -vmb-en1 --path="C:" -p{SPEAKING_PITCH} -g13 -s{SPEAKING_SPEED} -w {rvcfilename} -f {text_file_path}')
     return rvcfilename
 
 def say_offline(text, exlang="fa"):
