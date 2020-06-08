@@ -275,14 +275,14 @@ boolean SHOW_MOUTH = true;
 int MOUTH_FORM = 1;
 
 // neutral eye
-byte neutral_eye[8] = {B00000000,
-                       B00011000,
-                       B00111100,
-                       B01111110,
-                       B01111110,
-                       B00111100,
-                       B00011000,
-                       B00000000};
+byte neutral_eye[8] = {B00111100,
+                       B01000010,
+                       B10011001,
+                       B10110101,
+                       B10111101,
+                       B10011001,
+                       B01000010,
+                       B00111100};
 
 byte lookright_eye[8] = {B01111110,
                        B10000001,
@@ -349,14 +349,14 @@ byte triangle_eye_left[8] = {    B00000000,
                                  B00010000,
                                  B00000000}; 
 
-byte triangle_eye[8] = {    B00000000,
-                                 B00011000,
-                                 B00010100,
+byte triangle_eye[8] = {         B00011100,
                                  B00010010,
-                                 B00010100,
-                                 B00011000,
-                                 B00010000,
-                                 B00000000};  
+                                 B00011001,
+                                 B00010101,
+                                 B00011101,
+                                 B00011001,
+                                 B00010010,
+                                 B00011100};   
                                                                                                   
 
 byte lookleft_eye[8] = {B01111110,
@@ -425,65 +425,94 @@ byte eye_right[8] =  { B00000000,
                        B00011000,
                        B00000000,
                        B00000000,
-                       B00000000}; 
-
-byte org_eye[8] =  {   B00000000,
-                       B00000000,
-                       B00000000,
-                       B00011000,
-                       B00011000,
-                       B00000000,
-                       B00000000,
                        B00000000};
+
+byte org_eye[8] =  {     B01111110,
+                         B10000001,
+                         B10000001,
+                         B10011001,
+                         B10011001,
+                         B10000001,
+                         B10000001,
+                         B01111110};
 
 
 
 
 
 byte batman_eye[8] =   { B00000000,
-                       B00000000,
-                       B00000000,
-                       B00011000,
-                       B00011000,
-                       B00000000,
-                       B00000000,
-                       B00000000};
+                         B00000000,
+                         B00000000,
+                         B00011000,
+                         B00010000,
+                         B00000000,
+                         B00000000,
+                         B00000000};
 
-byte bob_eye[8] =  { B00000000,
-                       B00000000,
-                       B00000000,
-                       B00011000,
-                       B00011000,
-                       B00000000,
-                       B00000000,
-                       B00000000}; 
+byte bob_eye_left[8] =  {    B00000000,
+                             B00000000,
+                             B00000000,
+                             B00000000,
+                             B00001100,
+                             B00001100,
+                             B00000000,
+                             B00000000};
 
-byte kitty_eye[8] =  {B00111100,
-                       B01000010,
-                       B10011001,
-                       B10110101,
-                       B10111101,
-                       B10011001,
-                       B01000010,
-                       B00111100};
+byte bob_eye_right[8] =  {   B00000000,
+                             B00000000,
+                             B00001100,
+                             B00001100,
+                             B00000000,
+                             B00000000,
+                             B00000000,
+                             B00000000};
 
-byte salivan_eye[8] =   { B00000000,
-                       B00000000,
-                       B00000000,
-                       B00011000,
-                       B00011000,
-                       B00000000,
-                       B00000000,
-                       B00000000};
+byte minion_eye_left[8] =  {   B00000000,
+                               B00000000,
+                               B00000000,
+                               B00000000,
+                               B00001100,
+                               B00001100,
+                               B00000000,
+                               B00000000};
 
-byte minion_eye[8] =  { B00000000,
-                       B00000000,
-                       B00000000,
-                       B00011000,
-                       B00011000,
-                       B00000000,
-                       B00000000,
-                       B00000000}; 
+byte minion_eye_right[8] =  {    B00000000,
+                                 B00000000,
+                                 B00001100,
+                                 B00001100,
+                                 B00000000,
+                                 B00000000,
+                                 B00000000,
+                                 B00000000};                             
+
+//byte kitty_eye[8] =  {B00111100,
+//                       B01000010,
+//                       B10011001,
+//                       B10110101,
+//                       B10111101,
+//                       B10011001,
+//                       B01000010,
+//                       B00111100};
+
+
+byte kitty_eye[8] =      {       B00011100,
+                                 B00100100,
+                                 B01001100,
+                                 B01011100,
+                                 B01011100,
+                                 B01001100,
+                                 B00100100,
+                                 B00011110}; 
+                                 
+
+byte salivan_eye[8] =   {  B00000000,
+                           B00000000,
+                           B00000000,
+                           B00011000,
+                           B00011000,
+                           B00000000,
+                           B00000000,
+                           B00000000};
 
 byte bird_eye[8] =  {   B00000000,
                        B00000000,
@@ -535,14 +564,24 @@ byte open_mouth[8] =        {  B00011111,
                                B00011111};
 // ----------------------------------------------------                               
 // GHONCHE MOUTH---------------------------------------
-byte closed_mouth_ghonche[8] = { B00000000,
-                                 B00000000,
-                                 B00000000,
-                                 B00011000,
-                                 B00011000,
-                                 B00000000,
-                                 B00000000,
-                                 B00000000};
+//byte closed_mouth_ghonche[8] = { B00000100,
+//                                 B00001000,
+//                                 B01111000,
+//                                 B10001000,
+//                                 B10001000,
+//                                 B01111000,
+//                                 B00001000,
+//                                 B00000100};
+
+
+byte closed_mouth_ghonche[8] = { B00011100,
+                                 B00001000,
+                                 B00001000,
+                                 B00101000,
+                                 B00101000,
+                                 B00001000,
+                                 B00001000,
+                                 B00011100};
 
 
 byte semi_closed_mouth_ghonche[8] = {  B00000000,
@@ -563,14 +602,14 @@ byte open_mouth_ghonche[8] =        {  B01111100,
                                        B10000010,
                                        B01111100};
 // ----------------------------------------------------
-byte happy_mouth[8] = {    B00011100,
-                           B00110000,
-                           B01100000,
-                           B01100000,
-                           B01100000,
-                           B01100000,
-                           B00110000,
-                           B00011100};                          
+byte happy_mouth[8] = {    B00000110,
+                           B00001100,
+                           B00011000,
+                           B00011000,
+                           B00011000,
+                           B00011000,
+                           B00001100,
+                           B00000110};                          
 
 // Arrows                            
 
@@ -1225,9 +1264,9 @@ void loop()
 			display_right_eye(org_eye);
             // memcpy(eye_right, org_eye, sizeof eye_right);
      if (field[1] == 'a') display_right_eye(bird_eye);
-     if (field[1] == 'y') display_right_eye(bob_eye);
+     if (field[1] == 'y') display_right_eye(bob_eye_right);
      if (field[1] == 's') display_right_eye(salivan_eye);
-     if (field[1] == 'm') display_right_eye(minion_eye);
+     if (field[1] == 'm') display_right_eye(minion_eye_right);
      if (field[1] == 'k') display_right_eye(kitty_eye);
      if (field[1] == 'b') display_right_eye(batman_eye);
     }
@@ -1256,9 +1295,9 @@ void loop()
             // memcpy(eye_left, org_eye, sizeof eye_left);
             
 		 if (field[1] == 'a') display_left_eye(bird_eye);
-     if (field[1] == 'y') display_left_eye(bob_eye);
+     if (field[1] == 'y') display_left_eye(bob_eye_left);
      if (field[1] == 's') display_left_eye(salivan_eye);
-     if (field[1] == 'm') display_left_eye(minion_eye);
+     if (field[1] == 'm') display_left_eye(minion_eye_left);
      if (field[1] == 'k') display_left_eye(kitty_eye);
      if (field[1] == 'b') display_left_eye(batman_eye);
      
