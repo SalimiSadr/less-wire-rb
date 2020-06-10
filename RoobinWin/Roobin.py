@@ -369,7 +369,7 @@ class Roobin:
 
 # Setup =================================================================================
 
-    @command("تغییر زبان به  %m.lang_list", defaults=['fa'])
+    @command("تغيير زبان به  %m.lang_list", defaults=['fa'])
     def set_language(self, lang_list):
         global LANG
         selected_lang = {
@@ -388,19 +388,19 @@ class Roobin:
         SPEAKING_SPEED = int(text)
         print(f"SPEAKING SPEED CHANGED TO {SPEAKING_SPEED}")
 
-    @command("سرعت صدا را %s تغییر بده")
+    @command("سرعت صدا را %s تغيير بده")
     def set_speak_speed(self, text):
         global SPEAKING_SPEED
         SPEAKING_SPEED += int(text)
         print(f"SPEAKING SPEED CHANGED TO {SPEAKING_SPEED}")
 
-    @command("نازکی صدا = %s")
+    @command("نازکي صدا = %s")
     def set_speak_pitch(self, text):
         global SPEAKING_PITCH
         SPEAKING_PITCH = int(text)
         print(f"SPEAKING PITCH CHANGED TO {SPEAKING_PITCH}")
 
-    @command("نازکی صدا را %s تغییر بده")
+    @command("نازکي صدا را %s تغيير بده")
     def change_speak_pitch(self, text):
         global SPEAKING_PITCH
         SPEAKING_PITCH += int(text)
@@ -442,20 +442,20 @@ class Roobin:
         else:
             print("A PROGRAM IS RUNNING..")
 
-    @command(" تغییر چشم %m.eyes_side_list  به %m.eyes_list",defaults=['دایره ای', "چپ"])
+    @command(" تغيير چشم %m.eyes_side_list  به %m.eyes_list",defaults=[])
     def change_eye(self, eyes_side_list, eyes_list):
         eye_state = {
             'اصل':5,
-            'دایره ای':4,
-            'لوزی':3,
-            'مربعی':2,
-            'مثلثی': 1,
+            'دايره':4,
+            'لوزي':3,
+            'مربعي':2,
+            'مثلثي': 1,
             'بتمن':'b',
-            'کیتی':'k',
-            'باب اسفنج':'y',
-            'پرنده عصبانی':'a',
-            'سالیوان': 's',
-            'مینیون': 'm',
+            'کيتي':'k',
+            'باب اسفنجي':'y',
+            'پرنده عصباني':'a',
+            'ساليوان': 's',
+            'مينيون': 'm',
         }[eyes_list]
 
         eye_side = {
@@ -468,11 +468,11 @@ class Roobin:
         print("*" * 10)
         RoobinControl.change_eye_command(eye_state, eye_side)
 
-    @command(" تغییر فرم دهان به فرم %m.mouth_list" , defaults=['روبین'])
+    @command(" تغيير فرم دهان به فرم %m.mouth_list" , defaults=['روبين'])
     def change_mouth(self, mouth_list):
         # Changes mouth form
         mouth_state = {
-            'روبین':1,
+            'روبين':1,
             'غنچه':2,
         }[mouth_list]
 
@@ -483,7 +483,7 @@ class Roobin:
 
 # Blocks =================================================================================
 
-    @command("عدد رندوم بین %s و %s")
+    @command("عدد رندوم بين %s و %s")
     def myRandom(self,FNum,SNum):
 
         global A_PROGRAM_IS_RUNNING
@@ -510,12 +510,12 @@ class Roobin:
         else:
             print("A PROGRAM IS RUNNING..")
 
-    @command("ریکاوری")
+    @command("ريکاوري")
     def recovery(self):
         RoobinControl.recovery_util()        
 
     # FA & EN
-    @command("معرفی")
+    @command("معرفي")
     def introduce(self):
         print("IN INTRODUCE !!!!")
         global A_PROGRAM_IS_RUNNING, LANG
@@ -530,7 +530,7 @@ class Roobin:
             if LANG == "en":
                 text = "Hello . I am roobin. Your good friend !"
             else:
-                text = "سلام ، من روبین هستم ، دوسته خوبه شما"
+                text = "سلام ، من روبين هستم ، دوسته خوبه شما"
             w = say_offline(text)
             time.sleep(w * 1.1)
             A_PROGRAM_IS_RUNNING = False
@@ -560,7 +560,7 @@ class Roobin:
                 if LANG == "en":
                     text = "Hello. I am Roobin. Nice to meet you !"
                 else:
-                    text = "سلام.من روبین هستم.از آشنایی با شما خوشحالم"
+                    text = "سلام.من روبين هستم.از آشنايي با شما خوشحالم"
                 w = say_offline(text)
                 time.sleep(w * 1.1)
 
@@ -599,7 +599,7 @@ class Roobin:
             print("A PROGRAM IS RUNNING !!")
 
     # FA & EN
-    @command("بگو آفلاین %s")
+    @command("بگو آفلاين %s")
     def begoo(self,text):
         print("IN BEGOO !!!!")
         global A_PROGRAM_IS_RUNNING
@@ -620,7 +620,7 @@ class Roobin:
         #os.system()
 
     # FA & EN
-    @command("سوال کن %s و صبر کن برای جواب")
+    @command("سوال کن %s و صبر کن براي جواب")
     def askNwait(self,text):
         global A_PROGRAM_IS_RUNNING
         """
@@ -639,7 +639,7 @@ class Roobin:
             print("A PROGRAM IS RUNNING !!")
 
     # FA & EN
-    @command("جست و جو در ویکی پدیا")
+    @command("جست و جو در ويکي پديا")
     def search_in_wikipedia(self):
         global A_PROGRAM_IS_RUNNING
         """
@@ -690,7 +690,7 @@ class Roobin:
                 if LANG == "en":
                     text = "Page not found"
                 else:
-                    text = 'این صفحه وجود ندارد'
+                    text = 'اين صفحه وجود ندارد'
                 say_offline(text)
             A_PROGRAM_IS_RUNNING = False
 
@@ -698,7 +698,7 @@ class Roobin:
             print("A PROGRAM IS RUNNING !!")
 
     # FA & EN
-    @command("%s را در ویکی پدیا جستجو کن")
+    @command("%s را در ويکي پديا جستجو کن")
     def search_sth_in_wikipedia(self,phrase):
         global A_PROGRAM_IS_RUNNING
         """
@@ -729,14 +729,14 @@ class Roobin:
                 if LANG == "en":
                     text = "Page not found"
                 else:
-                    text = 'این صفحه وجود ندارد'
+                    text = 'اين صفحه وجود ندارد'
                 say_offline(text)
             A_PROGRAM_IS_RUNNING = False
 
         elif A_PROGRAM_IS_RUNNING == True:
             print("A PROGRAM IS RUNNING !!")
 
-    @command("تاریخ امروز")
+    @command("تاريخ امروز")
     def today(self):
         global A_PROGRAM_IS_RUNNING
         """
@@ -875,7 +875,7 @@ class Roobin:
             print("A PROGRAM IS RUNNING !!")
 
 # Games ==================================================================================
-    @command("چیستان")
+    @command("چيستان")
     def riddle_game(self):
         global A_PROGRAM_IS_RUNNING
         """
@@ -896,7 +896,7 @@ class Roobin:
             the_path="./facts-numbers-riddles/ForGodSake.xls"
 
             the_list=[]
-            #yes_list=['بله','بلی','آره','آری','بریم','بریم چیستان بعدی','اره','ار','آر','بعدی','برو','بر']
+            #yes_list=['بله','بلي','آره','آري','بريم','بريم چيستان بعدي','اره','ار','آر','بعدي','برو','بر']
             while nn==0:
                 nn==1
                 gg=0
@@ -1001,7 +1001,7 @@ class Roobin:
                         break
                 if gg==1:
                     print('barikallaaaaaaa')
-                    w = say_offline("تبریک میگم. جوابت درست بود")
+                    w = say_offline("تبريک ميگم. جوابت درست بود")
                     #playsound("./GameVoice/well_done.mp3")
                     time.sleep(w * 1.1)
 
@@ -1017,7 +1017,7 @@ class Roobin:
         elif A_PROGRAM_IS_RUNNING == True:
             print("A PROGRAM IS RUNNING !!")
 
-    @command("بازی جهت ها %m.pattern_game_difficulty",defaults=['متوسط'])
+    @command("بازي جهت ها %m.pattern_game_difficulty",defaults=['متوسط'])
     def arrow_game(self,pattern_game_difficulty):
         global A_PROGRAM_IS_RUNNING
         """
@@ -1034,7 +1034,7 @@ class Roobin:
                 "آسان":4,
                 "متوسط":3,
                 "سخت":2,
-                "غیر ممکن":1
+                "غير ممکن":1
             }[pattern_game_difficulty]
             game_difficulty=little_mother
             a=(4-game_difficulty)+1
@@ -1047,9 +1047,9 @@ class Roobin:
 
             #playsound("./GameVoice/arrow_guide.mp3")
             # say_offline(
-            #     "در این بازی در چشم های ربات , جهت هایی به طرف بالا , پایین , چپ و راست نمایش داده می شود."
+            #     "در اين بازي در چشم هاي ربات , جهت هايي به طرف بالا , پايين , چپ و راست نمايش داده مي شود."
             #     " اگر در چشم راست ربات بود , خلاف آن را و اگر در چشم چپ ربات بود خود"
-            #     " آن جهت را در پنجره ای که برایتان باز می شود , وارد نمایید.")
+            #     " آن جهت را در پنجره اي که برايتان باز مي شود , وارد نماييد.")
             # time.sleep(25)
             #time.sleep(20)
 
@@ -1061,13 +1061,13 @@ class Roobin:
             if High_Score==0:
                 print("you have no score with this game diffuculty")
             else:
-                w = say_offline(f"بیشترین امتیازی که در این بازی کسب کرده اید ، {High_Score} بوده است.")
+                w = say_offline(f"بيشترين امتيازي که در اين بازي کسب کرده ايد ، {High_Score} بوده است.")
                 #roobin must show the score from "./High Scores/repeating pattern game2/GD={}.txt".format(a)
                 print("your high score is in this game difficulty is {}".format(str(High_Score)))
 
             time.sleep(w * 1.1)
             #playsound("./GameVoice/Readdy.mp3")
-            w = say_offline("آماده باشید")
+            w = say_offline("آماده باشيد")
             os.system('cls' if os.name == 'nt' else 'clear')
             time.sleep(w * 1.1)
 
@@ -1077,7 +1077,7 @@ class Roobin:
             os.system('cls' if os.name == 'nt' else 'clear')
             print("the pattern will show in 2 seconds")
             #playsound("./GameVoice/in 2 secconds.mp3")
-            w = say_offline("الگو تا دو ثانیه ی دیگر نمایش داده می شود")
+            w = say_offline("الگو تا دو ثانيه ي ديگر نمايش داده مي شود")
             time.sleep(w * 1.1)
             print("==============================SENDING======================================")
             for i in range(1000):
@@ -1216,7 +1216,7 @@ class Roobin:
             else:
                 print("you answered soooo late")
                 #playsound("./GameVoice/late.mp3")
-                w = say_offline("خیلی دیر جواب دادی")
+                w = say_offline("خيلي دير جواب دادي")
                 time.sleep(w * 1.1)
 
             print("you lost in level {} with difficulty{}".format(str(len(mylist)),str(a)))
@@ -1224,7 +1224,7 @@ class Roobin:
             if new_score>High_Score:
                 print("this is the highest score!")
                 #playsound("./GameVoice/new_record.mp3")
-                w = say_offline("تبریک. رکورده جدیدی با این درجه سختی کسب کردی")
+                w = say_offline("تبريک. رکورده جديدي با اين درجه سختي کسب کردي")
                 F = open("./High Scores/arrow game/GD={}.txt".format(str(a)),"w")
                 F.write(str(new_score))
                 F.close()
@@ -1238,7 +1238,7 @@ class Roobin:
         elif A_PROGRAM_IS_RUNNING == True:
             print("A PROGRAM IS RUNNING !!")
 
-    @command("الگوها آفلاین  %m.pattern_game_difficulty",defaults=['متوسط'])
+    @command("الگوها آفلاين  %m.pattern_game_difficulty",defaults=['متوسط'])
     def repeating_pattern_game2(self,pattern_game_difficulty):
         global A_PROGRAM_IS_RUNNING
         """
@@ -1255,7 +1255,7 @@ class Roobin:
                 "آسان":4,
                 "متوسط":3,
                 "سخت":2,
-                "غیر ممکن":1
+                "غير ممکن":1
             }[pattern_game_difficulty]
             game_difficulty=little_mother
             a=(4-game_difficulty)+1
@@ -1264,10 +1264,10 @@ class Roobin:
             HSS=0
             n=3
 
-            voice1 = 'متوجه نشدم. لطفا تکرار کنید'
-            voice2 = 'تا دو ثانیه ی دیگر , بازی شروع می شود'
-            guide1 = "در این بازی چشم های ربات،  به صورت رندوم چشمک میزنند. وظیفه ی شما تکرار کردنه الگوها می باشد"
-            guide2 = "لطفا الگو را با صدای بلند و بدون توقف زیاد تکرار کنید. به این مثال توجه کنید"
+            voice1 = 'متوجه نشدم. لطفا تکرار کنيد'
+            voice2 = 'تا دو ثانيه ي ديگر , بازي شروع مي شود'
+            guide1 = "در اين بازي چشم هاي ربات،  به صورت رندوم چشمک ميزنند. وظيفه ي شما تکرار کردنه الگوها مي باشد"
+            guide2 = "لطفا الگو را با صداي بلند و بدون توقف زياد تکرار کنيد. به اين مثال توجه کنيد"
 
 
             #playsound("./GameVoice/guide1.mp3")
@@ -1287,7 +1287,7 @@ class Roobin:
                 print("your high score is in this game difficulty is {}".format(str(High_Score)))
             time.sleep(3.5)
             #playsound("./GameVoice/Readdy.mp3")
-            w = say_offline("آماده باشید")
+            w = say_offline("آماده باشيد")
             os.system('cls' if os.name == 'nt' else 'clear')
             time.sleep(w * 1.1)
 
@@ -1351,7 +1351,7 @@ class Roobin:
                 if result==mylist:
                     print("you won level {}".format(str(n-2)))
                     #playsound("./GameVoice/you won.mp3")
-                    w = say_offline("تبریک میگم. این مرحله را رد کردی")
+                    w = say_offline("تبريک ميگم. اين مرحله را رد کردي")
                     time.sleep(w * 1.1)
                     if n-2 > High_Score:
 
@@ -1360,7 +1360,7 @@ class Roobin:
                         F.write(str(n-2))
                         F.close()
                         if HSS==0:
-                            w = say_offline("رکورده جدیدی با این درجه سختی کسب کردی. آفرین")
+                            w = say_offline("رکورده جديدي با اين درجه سختي کسب کردي. آفرين")
                             #playsound("./High Scores/repeating pattern game2/Record{}.mp3".format(str(a)))
                             HSS=1
                             time.sleep(w * 1.1)
@@ -1368,7 +1368,7 @@ class Roobin:
                 else:
                     print("you lost in level {} with difficulty{}".format(str(n-2),str(a)))
                     #playsound("./GameVoice/Game over.mp3")
-                    w = say_offline("با عرض پوزش. شما باختید")
+                    w = say_offline("با عرض پوزش. شما باختيد")
                     print("======================================")
                     print(mylist)
                     print("======================================")
@@ -1380,7 +1380,7 @@ class Roobin:
         elif A_PROGRAM_IS_RUNNING == True:
             print("A PROGRAM IS RUNNING !!")
 
-    @command("دنباله اعداد %m.difficulty ",defaults=["سطح 2"])
+    @command("دنباله اعداد %m.difficulty ",defaults=["1 سطح"])
     def number_series(self,difficulty):
         global A_PROGRAM_IS_RUNNING
         """
@@ -1397,9 +1397,9 @@ class Roobin:
             answers=[]
             erfan=[]
             the_path = {
-                "سطح 1":"./facts-numbers-riddles/numbers1.xls",
-                "سطح 2":"./facts-numbers-riddles/numbers2.xls",
-                "سطح 3":"./facts-numbers-riddles/numbers3.xls",
+                "1 سطح":"./facts-numbers-riddles/numbers1.xls",
+                "2 سطح":"./facts-numbers-riddles/numbers2.xls",
+                "3 سطح":"./facts-numbers-riddles/numbers3.xls",
 
             }[difficulty]
 
@@ -1462,7 +1462,7 @@ class Roobin:
 
                 print('reading the numbers, pls listen carefully!')
                 #playsound("./GameVoice/numbers comming!.mp3")
-                w = say_offline("تا ثانیه ای دیگر ، اعداد خوانده خواهند شد. دقت کنید")
+                w = say_offline("تا ثانيه اي ديگر ، اعداد خوانده خواهند شد. دقت کنيد")
                 time.sleep(w * 1.1)
                 #numbersss=df['A'][a]
                 say_offline(numbersss)
@@ -1496,17 +1496,17 @@ class Roobin:
                 #print(df['B'][a])
                 if int(answers[-1]) == int(javab):
                     #playsound("./GameVoice/True answer.mp3")
-                    say_offline("آفرین جوابه شما درست بود")
+                    say_offline("آفرين جوابه شما درست بود")
 
                 else:
                     #playsound("./GameVoice/wrong answer(numbers).mp3")
-                    say_offline("جوابه شما اشتباه بود. بیشتر دقت کن")
+                    say_offline("جوابه شما اشتباه بود. بيشتر دقت کن")
             A_PROGRAM_IS_RUNNING = False
 
         elif A_PROGRAM_IS_RUNNING == True:
             print("A PROGRAM IS RUNNING !!")
 
-    @command("آیا میدانستید؟")
+    @command("آيا ميدانستيد؟")
     def amazing_facts(self):
         global A_PROGRAM_IS_RUNNING
         """
@@ -1575,7 +1575,7 @@ class Roobin:
         elif A_PROGRAM_IS_RUNNING == True:
             print("A PROGRAM IS RUNNING !!")
 
-    @command("توضیحات %m.guide", defaults=["جست و جو در ویکی پدیا"])
+    @command("توضيحات %m.guide", defaults=[""])
     def games_explanation(self,guide):
         global A_PROGRAM_IS_RUNNING
         """
@@ -1588,36 +1588,36 @@ class Roobin:
         if A_PROGRAM_IS_RUNNING == False:
             A_PROGRAM_IS_RUNNING = True
             little_mother = {
-                "جست و جو در ویکی پدیا":4,
-                "چیستان":3,
-                "بازی جهت ها":2,
-                "الگوها آفلاین":1,
+                "جست و جو در ويکي پديا":4,
+                "چيستان":3,
+                "بازي جهت ها":2,
+                "الگوها آفلاين":1,
                 "دنباله اعداد":0
             }[guide]
 
             if little_mother==0:
-                w = say_offline("در این بازی دنباله ای از اعداد با الگوی خاصی به شما داده می شود")
+                w = say_offline("در اين بازي دنباله اي از اعداد با الگوي خاصي به شما داده مي شود")
                 time.sleep(w * 1.1)
-                w = say_offline("وظیفه ی شما پیدا کردنه آن الگو و حدسه عدده بعد می باشد. آن عدد را در پنجره ای که برایتان باز می شود وارد کنید")
+                w = say_offline("وظيفه ي شما پيدا کردنه آن الگو و حدسه عدده بعد مي باشد. آن عدد را در پنجره اي که برايتان باز مي شود وارد کنيد")
                 time.sleep(w * 1.1)
             elif little_mother==1:
-                guide1 = "در این بازی چشم های ربات،  به صورته رندوم چشمک میزنند. وظیفه ی شما تکرار کردنه الگوها در پنجره می باشد"
+                guide1 = "در اين بازي چشم هاي ربات،  به صورته رندوم چشمک ميزنند. وظيفه ي شما تکرار کردنه الگوها در پنجره مي باشد"
                 w = say_offline(guide1)
                 time.sleep(w * 1.1)
             elif little_mother==2:
                 w = say_offline(
-                    "در این بازی در چشم های ربات , جهت هایی به طرفه بالا , پایین , چپ و راست نمایش داده می شود.")
+                    "در اين بازي در چشم هاي ربات , جهت هايي به طرفه بالا , پايين , چپ و راست نمايش داده مي شود.")
                 time.sleep(w * 1.1)
                 w = say_offline(" اگر در چشمه راسته ربات بود , برعکسه آن را ")
                 time.sleep(w * 1.1)
                 w = say_offline("و اگر در چشمه چپ ربات بود همان"
-                            "  جهت را در پنجره ای که برایتان باز می شود , وارد نمایید.")
+                            "  جهت را در پنجره اي که برايتان باز مي شود , وارد نماييد.")
                 time.sleep(w * 1.1)
             elif little_mother==3:
-                w = say_offline("بعد از اجرایه این بازی , چیستانی از شما پرسیده می شود. سعی کنید جوابه خود را با صدای رسا اعلام کنید")
+                w = say_offline("بعد از اجرايه اين بازي , چيستاني از شما پرسيده مي شود. سعي کنيد جوابه خود را با صداي رسا اعلام کنيد")
                 time.sleep(w * 1.1)
             elif little_mother==4:
-                w = say_offline("بعد از شنیدنه صدای بوق , کلمه ای را بگویید. من آن را در ویکی پدیا سرچ می کنم و خلاصه ای از نتیجه را برای شما می خوانم")
+                w = say_offline("بعد از شنيدنه صداي بوق , کلمه اي را بگوييد. من آن را در ويکي پديا سرچ مي کنم و خلاصه اي از نتيجه را براي شما مي خوانم")
                 time.sleep(w * 1.1)
 
             A_PROGRAM_IS_RUNNING = False
@@ -1625,7 +1625,7 @@ class Roobin:
         elif A_PROGRAM_IS_RUNNING == True:
             print("A PROGRAM IS RUNNING !!")
 
-    @command("انتخاب داستان %m.story ", defaults=["قلعه حیوانات 1"])
+    @command("انتخاب داستان %m.story ", defaults=[""])
     def story_telling(self, story):
         global A_PROGRAM_IS_RUNNING
         """
@@ -1638,22 +1638,22 @@ class Roobin:
             A_PROGRAM_IS_RUNNING = True
             a = {
                 "دماغ": "./story/127-hamechiz-darbareye-damagh.mp3",
-                "عینکم": "./story/einakam65519.mp3",
-                "یکی زیر یکی رو": "./story/قصه-صوتی-کودکانه-یکی-زیر-یکی-رو.mp3",
-                "پسری در طبل": "./story/قصه-صوتی-کودکانه-پسری-در-طبل.mp3",
+                "عينکم": "./story/einakam65519.mp3",
+                "يکي زير يکي رو": "./story/قصه-صوتي-کودکانه-يکي-زير-يکي-رو.mp3",
+                "پسري در طبل": "./story/قصه-صوتي-کودکانه-پسري-در-طبل.mp3",
                 "شازده کوچولو 1": "./story/Shazdeh.Koochooloo.Part 1.mp3",
                 "شازده کوچولو 2": "./story/Shazdeh.Koochooloo.Part 2.mp3",
-                "قلعه حیوانات 1": "./story/A-fasl-1.mp3",
-                "قلعه حیوانات 2": "./story/B-fasl-2.mp3",
-                "قلعه حیوانات 3": "./story/C-fasl-3.mp3",
-                "آدم برفی": "./story/آدم برفی خندان.mp3",
+                "قلعه حيوانات 1": "./story/A-fasl-1.mp3",
+                "قلعه حيوانات 2": "./story/B-fasl-2.mp3",
+                "قلعه حيوانات 3": "./story/C-fasl-3.mp3",
+                "آدم برفي": "./story/آدم برفي خندان.mp3",
                 "لباس پادشاه": "./story/Lebase Jadide Padeshah Audio.mp3",
-                "پسرک بند انگشتی": "./story/pesarak.mp3",
-                "سیندرلا": "./story/Cinderella.mp3",
-                "گالیور": "./story/galiver.mp3",
+                "پسرک بند انگشتي": "./story/pesarak.mp3",
+                "سيندرلا": "./story/Cinderella.mp3",
+                "گاليور": "./story/galiver.mp3",
                 "حاکم جوان": "./story/hakem javan.mp3",
                 "گربه چکمه پوش": "./story/gorbe chakme poosh.mp3",
-                "جک و لوبیای سحرآمیز": "./story/jack.mp3",
+                "جک و لوبياي سحرآميز": "./story/jack.mp3",
 
             }[story]
             '''freeze_support()
@@ -1764,7 +1764,7 @@ class Roobin:
         RoobinControl.eye("both","neutral")
         print("Neutralled :)")
 
-    @command("چشم %m.eyes_side_list را در موقعیت %s و %s %m.on_or_off کن ")
+    @command("چشم %m.eyes_side_list را در موقعيت %s و %s %m.on_or_off کن ")
     def draw_on_eyes(self, eyes_side_list, x, y, on_or_off):
         onOroff = {
                 "خاموش":0,
@@ -1779,7 +1779,7 @@ class Roobin:
         RoobinControl.matrix_eye(x, y, onOroff, eye_side)
 
 
-    @command("دهان را در موقعیت %s و %s %m.on_or_off کن ")
+    @command("دهان را در موقعيت %s و %s %m.on_or_off کن ")
     def draw_on_mouth(self, x, y, on_or_off):
         onOroff = {
                 "خاموش":0,
@@ -1789,7 +1789,7 @@ class Roobin:
         print(f"( {x} {y} ) on mouth matrix is now {onOroff}")
         RoobinControl.matrix_mouth(x, y, onOroff)
 
-    @command(" %m.matrices را برای نقاشی خاموش کن  ")
+    @command(" %m.matrices را براي نقاشي خاموش کن ", defaults=[''] )
     def clean_the_matrices(self,matrices):
         mat = {
             'چشم راست':1,
@@ -1809,14 +1809,14 @@ descriptor = Descriptor(
     port = 1234,
     blocks = get_decorated_blocks_from_class(Roobin),
     menus= dict(
-        story = ["دماغ" , "عینکم" , "یکی زیر یکی رو","پسری در طبل","لباس پادشاه","قلعه حیوانات 1","قلعه حیوانات 2","قلعه حیوانات 3","شازده کوچولو 1","شازده کوچولو 2","پسرک بند انگشتی","آدم برفی","سیندرلا","گالیور","حاکم جوان","گربه چکمه پوش","جک و لوبیای سحرآمیز"],
+        story = ["دماغ" , "عينکم" , "يکي زير يکي رو","پسري در طبل","لباس پادشاه","قلعه حيوانات 1","قلعه حيوانات 2","قلعه حيوانات 3","شازده کوچولو 1","شازده کوچولو 2","پسرک بند انگشتي","آدم برفي","سيندرلا","گاليور","حاکم جوان","گربه چکمه پوش","جک و لوبياي سحرآميز"],
         difficulty = ["سطح 1","سطح 2","سطح 3"],
-        pattern_game_difficulty = ["آسان","متوسط","سخت","غیر ممکن"],
-        speak_please = ["روش یک(آنلاین)","روش دو"],
-        eyes_list = ["سالیوان" ,"باب اسفنج" ,"کیتی","مینیون", "بتمن", "پرنده عصبانی" ,"دایره ای" ,"لوزی","مثلثی", "مثلثی" , "اصل"],
+        pattern_game_difficulty = ["آسان","متوسط","سخت","غير ممکن"],
+        speak_please = ["روش يک(آنلاين)","روش دو"],
+        eyes_list = ["ساليوان" ,"باب اسفنجي" ,"کيتي","مينيون", "بتمن", "پرنده عصباني" ,"دايره" ,"لوزي","مثلثي", "مثلثي" , "اصل"],
         eyes_side_list = ["راست","چپ"],
-        mouth_list = ["غنچه","روبین"],
-        guide=["جست و جو در ویکی پدیا","چیستان","بازی جهت ها","الگوها آفلاین","دنباله اعداد"],
+        mouth_list = ["غنچه","روبين"],
+        guide=["جست و جو در ويکي پديا","چيستان","بازي جهت ها","الگوها آفلاين","دنباله اعداد"],
         lang_list = ["en", "fa"],
         motors = ["سر" , "گردن"],
         on_or_off = ["روشن", "خاموش"],
