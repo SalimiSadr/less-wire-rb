@@ -9,7 +9,7 @@ playsound==1.2.2
 psutil==5.7.0
 PyAudio==0.2.11
 pyserial==3.4
-PyYAML==5.3
+PyYAML==5.4
 requests==2.23.0
 serial==0.0.97
 SimpleWebSocketServer==0.1.1
