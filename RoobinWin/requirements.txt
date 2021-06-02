@@ -14,4 +14,4 @@ requests==2.23.0
 serial==0.0.97
 SimpleWebSocketServer==0.1.1
 SpeechRecognition==3.8.1
-urllib3==1.25.8
+urllib3==1.26.5
