@@ -3,7 +3,7 @@ chardet==3.0.4
 future==0.18.2
 idna==2.9
 iso8601==0.1.12
-lxml==4.5.0
+lxml==4.9.1
 pigpio==1.45
 playsound==1.2.2
 psutil==5.7.0
